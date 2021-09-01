@@ -12,12 +12,6 @@ C:\Users\Dmitry\source\repos\RUFR.api\RUFR.Api.Service\bin\Debug\netcoreapp3.1\R
 C:\Users\Dmitry\source\repos\RUFR.api\RUFR.Api.Service\obj\Debug\netcoreapp3.1\RUFR.Api.Service.csproj.CopyComplete
 C:\Users\Dmitry\source\repos\RUFR.api\RUFR.Api.Service\obj\Debug\netcoreapp3.1\RUFR.Api.Service.dll
 C:\Users\Dmitry\source\repos\RUFR.api\RUFR.Api.Service\obj\Debug\netcoreapp3.1\RUFR.Api.Service.pdb
-C:\Users\Dmitry\RUFR\RUFR.Api.Service\obj\Debug\netcoreapp3.1\RUFR.Api.Service.csprojAssemblyReference.cache
-C:\Users\Dmitry\RUFR\RUFR.Api.Service\obj\Debug\netcoreapp3.1\RUFR.Api.Service.AssemblyInfoInputs.cache
-C:\Users\Dmitry\RUFR\RUFR.Api.Service\obj\Debug\netcoreapp3.1\RUFR.Api.Service.AssemblyInfo.cs
-C:\Users\Dmitry\RUFR\RUFR.Api.Service\obj\Debug\netcoreapp3.1\RUFR.Api.Service.csproj.CoreCompileInputs.cache
-C:\Users\Dmitry\RUFR\RUFR.Api.Service\obj\Debug\netcoreapp3.1\RUFR.Api.Service.dll
-C:\Users\Dmitry\RUFR\RUFR.Api.Service\obj\Debug\netcoreapp3.1\RUFR.Api.Service.pdb
 C:\Users\Dmitry\RUFR\RUFR.Api.Service\bin\Debug\netcoreapp3.1\RUFR.Api.Service.deps.json
 C:\Users\Dmitry\RUFR\RUFR.Api.Service\bin\Debug\netcoreapp3.1\RUFR.Api.Service.dll
 C:\Users\Dmitry\RUFR\RUFR.Api.Service\bin\Debug\netcoreapp3.1\RUFR.Api.Service.pdb
@@ -25,4 +19,10 @@ C:\Users\Dmitry\RUFR\RUFR.Api.Service\bin\Debug\netcoreapp3.1\RUFR.Api.DataLayer
 C:\Users\Dmitry\RUFR\RUFR.Api.Service\bin\Debug\netcoreapp3.1\RUFR.Api.Model.dll
 C:\Users\Dmitry\RUFR\RUFR.Api.Service\bin\Debug\netcoreapp3.1\RUFR.Api.DataLayer.pdb
 C:\Users\Dmitry\RUFR\RUFR.Api.Service\bin\Debug\netcoreapp3.1\RUFR.Api.Model.pdb
+C:\Users\Dmitry\RUFR\RUFR.Api.Service\obj\Debug\netcoreapp3.1\RUFR.Api.Service.csprojAssemblyReference.cache
+C:\Users\Dmitry\RUFR\RUFR.Api.Service\obj\Debug\netcoreapp3.1\RUFR.Api.Service.AssemblyInfoInputs.cache
+C:\Users\Dmitry\RUFR\RUFR.Api.Service\obj\Debug\netcoreapp3.1\RUFR.Api.Service.AssemblyInfo.cs
+C:\Users\Dmitry\RUFR\RUFR.Api.Service\obj\Debug\netcoreapp3.1\RUFR.Api.Service.csproj.CoreCompileInputs.cache
 C:\Users\Dmitry\RUFR\RUFR.Api.Service\obj\Debug\netcoreapp3.1\RUFR.Api.Service.csproj.CopyComplete
+C:\Users\Dmitry\RUFR\RUFR.Api.Service\obj\Debug\netcoreapp3.1\RUFR.Api.Service.dll
+C:\Users\Dmitry\RUFR\RUFR.Api.Service\obj\Debug\netcoreapp3.1\RUFR.Api.Service.pdb
