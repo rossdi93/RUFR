@@ -5,8 +5,8 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Api.DataLayer\RUFR.Api.DataLayer.csproj" />
-    <ProjectReference Include="..\Api.Model\RUFR.Api.Model.csproj" />
+    <ProjectReference Include="..\RUFR.Api.DataLayer\RUFR.Api.DataLayer.csproj" />
+    <ProjectReference Include="..\RUFR.Api.Model\RUFR.Api.Model.csproj" />
   </ItemGroup>
 
 </Project>

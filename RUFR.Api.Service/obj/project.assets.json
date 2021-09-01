@@ -5181,13 +5181,13 @@
     },
     "RUFR.Api.DataLayer/1.0.0": {
       "type": "project",
-      "path": "../Api.DataLayer/RUFR.Api.DataLayer.csproj",
-      "msbuildProject": "../Api.DataLayer/RUFR.Api.DataLayer.csproj"
+      "path": "../RUFR.Api.DataLayer/RUFR.Api.DataLayer.csproj",
+      "msbuildProject": "../RUFR.Api.DataLayer/RUFR.Api.DataLayer.csproj"
     },
     "RUFR.Api.Model/1.0.0": {
       "type": "project",
-      "path": "../Api.Model/RUFR.Api.Model.csproj",
-      "msbuildProject": "../Api.Model/RUFR.Api.Model.csproj"
+      "path": "../RUFR.Api.Model/RUFR.Api.Model.csproj",
+      "msbuildProject": "../RUFR.Api.Model/RUFR.Api.Model.csproj"
     }
   },
   "projectFileDependencyGroups": {
@@ -5223,11 +5223,11 @@
         "netcoreapp3.1": {
           "targetAlias": "netcoreapp3.1",
           "projectReferences": {
-            "C:\\Users\\Dmitry\\RUFR\\Api.DataLayer\\RUFR.Api.DataLayer.csproj": {
-              "projectPath": "C:\\Users\\Dmitry\\RUFR\\Api.DataLayer\\RUFR.Api.DataLayer.csproj"
+            "C:\\Users\\Dmitry\\RUFR\\RUFR.Api.DataLayer\\RUFR.Api.DataLayer.csproj": {
+              "projectPath": "C:\\Users\\Dmitry\\RUFR\\RUFR.Api.DataLayer\\RUFR.Api.DataLayer.csproj"
             },
-            "C:\\Users\\Dmitry\\RUFR\\Api.Model\\RUFR.Api.Model.csproj": {
-              "projectPath": "C:\\Users\\Dmitry\\RUFR\\Api.Model\\RUFR.Api.Model.csproj"
+            "C:\\Users\\Dmitry\\RUFR\\RUFR.Api.Model\\RUFR.Api.Model.csproj": {
+              "projectPath": "C:\\Users\\Dmitry\\RUFR\\RUFR.Api.Model\\RUFR.Api.Model.csproj"
             }
           }
         }

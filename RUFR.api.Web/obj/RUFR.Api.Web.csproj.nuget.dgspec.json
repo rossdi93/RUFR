@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\Dmitry\\RUFR\\RUFR.api\\RUFR.Api.Web.csproj": {}
+    "C:\\Users\\Dmitry\\RUFR\\RUFR.Api.Web\\RUFR.Api.Web.csproj": {}
   },
   "projects": {
-    "C:\\Users\\Dmitry\\RUFR\\Api.DataLayer\\RUFR.Api.DataLayer.csproj": {
+    "C:\\Users\\Dmitry\\RUFR\\RUFR.Api.DataLayer\\RUFR.Api.DataLayer.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\Dmitry\\RUFR\\Api.DataLayer\\RUFR.Api.DataLayer.csproj",
+        "projectUniqueName": "C:\\Users\\Dmitry\\RUFR\\RUFR.Api.DataLayer\\RUFR.Api.DataLayer.csproj",
         "projectName": "RUFR.Api.DataLayer",
-        "projectPath": "C:\\Users\\Dmitry\\RUFR\\Api.DataLayer\\RUFR.Api.DataLayer.csproj",
+        "projectPath": "C:\\Users\\Dmitry\\RUFR\\RUFR.Api.DataLayer\\RUFR.Api.DataLayer.csproj",
         "packagesPath": "C:\\Users\\Dmitry\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\Dmitry\\RUFR\\Api.DataLayer\\obj\\",
+        "outputPath": "C:\\Users\\Dmitry\\RUFR\\RUFR.Api.DataLayer\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\Dmitry\\AppData\\Roaming\\NuGet\\NuGet.Config",
@@ -28,8 +28,8 @@
           "netcoreapp3.1": {
             "targetAlias": "netcoreapp3.1",
             "projectReferences": {
-              "C:\\Users\\Dmitry\\RUFR\\Api.Model\\RUFR.Api.Model.csproj": {
-                "projectPath": "C:\\Users\\Dmitry\\RUFR\\Api.Model\\RUFR.Api.Model.csproj"
+              "C:\\Users\\Dmitry\\RUFR\\RUFR.Api.Model\\RUFR.Api.Model.csproj": {
+                "projectPath": "C:\\Users\\Dmitry\\RUFR\\RUFR.Api.Model\\RUFR.Api.Model.csproj"
               }
             }
           }
@@ -82,14 +82,14 @@
         }
       }
     },
-    "C:\\Users\\Dmitry\\RUFR\\Api.Model\\RUFR.Api.Model.csproj": {
+    "C:\\Users\\Dmitry\\RUFR\\RUFR.Api.Model\\RUFR.Api.Model.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\Dmitry\\RUFR\\Api.Model\\RUFR.Api.Model.csproj",
+        "projectUniqueName": "C:\\Users\\Dmitry\\RUFR\\RUFR.Api.Model\\RUFR.Api.Model.csproj",
         "projectName": "RUFR.Api.Model",
-        "projectPath": "C:\\Users\\Dmitry\\RUFR\\Api.Model\\RUFR.Api.Model.csproj",
+        "projectPath": "C:\\Users\\Dmitry\\RUFR\\RUFR.Api.Model\\RUFR.Api.Model.csproj",
         "packagesPath": "C:\\Users\\Dmitry\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\Dmitry\\RUFR\\Api.Model\\obj\\",
+        "outputPath": "C:\\Users\\Dmitry\\RUFR\\RUFR.Api.Model\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\Dmitry\\AppData\\Roaming\\NuGet\\NuGet.Config",
@@ -136,14 +136,14 @@
         }
       }
     },
-    "C:\\Users\\Dmitry\\RUFR\\RUFR.api\\RUFR.Api.Web.csproj": {
+    "C:\\Users\\Dmitry\\RUFR\\RUFR.Api.Service\\RUFR.Api.Service.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\Dmitry\\RUFR\\RUFR.api\\RUFR.Api.Web.csproj",
-        "projectName": "RUFR.Api.Web",
-        "projectPath": "C:\\Users\\Dmitry\\RUFR\\RUFR.api\\RUFR.Api.Web.csproj",
+        "projectUniqueName": "C:\\Users\\Dmitry\\RUFR\\RUFR.Api.Service\\RUFR.Api.Service.csproj",
+        "projectName": "RUFR.Api.Service",
+        "projectPath": "C:\\Users\\Dmitry\\RUFR\\RUFR.Api.Service\\RUFR.Api.Service.csproj",
         "packagesPath": "C:\\Users\\Dmitry\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\Dmitry\\RUFR\\RUFR.api\\obj\\",
+        "outputPath": "C:\\Users\\Dmitry\\RUFR\\RUFR.Api.Service\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\Dmitry\\AppData\\Roaming\\NuGet\\NuGet.Config",
@@ -160,11 +160,75 @@
           "netcoreapp3.1": {
             "targetAlias": "netcoreapp3.1",
             "projectReferences": {
-              "C:\\Users\\Dmitry\\RUFR\\Api.DataLayer\\RUFR.Api.DataLayer.csproj": {
-                "projectPath": "C:\\Users\\Dmitry\\RUFR\\Api.DataLayer\\RUFR.Api.DataLayer.csproj"
+              "C:\\Users\\Dmitry\\RUFR\\RUFR.Api.DataLayer\\RUFR.Api.DataLayer.csproj": {
+                "projectPath": "C:\\Users\\Dmitry\\RUFR\\RUFR.Api.DataLayer\\RUFR.Api.DataLayer.csproj"
               },
-              "C:\\Users\\Dmitry\\RUFR\\Api.Model\\RUFR.Api.Model.csproj": {
-                "projectPath": "C:\\Users\\Dmitry\\RUFR\\Api.Model\\RUFR.Api.Model.csproj"
+              "C:\\Users\\Dmitry\\RUFR\\RUFR.Api.Model\\RUFR.Api.Model.csproj": {
+                "projectPath": "C:\\Users\\Dmitry\\RUFR\\RUFR.Api.Model\\RUFR.Api.Model.csproj"
+              }
+            }
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        }
+      },
+      "frameworks": {
+        "netcoreapp3.1": {
+          "targetAlias": "netcoreapp3.1",
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48"
+          ],
+          "assetTargetFallback": true,
+          "warn": true,
+          "frameworkReferences": {
+            "Microsoft.NETCore.App": {
+              "privateAssets": "all"
+            }
+          },
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.102\\RuntimeIdentifierGraph.json"
+        }
+      }
+    },
+    "C:\\Users\\Dmitry\\RUFR\\RUFR.Api.Web\\RUFR.Api.Web.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "C:\\Users\\Dmitry\\RUFR\\RUFR.Api.Web\\RUFR.Api.Web.csproj",
+        "projectName": "RUFR.Api.Web",
+        "projectPath": "C:\\Users\\Dmitry\\RUFR\\RUFR.Api.Web\\RUFR.Api.Web.csproj",
+        "packagesPath": "C:\\Users\\Dmitry\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\Dmitry\\RUFR\\RUFR.Api.Web\\obj\\",
+        "projectStyle": "PackageReference",
+        "configFilePaths": [
+          "C:\\Users\\Dmitry\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+        ],
+        "originalTargetFrameworks": [
+          "netcoreapp3.1"
+        ],
+        "sources": {
+          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "netcoreapp3.1": {
+            "targetAlias": "netcoreapp3.1",
+            "projectReferences": {
+              "C:\\Users\\Dmitry\\RUFR\\RUFR.Api.DataLayer\\RUFR.Api.DataLayer.csproj": {
+                "projectPath": "C:\\Users\\Dmitry\\RUFR\\RUFR.Api.DataLayer\\RUFR.Api.DataLayer.csproj"
+              },
+              "C:\\Users\\Dmitry\\RUFR\\RUFR.Api.Model\\RUFR.Api.Model.csproj": {
+                "projectPath": "C:\\Users\\Dmitry\\RUFR\\RUFR.Api.Model\\RUFR.Api.Model.csproj"
+              },
+              "C:\\Users\\Dmitry\\RUFR\\RUFR.Api.Service\\RUFR.Api.Service.csproj": {
+                "projectPath": "C:\\Users\\Dmitry\\RUFR\\RUFR.Api.Service\\RUFR.Api.Service.csproj"
               }
             }
           }

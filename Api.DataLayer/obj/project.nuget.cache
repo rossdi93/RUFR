@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "nYY4qjlzKJk4vQzRQtsuv0QxHD+s/spxiYmZvr384QpUAFFl49LgKTQkNV5DHnhJCBHKOofmBs1mnkgvHBYjMg==",
+  "dgSpecHash": "I3rLH4uY3eDatYppj8H8NZKsClLeq4+F4QVwNGsLCKjSV4cY7FbQA8vYBiC5UbRZ2LLn1LYhYlY13QET3eskEQ==",
   "success": true,
-  "projectFilePath": "C:\\Users\\Dmitry\\RUFR\\RUFR.Api.DataLayer\\RUFR.Api.DataLayer.csproj",
+  "projectFilePath": "C:\\Users\\Dmitry\\RUFR\\Api.DataLayer\\RUFR.Api.DataLayer.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\Dmitry\\.nuget\\packages\\humanizer.core\\2.8.26\\humanizer.core.2.8.26.nupkg.sha512",
     "C:\\Users\\Dmitry\\.nuget\\packages\\microsoft.csharp\\4.7.0\\microsoft.csharp.4.7.0.nupkg.sha512",

@@ -1,5 +1,6 @@
 ﻿using System;
 using Microsoft.EntityFrameworkCore;
+using RUFR.Api.DataLayer;
 using RUFR.Api.Model.Models;
 
 namespace Api.DataLayer

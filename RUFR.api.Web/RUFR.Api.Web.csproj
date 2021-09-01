@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk.Web">
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
 
   <PropertyGroup>
     <TargetFramework>netcoreapp3.1</TargetFramework>
@@ -22,8 +22,9 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Api.DataLayer\RUFR.Api.DataLayer.csproj" />
-    <ProjectReference Include="..\Api.Model\RUFR.Api.Model.csproj" />
+    <ProjectReference Include="..\RUFR.Api.DataLayer\RUFR.Api.DataLayer.csproj" />
+    <ProjectReference Include="..\RUFR.Api.Model\RUFR.Api.Model.csproj" />
+    <ProjectReference Include="..\RUFR.Api.Service\RUFR.Api.Service.csproj" />
   </ItemGroup>
 
 </Project>

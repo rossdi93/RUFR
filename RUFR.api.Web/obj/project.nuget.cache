@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "KsfGabHp6bBKWXGa6w95D7CF0OlIP6Gt3nSuKt+WqBG75nlWXgllNU8jQoKzJjqjcxpLd73XGKRBf48qgA/hyw==",
+  "dgSpecHash": "EibOslzxTYJsWKj2LCFXN6EwDNfEwSz3wqKxKrbT1AmG5AqKUN6OQT3HiRVvW4mFLsVRqOzrRNp7PyRYeJX/kg==",
   "success": true,
-  "projectFilePath": "C:\\Users\\Dmitry\\RUFR\\RUFR.api\\RUFR.Api.Web.csproj",
+  "projectFilePath": "C:\\Users\\Dmitry\\RUFR\\RUFR.Api.Web\\RUFR.Api.Web.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\Dmitry\\.nuget\\packages\\advancedstringbuilder\\0.1.0\\advancedstringbuilder.0.1.0.nupkg.sha512",
     "C:\\Users\\Dmitry\\.nuget\\packages\\humanizer.core\\2.8.26\\humanizer.core.2.8.26.nupkg.sha512",

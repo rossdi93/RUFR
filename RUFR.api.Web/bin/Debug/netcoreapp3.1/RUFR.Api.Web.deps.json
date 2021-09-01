@@ -36,6 +36,7 @@
           "Microsoft.VisualStudio.Web.CodeGeneration.Design": "3.1.5",
           "RUFR.Api.DataLayer": "1.0.0",
           "RUFR.Api.Model": "1.0.0",
+          "RUFR.Api.Service": "1.0.0",
           "React.AspNet": "5.2.11",
           "Microsoft.AspNetCore.Antiforgery": "3.1.0.0",
           "Microsoft.AspNetCore.Authentication.Abstractions": "3.1.0.0",
@@ -2098,6 +2099,18 @@
         },
         "compile": {
           "RUFR.Api.Model.dll": {}
+        }
+      },
+      "RUFR.Api.Service/1.0.0": {
+        "dependencies": {
+          "RUFR.Api.DataLayer": "1.0.0",
+          "RUFR.Api.Model": "1.0.0"
+        },
+        "runtime": {
+          "RUFR.Api.Service.dll": {}
+        },
+        "compile": {
+          "RUFR.Api.Service.dll": {}
         }
       },
       "Microsoft.AspNetCore.Antiforgery/3.1.0.0": {
@@ -4742,6 +4755,11 @@
       "sha512": ""
     },
     "RUFR.Api.Model/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    },
+    "RUFR.Api.Service/1.0.0": {
       "type": "project",
       "serviceable": false,
       "sha512": ""
