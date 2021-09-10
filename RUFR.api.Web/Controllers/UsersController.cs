@@ -1,68 +1,109 @@
-﻿using Api.DataLayer;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using RUFR.Api.Model.Models;
 using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
+using RUFR.Api.Service.Interfaces;
 
-// For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-
-namespace RUFR.api.Controllers
+namespace RUFR.Api.Controllers
 {
     [Route("api/Users")]
     [ApiController]
     public class UsersController : ControllerBase
     {
-        private readonly ApiDbContext _context;
+        private readonly IUsersService _usersService;
 
-        public UsersController(ApiDbContext context)
+        public UsersController(IUsersService usersService)
         {
-            _context = context;
+            _usersService = usersService;
         }
 
-        // GET: api/<UserController>
-        [HttpGet("GetAll")]
+        /// <summary>
+        /// Получение всех сущностей
+        /// </summary>
+        /// <returns></returns>
+        [HttpGet]
         public IActionResult Get()
         {
-            return Ok(_context.Users.ToList());
+            return Ok(_usersService.Select().ToList());
         }
 
-        // GET api/<UserController>/5
-        [HttpGet("{id}")]
-        public IActionResult Get(int id)
+        /// <summary>
+        /// Получение по id конктретной сущности
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        [HttpGet("GetById/{id}")]
+        public IActionResult GetById(int id)
         {
-            return Ok(_context.Users.First(u => u.Id == id));
+            return Ok(_usersService.GetById(id));
         }
 
-        // POST api/<UserController>
-        [HttpPost]
-        public IActionResult Post([FromBody] UserModel user)
+        /// <summary>
+        /// Добавление нового сущности
+        /// </summary>
+        /// <param name="user"></param>
+        /// <returns></returns>
+        [HttpPost("New")]
+        public IActionResult New([FromBody] UserModel user)
         {
-            UserModel newUser = _context.Users.Add(user).Entity;
-            _context.SaveChanges();
+            UserModel newUser = _usersService.Create(user);
+
             return Ok(newUser);
         }
 
-        // PUT api/<UserController>/5
-        [HttpPut]
-        public IActionResult Put([FromBody] UserModel user)
+        /// <summary>
+        /// Обновление сущетсвующего сущности
+        /// </summary>
+        /// <param name="user"></param>
+        /// <returns></returns>
+        [HttpPut("Update")]
+        public IActionResult Update([FromBody] UserModel user)
         {
-            UserModel newUser = _context.Users.Update(user).Entity;
-           _context.SaveChanges();
-            return Ok(newUser);
+            if (_usersService.GetById(user.Id) != null)
+            {
+                return NotFound(user);
+            }
+
+            try
+            {
+                UserModel oldUser = _usersService.GetById(user.Id);
+                oldUser = user;
+                _usersService.Update(oldUser);
+
+                return Ok(oldUser);
+
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+
         }
 
-        // DELETE api/<UserController>/5
+        // DELETE api/<EventController>/5
         [HttpDelete("{id}")]
         public IActionResult Delete(int id)
         {
-            _context.Users.First(u => u.Id == id).IsDelete = true;
-            _context.SaveChanges();
-            if (_context.Users.First(u => u.Id == id).IsDelete == true)
-                return Ok();
+            var user = _usersService.GetById(id);
+            if (!user.IsDelete)
+            {
+                user.IsDelete = true;
+                try
+                {
+                    _usersService.Update(user);
+                    return Ok();
+                }
+                catch (Exception)
+                {
+
+                    throw;
+                }
+            }
             else
+            {
                 return Ok(false);
+            }
         }
     }
 }

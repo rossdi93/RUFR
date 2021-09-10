@@ -1,68 +1,109 @@
-﻿using Api.DataLayer;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using RUFR.Api.Model.Models;
 using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
+using RUFR.Api.Service.Interfaces;
 
-// For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-
-namespace RUFR.api.Controllers
+namespace RUFR.Api.Controllers
 {
     [Route("api/Events")]
     [ApiController]
     public class EventsController : ControllerBase
     {
-        private readonly ApiDbContext _context;
+        private readonly IEventsService _eventsService;
 
-        public EventsController(ApiDbContext context)
+        public EventsController(IEventsService eventsService)
         {
-            _context = context;
+            _eventsService = eventsService;
         }
 
-        // GET: api/<EventController>
-        [HttpGet("GetAll")]
+        /// <summary>
+        /// Получение всех сущностей
+        /// </summary>
+        /// <returns></returns>
+        [HttpGet]
         public IActionResult Get()
         {
-            return Ok(_context.EventModels.ToList());
+            return Ok(_eventsService.Select().ToList());
         }
 
-        // GET api/<EventController>/5
-        [HttpGet("{id}")]
-        public IActionResult Get(int id)
+        /// <summary>
+        /// Получение по id конктретной сущности
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        [HttpGet("GetById/{id}")]
+        public IActionResult GetById(int id)
         {
-            return Ok(_context.EventModels.First(u => u.Id == id));
+            return Ok(_eventsService.GetById(id));
         }
 
-        // POST api/<EventController>
-        [HttpPost]
-        public IActionResult Post([FromBody] EventModel events)
+        /// <summary>
+        /// Добавление нового сущности
+        /// </summary>
+        /// <param name="ev"></param>
+        /// <returns></returns>
+        [HttpPost("New")]
+        public IActionResult New([FromBody] EventModel ev)
         {
-            EventModel newEvents = _context.EventModels.Add(events).Entity;
-            _context.SaveChanges();
+            EventModel newEvents = _eventsService.Create(ev);
+
             return Ok(newEvents);
         }
 
-        // PUT api/<EventController>/5
-        [HttpPut]
-        public IActionResult Put([FromBody] EventModel events)
+        /// <summary>
+        /// Обновление сущетсвующего сущности
+        /// </summary>
+        /// <param name="ev"></param>
+        /// <returns></returns>
+        [HttpPut("Update")]
+        public IActionResult Update([FromBody] EventModel ev)
         {
-            EventModel newEvents = _context.EventModels.Update(events).Entity;
-            _context.SaveChanges();
-            return Ok(newEvents);
+            if (_eventsService.GetById(ev.Id) != null)
+            {
+                return NotFound(ev);
+            }
+
+            try
+            {
+                EventModel oldEvent = _eventsService.GetById(ev.Id);
+                oldEvent = ev;
+                _eventsService.Update(oldEvent);
+
+                return Ok(oldEvent);
+
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+
         }
 
         // DELETE api/<EventController>/5
         [HttpDelete("{id}")]
         public IActionResult Delete(int id)
         {
-            _context.EventModels.First(u => u.Id == id).IsDelete = true;
-            _context.SaveChanges();
-            if (_context.EventModels.First(u => u.Id == id).IsDelete == true)
-                return Ok();
+            var ev = _eventsService.GetById(id);
+            if (!ev.IsDelete)
+            {
+                ev.IsDelete = true;
+                try
+                {
+                    _eventsService.Update(ev);
+                    return Ok();
+                }
+                catch (Exception)
+                {
+
+                    throw;
+                }
+            }
             else
+            {
                 return Ok(false);
+            }
         }
     }
 }

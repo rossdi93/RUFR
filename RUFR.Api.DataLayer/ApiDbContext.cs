@@ -55,5 +55,13 @@ namespace Api.DataLayer
         /// таблица поректов
         /// </summary>
         public DbSet<ProjectModel> ProjectModels { get; set; }
+
+        /// <summary>
+        /// Сохранение изменений
+        /// </summary>
+        public new void SaveChanges()
+        {
+            base.SaveChanges();
+        }
     }
 }

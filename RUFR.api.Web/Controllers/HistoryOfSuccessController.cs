@@ -1,68 +1,109 @@
-﻿using Api.DataLayer;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using RUFR.Api.Model.Models;
 using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
+using RUFR.Api.Service.Interfaces;
 
-// For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-
-namespace RUFR.api.Controllers
+namespace RUFR.Api.Controllers
 {
-    [Route("api/Events")]
+    [Route("api/History")]
     [ApiController]
     public class HistoryOfSuccessController : ControllerBase
     {
-        private readonly ApiDbContext _context;
+        private readonly IHistoryOfSuccessService _historyOfSuccessService;
 
-        public HistoryOfSuccessController(ApiDbContext context)
+        public HistoryOfSuccessController(IHistoryOfSuccessService historyOfSuccessService)
         {
-            _context = context;
+            _historyOfSuccessService = historyOfSuccessService;
         }
 
-        // GET: api/<HistoryOfSuccessController>
-        [HttpGet("GetAll")]
+        /// <summary>
+        /// Получение всех сущностей
+        /// </summary>
+        /// <returns></returns>
+        [HttpGet]
         public IActionResult Get()
         {
-            return Ok(_context.HistoryOfSuccessModels.ToList());
+            return Ok(_historyOfSuccessService.Select().ToList());
         }
 
-        // GET api/<HistoryOfSuccessController>/5
-        [HttpGet("{id}")]
-        public IActionResult Get(int id)
+        /// <summary>
+        /// Получение по id конктретной сущности
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        [HttpGet("GetById/{id}")]
+        public IActionResult GetById(int id)
         {
-            return Ok(_context.HistoryOfSuccessModels.First(u => u.Id == id));
+            return Ok(_historyOfSuccessService.GetById(id));
         }
 
-        // POST api/<HistoryOfSuccessController>
-        [HttpPost]
-        public IActionResult Post([FromBody] HistoryOfSuccessModel history)
+        /// <summary>
+        /// Добавление новой сущности
+        /// </summary>
+        /// <param name="history"></param>
+        /// <returns></returns>
+        [HttpPost("New")]
+        public IActionResult New([FromBody] HistoryOfSuccessModel history)
         {
-            HistoryOfSuccessModel newHistory = _context.HistoryOfSuccessModels.Add(history).Entity;
-            _context.SaveChanges();
+            HistoryOfSuccessModel newHistory = _historyOfSuccessService.Create(history);
+
             return Ok(newHistory);
         }
 
-        // PUT api/<HistoryOfSuccessController>/5
-        [HttpPut]
-        public IActionResult Put([FromBody] HistoryOfSuccessModel history)
+        /// <summary>
+        /// Обновление сущетсвующего сущности
+        /// </summary>
+        /// <param name="history"></param>
+        /// <returns></returns>
+        [HttpPut("Update")]
+        public IActionResult Update([FromBody] HistoryOfSuccessModel history)
         {
-            HistoryOfSuccessModel newHistory = _context.HistoryOfSuccessModels.Update(history).Entity;
-            _context.SaveChanges();
-            return Ok(newHistory);
+            if (_historyOfSuccessService.GetById(history.Id) != null)
+            {
+                return NotFound(history);
+            }
+
+            try
+            {
+                HistoryOfSuccessModel oldHistory = _historyOfSuccessService.GetById(history.Id);
+                oldHistory = history;
+                _historyOfSuccessService.Update(oldHistory);
+
+                return Ok(oldHistory);
+
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+
         }
 
-        // DELETE api/<HistoryOfSuccessController>/5
+        // DELETE api/<EventController>/5
         [HttpDelete("{id}")]
         public IActionResult Delete(int id)
         {
-            _context.HistoryOfSuccessModels.First(u => u.Id == id).IsDelete = true;
-            _context.SaveChanges();
-            if (_context.HistoryOfSuccessModels.First(u => u.Id == id).IsDelete == true)
-                return Ok();
+            var history = _historyOfSuccessService.GetById(id);
+            if (!history.IsDelete)
+            {
+                history.IsDelete = true;
+                try
+                {
+                    _historyOfSuccessService.Update(history);
+                    return Ok();
+                }
+                catch (Exception)
+                {
+
+                    throw;
+                }
+            }
             else
+            {
                 return Ok(false);
+            }
         }
     }
 }

@@ -1,68 +1,109 @@
-﻿using Api.DataLayer;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using RUFR.Api.Model.Models;
 using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
+using RUFR.Api.Service.Interfaces;
 
-// For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-
-namespace RUFR.api.Controllers
+namespace RUFR.Api.Controllers
 {
     [Route("api/Projects")]
     [ApiController]
     public class ProjectsController : ControllerBase
     {
-        private readonly ApiDbContext _context;
+        private readonly IProjectService _projectService;
 
-        public ProjectsController(ApiDbContext context)
+        public ProjectsController(IProjectService projectService)
         {
-            _context = context;
+            _projectService = projectService;
         }
 
-        // GET: api/<ProjectController>
-        [HttpGet("GetAll")]
+        /// <summary>
+        /// Получение всех сущностей
+        /// </summary>
+        /// <returns></returns>
+        [HttpGet]
         public IActionResult Get()
         {
-            return Ok(_context.ProjectModels.ToList());
+            return Ok(_projectService.Select().ToList());
         }
 
-        // GET api/<ProjectController>/5
-        [HttpGet("{id}")]
-        public IActionResult Get(int id)
+        /// <summary>
+        /// Получение по id конктретной сущности
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        [HttpGet("GetById/{id}")]
+        public IActionResult GetById(int id)
         {
-            return Ok(_context.ProjectModels.First(u => u.Id == id));
+            return Ok(_projectService.GetById(id));
         }
 
-        // POST api/<ProjectController>
-        [HttpPost]
-        public IActionResult Post([FromBody] ProjectModel project)
+        /// <summary>
+        /// Добавление нового сущности
+        /// </summary>
+        /// <param name="project"></param>
+        /// <returns></returns>
+        [HttpPost("New")]
+        public IActionResult New([FromBody] ProjectModel project)
         {
-            ProjectModel newProject = _context.ProjectModels.Add(project).Entity;
-            _context.SaveChanges();
+            ProjectModel newProject = _projectService.Create(project);
+
             return Ok(newProject);
         }
 
-        // PUT api/<ProjectController>/5
-        [HttpPut]
-        public IActionResult Put([FromBody] ProjectModel project)
+        /// <summary>
+        /// Обновление сущетсвующего сущности
+        /// </summary>
+        /// <param name="ev"></param>
+        /// <returns></returns>
+        [HttpPut("Update")]
+        public IActionResult Update([FromBody] ProjectModel project)
         {
-            ProjectModel upProject = _context.ProjectModels.Update(project).Entity;
-           _context.SaveChanges();
-            return Ok(upProject);
+            if (_projectService.GetById(project.Id) != null)
+            {
+                return NotFound(project);
+            }
+
+            try
+            {
+                ProjectModel oldProject = _projectService.GetById(project.Id);
+                oldProject = project;
+                _projectService.Update(oldProject);
+
+                return Ok(oldProject);
+
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+
         }
 
-        // DELETE api/<ProjectController>/5
+        // DELETE api/<EventController>/5
         [HttpDelete("{id}")]
         public IActionResult Delete(int id)
         {
-            _context.ProjectModels.First(u => u.Id == id).IsDelete = true;
-            _context.SaveChanges();
-            if (_context.ProjectModels.First(u => u.Id == id).IsDelete == true)
-                return Ok();
+            var project = _projectService.GetById(id);
+            if (!project.IsDelete)
+            {
+                project.IsDelete = true;
+                try
+                {
+                    _projectService.Update(project);
+                    return Ok();
+                }
+                catch (Exception)
+                {
+
+                    throw;
+                }
+            }
             else
+            {
                 return Ok(false);
+            }
         }
     }
 }

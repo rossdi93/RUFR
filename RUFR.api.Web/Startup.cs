@@ -9,8 +9,11 @@ using JavaScriptEngineSwitcher.Extensions.MsDependencyInjection;
 using Api.DataLayer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
+using RUFR.Api.Service.Interfaces;
+using RUFR.Api.Service.Services;
+using RUFR.Api.DataLayer;
 
-namespace RUFR.api
+namespace RUFR.Api
 {
     public class Startup
     {
@@ -50,6 +53,13 @@ namespace RUFR.api
             services.AddReact();
             services.AddJsEngineSwitcher(options => options.DefaultEngineName = ChakraCoreJsEngine.EngineName).AddChakraCore();
             services.AddDbContext<ApiDbContext>(o => o.UseNpgsql(Configuration.GetConnectionString("DefaultConnection")));
+
+            services.AddScoped<IDbContext, ApiDbContext>();
+            services.AddScoped<INewsService, NewsService>();
+            services.AddScoped<IHistoryOfSuccessService, HistoryOfSuccessService>();
+            services.AddScoped<IProjectService, ProjectService>();
+            services.AddScoped<IUsersService, UsersService>();
+            services.AddScoped<IEventsService, EventService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
