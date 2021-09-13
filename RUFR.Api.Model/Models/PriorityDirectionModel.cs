@@ -7,7 +7,7 @@ namespace RUFR.Api.Model.Models
     public class PriorityDirectionModel: BaseModel
     {
         /// <summary>
-        /// описание напрвление
+        /// описание направления
         /// </summary>
         public string Description { get; set; }
 
@@ -22,7 +22,7 @@ namespace RUFR.Api.Model.Models
         public ProjectModel ProjectModel { get; set; }
 
         /// <summary>
-        /// id участника по направлению
+        /// id участника
         /// </summary>
         public long MemberModelId { get; set; }
 

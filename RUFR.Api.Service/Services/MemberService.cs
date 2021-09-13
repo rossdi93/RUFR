@@ -4,9 +4,9 @@ using RUFR.Api.Service.Interfaces;
 
 namespace RUFR.Api.Service.Services
 {
-    public class EventService : MainService<EventModel>, IEventsService
+    public class MemberService : MainService<MemberModel>, IMemberService
     {
-        public EventService(IDbContext context) : base(context)
+        public MemberService(IDbContext context) : base(context)
         {
         }
     }

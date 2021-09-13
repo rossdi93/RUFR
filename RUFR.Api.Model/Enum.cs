@@ -31,7 +31,7 @@
     }
 
     /// <summary>
-    /// тип события
+    /// тип истории
     /// </summary>
     public enum TypesOfHistory : int
     {

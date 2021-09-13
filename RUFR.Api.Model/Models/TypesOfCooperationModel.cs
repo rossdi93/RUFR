@@ -10,5 +10,15 @@ namespace RUFR.Api.Model.Models
         /// описание вида сотрудничества 
         /// </summary>
         public string Description { get; set; }
+
+        /// <summary>
+        /// id участника
+        /// </summary>
+        public long MemberModelId { get; set; }
+
+        /// <summary>
+        /// навигационное свойство  
+        /// </summary>
+        public MemberModel MemberModel { get; set; }
     }
 }

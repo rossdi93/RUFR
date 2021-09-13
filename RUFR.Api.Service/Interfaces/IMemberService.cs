@@ -2,7 +2,7 @@
 
 namespace RUFR.Api.Service.Interfaces
 {
-    public interface IEventsService : IMainService<EventModel>
+    public interface IMemberService : IMainService<MemberModel>
     {
     }
 }

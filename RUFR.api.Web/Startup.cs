@@ -60,6 +60,8 @@ namespace RUFR.Api
             services.AddScoped<IProjectService, ProjectService>();
             services.AddScoped<IUsersService, UsersService>();
             services.AddScoped<IEventsService, EventService>();
+            services.AddScoped<ITyperOfCooperationService, TyperOfCooperationService>();
+            services.AddScoped<IMemberService, MemberService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
