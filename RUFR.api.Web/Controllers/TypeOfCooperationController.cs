@@ -81,7 +81,11 @@ namespace RUFR.Api.Web.Controllers
 
         }
 
-        // DELETE api/<EventController>/5
+        /// <summary>
+        /// Удаление сущности по id
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         [HttpDelete("{id}")]
         public IActionResult Delete(int id)
         {
