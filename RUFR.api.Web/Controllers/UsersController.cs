@@ -59,7 +59,7 @@ namespace RUFR.Api.Controllers
         [HttpPut("Update")]
         public IActionResult Update([FromBody] UserModel user)
         {
-            if (_usersService.GetById(user.Id) != null)
+            if (_usersService.GetById(user.Id) == null)
             {
                 return NotFound(user);
             }

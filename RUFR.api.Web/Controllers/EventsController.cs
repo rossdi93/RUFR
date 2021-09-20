@@ -59,7 +59,7 @@ namespace RUFR.Api.Controllers
         [HttpPut("Update")]
         public IActionResult Update([FromBody] EventModel ev)
         {
-            if (_eventsService.GetById(ev.Id) != null)
+            if (_eventsService.GetById(ev.Id) == null)
             {
                 return NotFound(ev);
             }

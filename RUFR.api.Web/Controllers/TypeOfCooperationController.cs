@@ -59,7 +59,7 @@ namespace RUFR.Api.Web.Controllers
         [HttpPut("Update")]
         public IActionResult Update([FromBody] TypesOfCooperationModel typeOfCooperation)
         {
-            if (_typerOfCooperationService.GetById(typeOfCooperation.Id) != null)
+            if (_typerOfCooperationService.GetById(typeOfCooperation.Id) == null)
             {
                 return NotFound(typeOfCooperation);
             }

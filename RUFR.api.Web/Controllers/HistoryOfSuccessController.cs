@@ -59,7 +59,7 @@ namespace RUFR.Api.Controllers
         [HttpPut("Update")]
         public IActionResult Update([FromBody] HistoryOfSuccessModel history)
         {
-            if (_historyOfSuccessService.GetById(history.Id) != null)
+            if (_historyOfSuccessService.GetById(history.Id) == null)
             {
                 return NotFound(history);
             }

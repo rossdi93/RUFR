@@ -59,7 +59,7 @@ namespace RUFR.Api.Controllers
         [HttpPut("Update")]
         public IActionResult Update([FromBody] ProjectModel project)
         {
-            if (_projectService.GetById(project.Id) != null)
+            if (_projectService.GetById(project.Id) == null)
             {
                 return NotFound(project);
             }
