@@ -27,5 +27,10 @@ namespace RUFR.Api.DataLayer
         /// <typeparam name="TEntity"></typeparam>
         /// <returns></returns>
         DbSet<TEntity> Set<TEntity>() where TEntity : class;
+
+        /// <summary>
+        /// Сохранение изменений
+        /// </summary>
+        void SaveChanges();
     }
 }

@@ -4,17 +4,17 @@ using System;
 using System.Linq;
 using RUFR.Api.Service.Interfaces;
 
-namespace RUFR.Api.Controllers
+namespace RUFR.Api.Web.Controllers
 {
-    [Route("api/History")]
+    [Route("api/TypeOfCooperation")]
     [ApiController]
-    public class HistoryOfSuccessController : ControllerBase
+    public class TypeOfCooperationController : ControllerBase
     {
-        private readonly IHistoryOfSuccessService _historyOfSuccessService;
+        private readonly ITyperOfCooperationService _typerOfCooperationService;
 
-        public HistoryOfSuccessController(IHistoryOfSuccessService historyOfSuccessService)
+        public TypeOfCooperationController(ITyperOfCooperationService typerOfCooperationService)
         {
-            _historyOfSuccessService = historyOfSuccessService;
+            _typerOfCooperationService = typerOfCooperationService;
         }
 
         /// <summary>
@@ -24,7 +24,7 @@ namespace RUFR.Api.Controllers
         [HttpGet]
         public IActionResult Get()
         {
-            return Ok(_historyOfSuccessService.Select().ToList());
+            return Ok(_typerOfCooperationService.Select().ToList());
         }
 
         /// <summary>
@@ -35,42 +35,42 @@ namespace RUFR.Api.Controllers
         [HttpGet("GetById/{id}")]
         public IActionResult GetById(int id)
         {
-            return Ok(_historyOfSuccessService.GetById(id));
+            return Ok(_typerOfCooperationService.GetById(id));
         }
 
         /// <summary>
         /// Добавление новой сущности
         /// </summary>
-        /// <param name="history"></param>
+        /// <param name="typeOfCooperation"></param>
         /// <returns></returns>
         [HttpPost("New")]
-        public IActionResult New([FromBody] HistoryOfSuccessModel history)
+        public IActionResult New([FromBody] TypesOfCooperationModel typeOfCooperation)
         {
-            HistoryOfSuccessModel newHistory = _historyOfSuccessService.Create(history);
+            TypesOfCooperationModel newTypeOfCooperation = _typerOfCooperationService.Create(typeOfCooperation);
 
-            return Ok(newHistory);
+            return Ok(newTypeOfCooperation);
         }
 
         /// <summary>
         /// Обновление сущетсвующего сущности
         /// </summary>
-        /// <param name="history"></param>
+        /// <param name="typeOfCooperation"></param>
         /// <returns></returns>
         [HttpPut("Update")]
-        public IActionResult Update([FromBody] HistoryOfSuccessModel history)
+        public IActionResult Update([FromBody] TypesOfCooperationModel typeOfCooperation)
         {
-            if (_historyOfSuccessService.GetById(history.Id) != null)
+            if (_typerOfCooperationService.GetById(typeOfCooperation.Id) != null)
             {
-                return NotFound(history);
+                return NotFound(typeOfCooperation);
             }
 
             try
             {
-                HistoryOfSuccessModel oldHistory = _historyOfSuccessService.GetById(history.Id);
-                oldHistory = history;
-                _historyOfSuccessService.Update(oldHistory);
+                TypesOfCooperationModel oldTypeOfCooperation = _typerOfCooperationService.GetById(typeOfCooperation.Id);
+                oldTypeOfCooperation = typeOfCooperation;
+                _typerOfCooperationService.Update(oldTypeOfCooperation);
 
-                return Ok(oldHistory);
+                return Ok(oldTypeOfCooperation);
 
             }
             catch (Exception)
@@ -89,13 +89,13 @@ namespace RUFR.Api.Controllers
         [HttpDelete("{id}")]
         public IActionResult Delete(int id)
         {
-            var history = _historyOfSuccessService.GetById(id);
-            if (!history.IsDelete)
+            var typeOfCooperation = _typerOfCooperationService.GetById(id);
+            if (!typeOfCooperation.IsDelete)
             {
-                history.IsDelete = true;
+                typeOfCooperation.IsDelete = true;
                 try
                 {
-                    _historyOfSuccessService.Update(history);
+                    _typerOfCooperationService.Update(typeOfCooperation);
                     return Ok();
                 }
                 catch (Exception)

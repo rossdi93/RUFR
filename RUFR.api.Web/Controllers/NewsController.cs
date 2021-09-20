@@ -1,68 +1,113 @@
-﻿using Api.DataLayer;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using RUFR.Api.Model.Models;
 using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
+using RUFR.Api.Service.Interfaces;
 
-// For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-
-namespace RUFR.api.Controllers
+namespace RUFR.Api.Controllers
 {
     [Route("api/News")]
     [ApiController]
     public class NewsController : ControllerBase
     {
-        private readonly ApiDbContext _context;
+        private readonly INewsService _newsService;
 
-        public NewsController(ApiDbContext context)
+        public NewsController(INewsService newsService)
         {
-            _context = context;
+            _newsService = newsService;
         }
 
-        // GET: api/<NewsController>
-        [HttpGet("GetAll")]
+        /// <summary>
+        /// Получение всех сущностей
+        /// </summary>
+        /// <returns></returns>
+        [HttpGet]
         public IActionResult Get()
         {
-            return Ok(_context.NewsModels.ToList());
+            return Ok(_newsService.Select().ToList());
         }
 
-        // GET api/<NewsController>/5
-        [HttpGet("{id}")]
-        public IActionResult Get(int id)
+        /// <summary>
+        /// Получение по id конктретной сущности
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        [HttpGet("GetById/{id}")]
+        public IActionResult GetById(int id)
         {
-            return Ok(_context.NewsModels.First(u => u.Id == id));
+            return Ok(_newsService.GetById(id));
         }
 
-        // POST api/<NewsController>
-        [HttpPost]
-        public IActionResult Post([FromBody] NewsModel news)
+        /// <summary>
+        /// Добавление нового сущности
+        /// </summary>
+        /// <param name="news"></param>
+        /// <returns></returns>
+        [HttpPost("New")]
+        public IActionResult New([FromBody] NewsModel news)
         {
-            NewsModel newNews = _context.NewsModels.Add(news).Entity;
-            _context.SaveChanges();
+            NewsModel newNews = _newsService.Create(news);
+
             return Ok(newNews);
         }
 
-        // PUT api/<NewsController>/5
-        [HttpPut]
-        public IActionResult Put([FromBody] NewsModel news)
+        /// <summary>
+        /// Обновление сущетсвующего сущности
+        /// </summary>
+        /// <param name="ev"></param>
+        /// <returns></returns>
+        [HttpPut("Update")]
+        public IActionResult Update([FromBody] NewsModel news)
         {
-            NewsModel newsModel = _context.NewsModels.Update(news).Entity;
-            _context.SaveChanges();
-            return Ok(newsModel);
+            if (_newsService.GetById(news.Id) != null)
+            {
+                return NotFound(news);
+            }
+
+            try
+            {
+                NewsModel oldNews = _newsService.GetById(news.Id);
+                oldNews = news;
+                _newsService.Update(oldNews);
+
+                return Ok(oldNews);
+
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+
         }
 
-        // DELETE api/<NewsController>/5
+        /// <summary>
+        /// Удаление сущности по id
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         [HttpDelete("{id}")]
         public IActionResult Delete(int id)
         {
-            _context.NewsModels.First(u => u.Id == id).IsDelete = true;
-            _context.SaveChanges();
-            if (_context.NewsModels.First(u => u.Id == id).IsDelete == true)
-                return Ok();
+            var news = _newsService.GetById(id);
+            if (!news.IsDelete)
+            {
+                news.IsDelete = true;
+                try
+                {
+                    _newsService.Update(news);
+                    return Ok();
+                }
+                catch (Exception)
+                {
+
+                    throw;
+                }
+            }
             else
+            {
                 return Ok(false);
+            }
         }
     }
 }

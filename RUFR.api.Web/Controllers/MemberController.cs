@@ -6,15 +6,15 @@ using RUFR.Api.Service.Interfaces;
 
 namespace RUFR.Api.Controllers
 {
-    [Route("api/History")]
+    [Route("api/Member")]
     [ApiController]
-    public class HistoryOfSuccessController : ControllerBase
+    public class MemberController : ControllerBase
     {
-        private readonly IHistoryOfSuccessService _historyOfSuccessService;
+        private readonly IMemberService _memberService;
 
-        public HistoryOfSuccessController(IHistoryOfSuccessService historyOfSuccessService)
+        public MemberController(IMemberService memberService)
         {
-            _historyOfSuccessService = historyOfSuccessService;
+            _memberService = memberService;
         }
 
         /// <summary>
@@ -24,7 +24,7 @@ namespace RUFR.Api.Controllers
         [HttpGet]
         public IActionResult Get()
         {
-            return Ok(_historyOfSuccessService.Select().ToList());
+            return Ok(_memberService.Select().ToList());
         }
 
         /// <summary>
@@ -35,42 +35,42 @@ namespace RUFR.Api.Controllers
         [HttpGet("GetById/{id}")]
         public IActionResult GetById(int id)
         {
-            return Ok(_historyOfSuccessService.GetById(id));
+            return Ok(_memberService.GetById(id));
         }
 
         /// <summary>
         /// Добавление новой сущности
         /// </summary>
-        /// <param name="history"></param>
+        /// <param name="member"></param>
         /// <returns></returns>
         [HttpPost("New")]
-        public IActionResult New([FromBody] HistoryOfSuccessModel history)
+        public IActionResult New([FromBody] MemberModel member)
         {
-            HistoryOfSuccessModel newHistory = _historyOfSuccessService.Create(history);
+            MemberModel newMember = _memberService.Create(member);
 
-            return Ok(newHistory);
+            return Ok(newMember);
         }
 
         /// <summary>
         /// Обновление сущетсвующего сущности
         /// </summary>
-        /// <param name="history"></param>
+        /// <param name="member"></param>
         /// <returns></returns>
         [HttpPut("Update")]
-        public IActionResult Update([FromBody] HistoryOfSuccessModel history)
+        public IActionResult Update([FromBody] MemberModel member)
         {
-            if (_historyOfSuccessService.GetById(history.Id) != null)
+            if (_memberService.GetById(member.Id) != null)
             {
-                return NotFound(history);
+                return NotFound(member);
             }
 
             try
             {
-                HistoryOfSuccessModel oldHistory = _historyOfSuccessService.GetById(history.Id);
-                oldHistory = history;
-                _historyOfSuccessService.Update(oldHistory);
+                MemberModel oldMember = _memberService.GetById(member.Id);
+                oldMember = member;
+                _memberService.Update(oldMember);
 
-                return Ok(oldHistory);
+                return Ok(oldMember);
 
             }
             catch (Exception)
@@ -89,13 +89,13 @@ namespace RUFR.Api.Controllers
         [HttpDelete("{id}")]
         public IActionResult Delete(int id)
         {
-            var history = _historyOfSuccessService.GetById(id);
-            if (!history.IsDelete)
+            var member = _memberService.GetById(id);
+            if (!member.IsDelete)
             {
-                history.IsDelete = true;
+                member.IsDelete = true;
                 try
                 {
-                    _historyOfSuccessService.Update(history);
+                    _memberService.Update(member);
                     return Ok();
                 }
                 catch (Exception)
@@ -111,3 +111,4 @@ namespace RUFR.Api.Controllers
         }
     }
 }
+
