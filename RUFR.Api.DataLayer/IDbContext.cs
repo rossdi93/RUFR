@@ -21,6 +21,8 @@ namespace RUFR.Api.DataLayer
 
         DbSet<ProjectModel> ProjectModels { get; set; }
 
+        DbSet<DocumentModel> DocumentModels { get; set; }
+
         /// <summary>
         /// Получение таблицы для указанного типа сущности
         /// </summary>

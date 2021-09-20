@@ -67,7 +67,9 @@ namespace RUFR.Api.Web.Controllers
             try
             {
                 TypesOfCooperationModel oldTypeOfCooperation = _typerOfCooperationService.GetById(typeOfCooperation.Id);
-                oldTypeOfCooperation = typeOfCooperation;
+                oldTypeOfCooperation.Description = typeOfCooperation.Description;
+                oldTypeOfCooperation.Name = typeOfCooperation.Name;
+
                 _typerOfCooperationService.Update(oldTypeOfCooperation);
 
                 return Ok(oldTypeOfCooperation);

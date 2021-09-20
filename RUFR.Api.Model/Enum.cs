@@ -40,4 +40,5 @@
         salonParticipantsStories = 3,
         InteruniversityPartnership = 4
     }
+
 }

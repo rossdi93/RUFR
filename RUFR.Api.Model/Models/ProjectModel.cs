@@ -4,7 +4,7 @@ using System.Text;
 
 namespace RUFR.Api.Model.Models
 {
-    public class ProjectModel: BaseModel
+    public class ProjectModel : BaseModel
     {
         /// <summary>
         /// страны
@@ -40,5 +40,10 @@ namespace RUFR.Api.Model.Models
         /// Logo
         /// </summary>
         public byte[] Logo { get; set; }
+
+        /// <summary>
+        /// язык
+        /// </summary>
+        public string Lang { get; set; }
     }
 }

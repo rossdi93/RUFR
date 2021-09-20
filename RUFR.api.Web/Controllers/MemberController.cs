@@ -67,7 +67,12 @@ namespace RUFR.Api.Controllers
             try
             {
                 MemberModel oldMember = _memberService.GetById(member.Id);
-                oldMember = member;
+                oldMember.Countrys = member.Countrys;
+                oldMember.Date = member.Date;
+                oldMember.Name = member.Name;
+                oldMember.Priorities = member.Priorities;
+                oldMember.TypesOfCooperationModels = member.TypesOfCooperationModels;
+
                 _memberService.Update(oldMember);
 
                 return Ok(oldMember);

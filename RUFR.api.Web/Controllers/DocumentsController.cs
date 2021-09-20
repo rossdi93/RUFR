@@ -6,15 +6,15 @@ using RUFR.Api.Service.Interfaces;
 
 namespace RUFR.Api.Controllers
 {
-    [Route("api/News")]
+    [Route("api/Document")]
     [ApiController]
-    public class NewsController : ControllerBase
+    public class DocumentsController : ControllerBase
     {
-        private readonly INewsService _newsService;
+        private readonly IDocumentService _documentService;
 
-        public NewsController(INewsService newsService)
+        public DocumentsController(IDocumentService documentService)
         {
-            _newsService = newsService;
+            _documentService = documentService;
         }
 
         /// <summary>
@@ -24,7 +24,7 @@ namespace RUFR.Api.Controllers
         [HttpGet]
         public IActionResult Get()
         {
-            return Ok(_newsService.Select().ToList());
+            return Ok(_documentService.Select().ToList());
         }
 
         /// <summary>
@@ -35,49 +35,48 @@ namespace RUFR.Api.Controllers
         [HttpGet("GetById/{id}")]
         public IActionResult GetById(int id)
         {
-            return Ok(_newsService.GetById(id));
+            return Ok(_documentService.GetById(id));
         }
 
         /// <summary>
         /// Добавление нового сущности
         /// </summary>
-        /// <param name="news"></param>
+        /// <param name="doc"></param>
         /// <returns></returns>
         [HttpPost("New")]
-        public IActionResult New([FromBody] NewsModel news)
+        public IActionResult New([FromBody] DocumentModel doc)
         {
-            NewsModel newNews = _newsService.Create(news);
+            DocumentModel newDoc = _documentService.Create(doc);
 
-            return Ok(newNews);
+            return Ok(newDoc);
         }
 
         /// <summary>
         /// Обновление сущетсвующего сущности
         /// </summary>
-        /// <param name="ev"></param>
+        /// <param name="doc"></param>
         /// <returns></returns>
         [HttpPut("Update")]
-        public IActionResult Update([FromBody] NewsModel news)
+        public IActionResult Update([FromBody] DocumentModel doc)
         {
-            if (_newsService.GetById(news.Id) == null)
+            if (_documentService.GetById(doc.Id) == null)
             {
-                return NotFound(news);
+                return NotFound(doc);
             }
 
             try
             {
-                NewsModel oldNews = _newsService.GetById(news.Id);
-                oldNews.Author = news.Author;
-                oldNews.Content = news.Content;
-                oldNews.Date = news.Date;
-                oldNews.Logo = news.Logo;
-                oldNews.Name = news.Name;
-                oldNews.Theme = news.Theme;
-                oldNews.Lang = news.Lang;
+                DocumentModel oldDoc = _documentService.GetById(doc.Id);
+                oldDoc.Author = doc.Author;
+                oldDoc.Date = doc.Date;
+                oldDoc.DocByte = doc.DocByte;
+                oldDoc.Lang = doc.Lang;
+                oldDoc.Name = doc.Name;
+                oldDoc.Type = doc.Type;
 
-                _newsService.Update(oldNews);
+                _documentService.Update(oldDoc);
 
-                return Ok(oldNews);
+                return Ok(oldDoc);
 
             }
             catch (Exception)
@@ -96,13 +95,13 @@ namespace RUFR.Api.Controllers
         [HttpDelete("{id}")]
         public IActionResult Delete(int id)
         {
-            var news = _newsService.GetById(id);
-            if (!news.IsDelete)
+            var doc = _documentService.GetById(id);
+            if (!doc.IsDelete)
             {
-                news.IsDelete = true;
+                doc.IsDelete = true;
                 try
                 {
-                    _newsService.Update(news);
+                    _documentService.Update(doc);
                     return Ok();
                 }
                 catch (Exception)
@@ -118,3 +117,4 @@ namespace RUFR.Api.Controllers
         }
     }
 }
+

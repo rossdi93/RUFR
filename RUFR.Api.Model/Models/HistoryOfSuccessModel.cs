@@ -4,7 +4,7 @@ using System.Text;
 
 namespace RUFR.Api.Model.Models
 {
-    public class HistoryOfSuccessModel: BaseModel
+    public class HistoryOfSuccessModel : BaseModel
     {
         /// <summary>
         /// страны
@@ -35,6 +35,11 @@ namespace RUFR.Api.Model.Models
         /// автор истрории
         /// </summary>
         public string Author { get; set; }
+
+        /// <summary>
+        /// язык
+        /// </summary>
+        public string Lang { get; set; }
 
     }
 }

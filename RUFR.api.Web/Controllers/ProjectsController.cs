@@ -67,7 +67,6 @@ namespace RUFR.Api.Controllers
             try
             {
                 ProjectModel oldProject = _projectService.GetById(project.Id);
-                //oldProject = project;
                 oldProject.Countrys = project.Countrys;
                 oldProject.Logo = project.Logo;
                 oldProject.Name = project.Name;
@@ -75,6 +74,8 @@ namespace RUFR.Api.Controllers
                 oldProject.ProjectStage = project.ProjectStage;
                 oldProject.TypeOfProject = project.TypeOfProject;
                 oldProject.Content = project.Content;
+                oldProject.Lang = project.Lang;
+
                 _projectService.Update(oldProject);
 
                 return Ok(oldProject);

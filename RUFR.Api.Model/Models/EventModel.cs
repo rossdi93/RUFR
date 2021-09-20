@@ -28,5 +28,10 @@ namespace RUFR.Api.Model.Models
         /// тип события
         /// </summary>
         public TypeEven TypeEven { get; set; }
+
+        /// <summary>
+        /// язык
+        /// </summary>
+        public string Lang { get; set; }
     }
 }

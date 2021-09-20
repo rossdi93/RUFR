@@ -67,7 +67,12 @@ namespace RUFR.Api.Controllers
             try
             {
                 UserModel oldUser = _usersService.GetById(user.Id);
-                oldUser = user;
+                oldUser.Date = user.Date;
+                oldUser.Login = user.Login;
+                oldUser.Mail = user.Mail;
+                oldUser.Name = user.Name;
+                oldUser.Pass = user.Pass;
+
                 _usersService.Update(oldUser);
 
                 return Ok(oldUser);

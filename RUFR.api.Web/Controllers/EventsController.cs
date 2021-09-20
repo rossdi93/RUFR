@@ -67,7 +67,14 @@ namespace RUFR.Api.Controllers
             try
             {
                 EventModel oldEvent = _eventsService.GetById(ev.Id);
-                oldEvent = ev;
+                oldEvent.Content = ev.Content;
+                oldEvent.Date = ev.Date;
+                oldEvent.Logo = ev.Logo;
+                oldEvent.Name = ev.Name;
+                oldEvent.Theme = ev.Theme;
+                oldEvent.TypeEven = ev.TypeEven;
+                oldEvent.Lang = ev.Lang;
+
                 _eventsService.Update(oldEvent);
 
                 return Ok(oldEvent);

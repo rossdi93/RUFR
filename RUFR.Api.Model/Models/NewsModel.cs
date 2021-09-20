@@ -4,7 +4,7 @@ using System.Text;
 
 namespace RUFR.Api.Model.Models
 {
-    public class NewsModel: BaseModel
+    public class NewsModel : BaseModel
     {
         /// <summary>
         /// дата новости
@@ -30,5 +30,10 @@ namespace RUFR.Api.Model.Models
         /// контент истории
         /// </summary>
         public string Content { get; set; }
+
+        /// <summary>
+        /// язык
+        /// </summary>
+        public string Lang { get; set; }
     }
 }

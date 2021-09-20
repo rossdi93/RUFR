@@ -57,6 +57,11 @@ namespace Api.DataLayer
         public DbSet<ProjectModel> ProjectModels { get; set; }
 
         /// <summary>
+        /// таблица документов
+        /// </summary>
+        public DbSet<DocumentModel> DocumentModels { get; set; }
+
+        /// <summary>
         /// Сохранение изменений
         /// </summary>
         public new void SaveChanges()

@@ -2,7 +2,7 @@
 
 namespace RUFR.Api.Service.Interfaces
 {
-    public interface IHistoryOfSuccessService : IMainService<HistoryOfSuccessModel>
+    public interface IDocumentService : IMainService<DocumentModel>
     {
 
     }

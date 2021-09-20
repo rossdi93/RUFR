@@ -67,7 +67,15 @@ namespace RUFR.Api.Controllers
             try
             {
                 HistoryOfSuccessModel oldHistory = _historyOfSuccessService.GetById(history.Id);
-                oldHistory = history;
+                oldHistory.Author = history.Author;
+                oldHistory.Content = history.Content;
+                oldHistory.Countrys = history.Countrys;
+                oldHistory.Date = history.Date;
+                oldHistory.Logo = history.Logo;
+                oldHistory.Name = history.Name;
+                oldHistory.TypesOfHistory = history.TypesOfHistory;
+                oldHistory.Lang = history.Lang;
+
                 _historyOfSuccessService.Update(oldHistory);
 
                 return Ok(oldHistory);

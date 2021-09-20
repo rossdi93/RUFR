@@ -25,5 +25,6 @@ namespace RUFR.Api.Model.Models
         /// виды сотрудничества
         /// </summary>
         public ICollection<TypesOfCooperationModel> TypesOfCooperationModels { get; set; }
+
     }
 }
