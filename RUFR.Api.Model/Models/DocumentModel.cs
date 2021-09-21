@@ -1,0 +1,34 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Text;
+
+namespace RUFR.Api.Model.Models
+{
+    public class DocumentModel : BaseModel
+    {
+        /// <summary>
+        /// автор документа
+        /// </summary>
+        public string Author { get; set; }
+
+        /// <summary>
+        /// дата добавления документа
+        /// </summary>
+        public string Date { get; set; }
+
+        /// <summary>
+        /// тип документа
+        /// </summary>
+        public string Type { get; set; }
+
+        /// <summary>
+        /// сам документ
+        /// </summary>
+        public byte[] DocByte { get; set; }
+
+        /// <summary>
+        /// язык
+        /// </summary>
+        public string Lang { get; set; }
+    }
+}
