@@ -75,6 +75,7 @@ namespace RUFR.Api.Controllers
                 oldHistory.Name = history.Name;
                 oldHistory.TypesOfHistory = history.TypesOfHistory;
                 oldHistory.Lang = history.Lang;
+                oldHistory.Description = history.Description;
 
                 _historyOfSuccessService.Update(oldHistory);
 

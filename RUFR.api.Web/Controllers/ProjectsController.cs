@@ -75,6 +75,7 @@ namespace RUFR.Api.Controllers
                 oldProject.TypeOfProject = project.TypeOfProject;
                 oldProject.Content = project.Content;
                 oldProject.Lang = project.Lang;
+                oldProject.Description = project.Description;
 
                 _projectService.Update(oldProject);
 

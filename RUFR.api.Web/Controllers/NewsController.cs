@@ -74,6 +74,7 @@ namespace RUFR.Api.Controllers
                 oldNews.Name = news.Name;
                 oldNews.Theme = news.Theme;
                 oldNews.Lang = news.Lang;
+                oldNews.Description = news.Description;
 
                 _newsService.Update(oldNews);
 

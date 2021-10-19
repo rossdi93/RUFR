@@ -73,6 +73,7 @@ namespace RUFR.Api.Controllers
                 oldDoc.Lang = doc.Lang;
                 oldDoc.Name = doc.Name;
                 oldDoc.Type = doc.Type;
+                oldDoc.Description = doc.Description;
 
                 _documentService.Update(oldDoc);
 
