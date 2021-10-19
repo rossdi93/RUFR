@@ -90,6 +90,31 @@ namespace RUFR.Api.Controllers
         }
 
         /// <summary>
+        /// Добавление картинки по id
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="logo"></param>
+        /// <returns></returns>
+        [HttpPost("AddLogo/{id}")]
+        public IActionResult AddLogo(long id, [FromBody] byte[] logo)
+        {
+
+            if (_newsService.GetById(id) == null)
+            {
+                return NotFound();
+            }
+            else
+            {
+                var news = _newsService.GetById(id);
+                news.Logo = logo;
+                _newsService.Update(news);
+
+                return Ok();
+            }
+        
+        }
+
+        /// <summary>
         /// Удаление сущности по id
         /// </summary>
         /// <param name="id"></param>

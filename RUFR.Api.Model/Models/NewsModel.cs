@@ -16,7 +16,6 @@ namespace RUFR.Api.Model.Models
         /// </summary>
         public string Description { get; set; }
 
-
         /// <summary>
         /// тема новости
         /// </summary>
