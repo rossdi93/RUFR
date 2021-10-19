@@ -12,6 +12,12 @@ namespace RUFR.Api.Model.Models
         public string Countrys { get; set; }
 
         /// <summary>
+        /// описание 
+        /// </summary>
+        public string Description { get; set; }
+
+
+        /// <summary>
         /// стадия проекта
         /// </summary>
         public ProjectStage ProjectStage { get; set; }

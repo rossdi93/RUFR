@@ -18,7 +18,7 @@ namespace RUFR.Api.Model.Models
         public string Pass { get; set; }
 
         /// <summary>
-        /// мэил
+        /// почта
         /// </summary>
         public string Mail { get; set; }
 

@@ -23,20 +23,31 @@ namespace RUFR.Api
             Configuration = configuration;
         }
 
-        public readonly string CorsPolicyName = "AllowAll";
+        public readonly string CorsPolicyName = "_allowSpecificOrigins";
 
         public IConfiguration Configuration { get; }
         // This method gets called by the runtime. Use this method to add services to the container.
         // For more information on how to configure your application, visit https://go.microsoft.com/fwlink/?LinkID=398940
         public void ConfigureServices(IServiceCollection services)
         {
+            //services.AddCors(options =>
+            //{
+            //    options.AddDefaultPolicy(builder =>
+            //        builder.SetIsOriginAllowed(_ => true)
+            //        .AllowAnyMethod()
+            //        .AllowAnyHeader()
+            //        .AllowCredentials());
+            //});
             services.AddCors(options =>
             {
-                options.AddDefaultPolicy(builder =>
-                    builder.SetIsOriginAllowed(_ => true)
-                    .AllowAnyMethod()
-                    .AllowAnyHeader()
-                    .AllowCredentials());
+                options.AddPolicy(CorsPolicyName,
+                builder =>
+                {
+                    builder.WithOrigins("http://45.141.184.21", 
+                        "http://rufrtest.xyz")
+                            .AllowAnyHeader()
+                            .AllowAnyMethod();
+                });
             });
 
             services.AddControllersWithViews(mvcOtions =>
@@ -78,11 +89,11 @@ namespace RUFR.Api
                 app.UseHsts();
             }
 
-            //app.UseCors(CorsPolicyName);
-            app.UseCors(options =>
-             options.WithOrigins("http://localhost:3000")
-             .AllowAnyHeader()
-             .AllowAnyMethod());
+            app.UseCors(CorsPolicyName);
+            //app.UseCors(options =>
+            // options.WithOrigins("http://localhost:8080/")
+            // .AllowAnyHeader()
+            // .AllowAnyMethod());
 
             app.UseReact(config => { });
             app.UseHttpsRedirection();

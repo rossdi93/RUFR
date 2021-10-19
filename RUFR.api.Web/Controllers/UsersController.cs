@@ -1,8 +1,8 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using RUFR.Api.Model.Models;
+using RUFR.Api.Service.Interfaces;
 using System;
 using System.Linq;
-using RUFR.Api.Service.Interfaces;
 
 namespace RUFR.Api.Controllers
 {
@@ -26,6 +26,17 @@ namespace RUFR.Api.Controllers
         {
             return Ok(_usersService.Select().ToList());
         }
+
+        /// <summary>
+        /// Получение всех сущностей
+        /// </summary>
+        /// <returns></returns>
+        [HttpGet("Test")]
+        public IActionResult Test()
+        {
+            return Ok("ok!!!!!!!!!!!!");
+        }
+
 
         /// <summary>
         /// Получение по id конктретной сущности

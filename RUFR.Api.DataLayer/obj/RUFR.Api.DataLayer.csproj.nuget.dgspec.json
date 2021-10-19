@@ -1,20 +1,20 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\Dmitry\\RUFR\\RUFR.Api.DataLayer\\RUFR.Api.DataLayer.csproj": {}
+    "D:\\VS Projects\\RUFR\\RUFR.Api.DataLayer\\RUFR.Api.DataLayer.csproj": {}
   },
   "projects": {
-    "C:\\Users\\Dmitry\\RUFR\\RUFR.Api.DataLayer\\RUFR.Api.DataLayer.csproj": {
+    "D:\\VS Projects\\RUFR\\RUFR.Api.DataLayer\\RUFR.Api.DataLayer.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\Dmitry\\RUFR\\RUFR.Api.DataLayer\\RUFR.Api.DataLayer.csproj",
+        "projectUniqueName": "D:\\VS Projects\\RUFR\\RUFR.Api.DataLayer\\RUFR.Api.DataLayer.csproj",
         "projectName": "RUFR.Api.DataLayer",
-        "projectPath": "C:\\Users\\Dmitry\\RUFR\\RUFR.Api.DataLayer\\RUFR.Api.DataLayer.csproj",
-        "packagesPath": "C:\\Users\\Dmitry\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\Dmitry\\RUFR\\RUFR.Api.DataLayer\\obj\\",
+        "projectPath": "D:\\VS Projects\\RUFR\\RUFR.Api.DataLayer\\RUFR.Api.DataLayer.csproj",
+        "packagesPath": "C:\\Users\\samsung 2020\\.nuget\\packages\\",
+        "outputPath": "D:\\VS Projects\\RUFR\\RUFR.Api.DataLayer\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "C:\\Users\\Dmitry\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\samsung 2020\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
@@ -28,8 +28,8 @@
           "netcoreapp3.1": {
             "targetAlias": "netcoreapp3.1",
             "projectReferences": {
-              "C:\\Users\\Dmitry\\RUFR\\RUFR.Api.Model\\RUFR.Api.Model.csproj": {
-                "projectPath": "C:\\Users\\Dmitry\\RUFR\\RUFR.Api.Model\\RUFR.Api.Model.csproj"
+              "D:\\VS Projects\\RUFR\\RUFR.Api.Model\\RUFR.Api.Model.csproj": {
+                "projectPath": "D:\\VS Projects\\RUFR\\RUFR.Api.Model\\RUFR.Api.Model.csproj"
               }
             }
           }
@@ -78,21 +78,21 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.102\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.401\\RuntimeIdentifierGraph.json"
         }
       }
     },
-    "C:\\Users\\Dmitry\\RUFR\\RUFR.Api.Model\\RUFR.Api.Model.csproj": {
+    "D:\\VS Projects\\RUFR\\RUFR.Api.Model\\RUFR.Api.Model.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\Dmitry\\RUFR\\RUFR.Api.Model\\RUFR.Api.Model.csproj",
+        "projectUniqueName": "D:\\VS Projects\\RUFR\\RUFR.Api.Model\\RUFR.Api.Model.csproj",
         "projectName": "RUFR.Api.Model",
-        "projectPath": "C:\\Users\\Dmitry\\RUFR\\RUFR.Api.Model\\RUFR.Api.Model.csproj",
-        "packagesPath": "C:\\Users\\Dmitry\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\Dmitry\\RUFR\\RUFR.Api.Model\\obj\\",
+        "projectPath": "D:\\VS Projects\\RUFR\\RUFR.Api.Model\\RUFR.Api.Model.csproj",
+        "packagesPath": "C:\\Users\\samsung 2020\\.nuget\\packages\\",
+        "outputPath": "D:\\VS Projects\\RUFR\\RUFR.Api.Model\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "C:\\Users\\Dmitry\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\samsung 2020\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
@@ -132,7 +132,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.102\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.401\\RuntimeIdentifierGraph.json"
         }
       }
     }

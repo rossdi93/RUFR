@@ -54,7 +54,7 @@ namespace RUFR.Api.Controllers
         /// <summary>
         /// Обновление сущетсвующего сущности
         /// </summary>
-        /// <param name="ev"></param>
+        /// <param name="project"></param>
         /// <returns></returns>
         [HttpPut("Update")]
         public IActionResult Update([FromBody] ProjectModel project)

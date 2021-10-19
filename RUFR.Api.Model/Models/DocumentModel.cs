@@ -12,6 +12,11 @@ namespace RUFR.Api.Model.Models
         public string Author { get; set; }
 
         /// <summary>
+        /// описание 
+        /// </summary>
+        public string Description { get; set; }
+
+        /// <summary>
         /// дата добавления документа
         /// </summary>
         public string Date { get; set; }

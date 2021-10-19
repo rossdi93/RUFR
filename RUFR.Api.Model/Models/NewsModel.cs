@@ -12,6 +12,12 @@ namespace RUFR.Api.Model.Models
         public string Date { get; set; }
 
         /// <summary>
+        /// описание
+        /// </summary>
+        public string Description { get; set; }
+
+
+        /// <summary>
         /// тема новости
         /// </summary>
         public string Theme { get; set; }

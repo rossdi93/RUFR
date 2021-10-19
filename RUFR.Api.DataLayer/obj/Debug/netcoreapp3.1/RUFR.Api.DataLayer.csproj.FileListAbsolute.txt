@@ -28,3 +28,19 @@ C:\Users\Dmitry\RUFR\RUFR.Api.DataLayer\obj\Debug\netcoreapp3.1\RUFR.Api.DataLay
 C:\Users\Dmitry\RUFR\RUFR.Api.DataLayer\obj\Debug\netcoreapp3.1\RUFR.Api.DataLayer.dll
 C:\Users\Dmitry\RUFR\RUFR.Api.DataLayer\obj\Debug\netcoreapp3.1\RUFR.Api.DataLayer.pdb
 C:\Users\Dmitry\RUFR\RUFR.Api.DataLayer\obj\Debug\netcoreapp3.1\RUFR.Api.DataLayer.genruntimeconfig.cache
+D:\VS Projects\RUFR\RUFR.Api.DataLayer\bin\Debug\netcoreapp3.1\RUFR.Api.DataLayer.deps.json
+D:\VS Projects\RUFR\RUFR.Api.DataLayer\bin\Debug\netcoreapp3.1\RUFR.Api.DataLayer.runtimeconfig.json
+D:\VS Projects\RUFR\RUFR.Api.DataLayer\bin\Debug\netcoreapp3.1\RUFR.Api.DataLayer.runtimeconfig.dev.json
+D:\VS Projects\RUFR\RUFR.Api.DataLayer\bin\Debug\netcoreapp3.1\RUFR.Api.DataLayer.dll
+D:\VS Projects\RUFR\RUFR.Api.DataLayer\bin\Debug\netcoreapp3.1\RUFR.Api.DataLayer.pdb
+D:\VS Projects\RUFR\RUFR.Api.DataLayer\bin\Debug\netcoreapp3.1\RUFR.Api.Model.dll
+D:\VS Projects\RUFR\RUFR.Api.DataLayer\bin\Debug\netcoreapp3.1\RUFR.Api.Model.pdb
+D:\VS Projects\RUFR\RUFR.Api.DataLayer\obj\Debug\netcoreapp3.1\RUFR.Api.DataLayer.csproj.AssemblyReference.cache
+D:\VS Projects\RUFR\RUFR.Api.DataLayer\obj\Debug\netcoreapp3.1\RUFR.Api.DataLayer.GeneratedMSBuildEditorConfig.editorconfig
+D:\VS Projects\RUFR\RUFR.Api.DataLayer\obj\Debug\netcoreapp3.1\RUFR.Api.DataLayer.AssemblyInfoInputs.cache
+D:\VS Projects\RUFR\RUFR.Api.DataLayer\obj\Debug\netcoreapp3.1\RUFR.Api.DataLayer.AssemblyInfo.cs
+D:\VS Projects\RUFR\RUFR.Api.DataLayer\obj\Debug\netcoreapp3.1\RUFR.Api.DataLayer.csproj.CoreCompileInputs.cache
+D:\VS Projects\RUFR\RUFR.Api.DataLayer\obj\Debug\netcoreapp3.1\RUFR.Api.DataLayer.csproj.CopyComplete
+D:\VS Projects\RUFR\RUFR.Api.DataLayer\obj\Debug\netcoreapp3.1\RUFR.Api.DataLayer.dll
+D:\VS Projects\RUFR\RUFR.Api.DataLayer\obj\Debug\netcoreapp3.1\RUFR.Api.DataLayer.pdb
+D:\VS Projects\RUFR\RUFR.Api.DataLayer\obj\Debug\netcoreapp3.1\RUFR.Api.DataLayer.genruntimeconfig.cache

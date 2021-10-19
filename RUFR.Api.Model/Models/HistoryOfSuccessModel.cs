@@ -16,6 +16,12 @@ namespace RUFR.Api.Model.Models
         /// </summary>
         public TypesOfHistory TypesOfHistory { get; set; }
 
+
+        /// <summary>
+        /// описание вида сотрудничества 
+        /// </summary>
+        public string Description { get; set; }
+
         /// <summary>
         /// дата события
         /// </summary>
