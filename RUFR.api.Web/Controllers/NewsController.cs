@@ -4,7 +4,7 @@ using System;
 using System.Linq;
 using RUFR.Api.Service.Interfaces;
 
-namespace RUFR.Api.Controllers
+namespace RUFR.Api.Web.Controllers
 {
     [Route("api/News")]
     [ApiController]

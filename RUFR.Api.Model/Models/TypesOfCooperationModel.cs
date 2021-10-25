@@ -11,14 +11,11 @@ namespace RUFR.Api.Model.Models
         /// </summary>
         public string Description { get; set; }
 
-        /// <summary>
-        /// id участника
-        /// </summary>
-        public long MemberModelId { get; set; }
+        public ICollection<MemberModel> MemberModels { get; set; }
 
-        /// <summary>
-        /// навигационное свойство  
-        /// </summary>
-        public MemberModel MemberModel { get; set; }
+        public TypesOfCooperationModel()
+        {
+            MemberModels = new List<MemberModel>();
+        }
     }
 }

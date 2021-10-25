@@ -4,7 +4,7 @@ using RUFR.Api.Service.Interfaces;
 using System;
 using System.Linq;
 
-namespace RUFR.Api.Controllers
+namespace RUFR.Api.Web.Controllers
 {
     [Route("api/Users")]
     [ApiController]

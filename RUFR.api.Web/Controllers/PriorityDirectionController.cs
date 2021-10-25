@@ -4,17 +4,18 @@ using System;
 using System.Linq;
 using RUFR.Api.Service.Interfaces;
 
+
 namespace RUFR.Api.Web.Controllers
 {
-    [Route("api/Document")]
+    [Route("api/PriorityDirection")]
     [ApiController]
-    public class DocumentsController : ControllerBase
+    public class PriorityDirectionController : Controller
     {
-        private readonly IDocumentService _documentService;
+        private readonly IPriorityDirectionService _priorityDirectionService;
 
-        public DocumentsController(IDocumentService documentService)
+        public PriorityDirectionController(IPriorityDirectionService priorityDirectionService)
         {
-            _documentService = documentService;
+            _priorityDirectionService = priorityDirectionService;
         }
 
         /// <summary>
@@ -24,7 +25,7 @@ namespace RUFR.Api.Web.Controllers
         [HttpGet]
         public IActionResult Get()
         {
-            return Ok(_documentService.Select().ToList());
+            return Ok(_priorityDirectionService.Select().ToList());
         }
 
         /// <summary>
@@ -35,49 +36,48 @@ namespace RUFR.Api.Web.Controllers
         [HttpGet("GetById/{id}")]
         public IActionResult GetById(int id)
         {
-            return Ok(_documentService.GetById(id));
+            return Ok(_priorityDirectionService.GetById(id));
         }
 
         /// <summary>
         /// Добавление нового сущности
         /// </summary>
-        /// <param name="doc"></param>
+        /// <param name="pd"></param>
         /// <returns></returns>
         [HttpPost("New")]
-        public IActionResult New([FromBody] DocumentModel doc)
+        public IActionResult New([FromBody] PriorityDirectionModel pd)
         {
-            DocumentModel newDoc = _documentService.Create(doc);
+            PriorityDirectionModel newpd = _priorityDirectionService.Create(pd);
 
-            return Ok(newDoc);
+            return Ok(newpd);
         }
 
         /// <summary>
         /// Обновление сущетсвующего сущности
         /// </summary>
-        /// <param name="doc"></param>
+        /// <param name="pd"></param>
         /// <returns></returns>
         [HttpPut("Update")]
-        public IActionResult Update([FromBody] DocumentModel doc)
+        public IActionResult Update([FromBody] PriorityDirectionModel pd)
         {
-            if (_documentService.GetById(doc.Id) == null)
+            if (_priorityDirectionService.GetById(pd.Id) == null)
             {
-                return NotFound(doc);
+                return NotFound(pd);
             }
 
             try
             {
-                DocumentModel oldDoc = _documentService.GetById(doc.Id);
-                oldDoc.Author = doc.Author;
-                oldDoc.Date = doc.Date;
-                oldDoc.DocByte = doc.DocByte;
-                oldDoc.Lang = doc.Lang;
-                oldDoc.Name = doc.Name;
-                oldDoc.Type = doc.Type;
-                oldDoc.Description = doc.Description;
+                PriorityDirectionModel oldPd = _priorityDirectionService.GetById(pd.Id);
+                oldPd.Description = pd.Description;
+                oldPd.IsDelete = pd.IsDelete;
+                oldPd.MemberModels = pd.MemberModels;
+                oldPd.ProjectModels = pd.ProjectModels;
+                oldPd.Name = pd.Name;
 
-                _documentService.Update(oldDoc);
 
-                return Ok(oldDoc);
+                _priorityDirectionService.Update(oldPd);
+
+                return Ok(oldPd);
 
             }
             catch (Exception)
@@ -96,13 +96,13 @@ namespace RUFR.Api.Web.Controllers
         [HttpDelete("{id}")]
         public IActionResult Delete(int id)
         {
-            var doc = _documentService.GetById(id);
-            if (!doc.IsDelete)
+            var pd = _priorityDirectionService.GetById(id);
+            if (!pd.IsDelete)
             {
-                doc.IsDelete = true;
+                pd.IsDelete = true;
                 try
                 {
-                    _documentService.Update(doc);
+                    _priorityDirectionService.Update(pd);
                     return Ok();
                 }
                 catch (Exception)
@@ -118,4 +118,3 @@ namespace RUFR.Api.Web.Controllers
         }
     }
 }
-

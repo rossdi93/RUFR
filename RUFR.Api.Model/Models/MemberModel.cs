@@ -19,12 +19,18 @@ namespace RUFR.Api.Model.Models
         /// <summary>
         /// приоритетные направления
         /// </summary>
-        public ICollection<PriorityDirectionModel> Priorities { get; set; }
+        public ICollection<PriorityDirectionModel> PriorityDirectionModels { get; set; }
 
         /// <summary>
         /// виды сотрудничества
         /// </summary>
         public ICollection<TypesOfCooperationModel> TypesOfCooperationModels { get; set; }
+
+        public MemberModel()
+        {
+            PriorityDirectionModels = new List<PriorityDirectionModel>();
+            TypesOfCooperationModels = new List<TypesOfCooperationModel>();
+        }
 
     }
 }

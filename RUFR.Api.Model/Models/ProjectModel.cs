@@ -51,5 +51,10 @@ namespace RUFR.Api.Model.Models
         /// язык
         /// </summary>
         public string Lang { get; set; }
+
+        public ProjectModel()
+        {
+            Priorities = new List<PriorityDirectionModel>();
+        }
     }
 }

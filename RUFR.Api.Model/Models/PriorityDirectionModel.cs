@@ -12,23 +12,19 @@ namespace RUFR.Api.Model.Models
         public string Description { get; set; }
 
         /// <summary>
-        /// id проектов по направлению
+        /// Участники
         /// </summary>
-        public long ProjectModelId { get; set; }
+        public ICollection<MemberModel> MemberModels { get; set; }
 
         /// <summary>
-        /// навигационное свойство  
+        /// Проекты
         /// </summary>
-        public ProjectModel ProjectModel { get; set; }
+        public ICollection<ProjectModel> ProjectModels { get; set; }
 
-        /// <summary>
-        /// id участника
-        /// </summary>
-        public long MemberModelId { get; set; }
-
-        /// <summary>
-        /// навигационное свойство  
-        /// </summary>
-        public MemberModel MemberModel { get; set; }
+        public PriorityDirectionModel()
+        {
+            ProjectModels = new List<ProjectModel>();
+            MemberModels = new List<MemberModel>();
+        }
     }
 }

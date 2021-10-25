@@ -4,7 +4,7 @@ using System;
 using System.Linq;
 using RUFR.Api.Service.Interfaces;
 
-namespace RUFR.Api.Controllers
+namespace RUFR.Api.Web.Controllers
 {
     [Route("api/Member")]
     [ApiController]
@@ -48,6 +48,24 @@ namespace RUFR.Api.Controllers
         {
             MemberModel newMember = _memberService.Create(member);
 
+            if (newMember.PriorityDirectionModels != member.PriorityDirectionModels)
+            {
+                foreach (var pd in member.PriorityDirectionModels)
+                {
+                    newMember.PriorityDirectionModels.Add(pd);
+                }
+                _memberService.Update(newMember);
+            }
+
+            if (newMember.TypesOfCooperationModels != member.TypesOfCooperationModels)
+            {
+                foreach (var tc in member.TypesOfCooperationModels)
+                {
+                    newMember.TypesOfCooperationModels.Add(tc);
+                }
+                _memberService.Update(newMember);
+            }
+
             return Ok(newMember);
         }
 
@@ -70,8 +88,24 @@ namespace RUFR.Api.Controllers
                 oldMember.Countrys = member.Countrys;
                 oldMember.Date = member.Date;
                 oldMember.Name = member.Name;
-                oldMember.Priorities = member.Priorities;
-                oldMember.TypesOfCooperationModels = member.TypesOfCooperationModels;
+
+                if (oldMember.PriorityDirectionModels != member.PriorityDirectionModels)
+                {
+                    oldMember.PriorityDirectionModels.Clear();
+                    foreach (var pd in member.PriorityDirectionModels)
+                    {
+                        oldMember.PriorityDirectionModels.Add(pd);
+                    }
+                }
+
+                if (oldMember.TypesOfCooperationModels != member.TypesOfCooperationModels)
+                {
+                    oldMember.PriorityDirectionModels.Clear();
+                    foreach (var tc in member.TypesOfCooperationModels)
+                    {
+                        oldMember.TypesOfCooperationModels.Add(tc);
+                    }
+                }
 
                 _memberService.Update(oldMember);
 

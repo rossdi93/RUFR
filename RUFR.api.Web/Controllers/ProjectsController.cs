@@ -4,7 +4,7 @@ using System;
 using System.Linq;
 using RUFR.Api.Service.Interfaces;
 
-namespace RUFR.Api.Controllers
+namespace RUFR.Api.Web.Controllers
 {
     [Route("api/Projects")]
     [ApiController]
@@ -48,6 +48,15 @@ namespace RUFR.Api.Controllers
         {
             ProjectModel newProject = _projectService.Create(project);
 
+            if (newProject.Priorities != project.Priorities)
+            {
+                foreach (var pd in project.Priorities)
+                {
+                    newProject.Priorities.Add(pd);
+                }
+                _projectService.Update(newProject);
+            }
+
             return Ok(newProject);
         }
 
@@ -70,12 +79,21 @@ namespace RUFR.Api.Controllers
                 oldProject.Countrys = project.Countrys;
                 oldProject.Logo = project.Logo;
                 oldProject.Name = project.Name;
-                oldProject.Priorities = project.Priorities;
                 oldProject.ProjectStage = project.ProjectStage;
                 oldProject.TypeOfProject = project.TypeOfProject;
                 oldProject.Content = project.Content;
                 oldProject.Lang = project.Lang;
                 oldProject.Description = project.Description;
+
+                if (oldProject.Priorities != project.Priorities)
+                {
+                    oldProject.Priorities.Clear();
+                    foreach (var pd in project.Priorities)
+                    {
+                        oldProject.Priorities.Add(pd);
+                    }
+                    _projectService.Update(oldProject);
+                }
 
                 _projectService.Update(oldProject);
 
