@@ -28,9 +28,9 @@ namespace RUFR.Api.Model.Models
         public string Date { get; set; }
 
         /// <summary>
-        /// флаг админ или нет
+        /// роль пользователя
         /// </summary>
-        public bool Admin { get; set; }
+        public UserRole Role { get; set; }
 
     }
 }

@@ -41,4 +41,13 @@
         InteruniversityPartnership = 4
     }
 
+    /// <summary>
+    /// роль пользователя
+    /// </summary>
+    public enum UserRole : int
+    {
+        simple = 1,
+        admin = 2,
+    }
+
 }

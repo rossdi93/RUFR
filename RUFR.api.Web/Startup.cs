@@ -1,6 +1,7 @@
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Cors;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using React.AspNet;
@@ -17,43 +18,23 @@ namespace RUFR.Api
 {
     public class Startup
     {
-
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
         }
-
-        public readonly string CorsPolicyName = "_allowSpecificOrigins";
 
         public IConfiguration Configuration { get; }
         // This method gets called by the runtime. Use this method to add services to the container.
         // For more information on how to configure your application, visit https://go.microsoft.com/fwlink/?LinkID=398940
         public void ConfigureServices(IServiceCollection services)
         {
-            //services.AddCors(options =>
-            //{
-            //    options.AddDefaultPolicy(builder =>
-            //        builder.SetIsOriginAllowed(_ => true)
-            //        .AllowAnyMethod()
-            //        .AllowAnyHeader()
-            //        .AllowCredentials());
-            //});
-            services.AddCors(options =>
+
+            services.AddControllersWithViews(mvcOptions =>
             {
-                options.AddPolicy(CorsPolicyName,
-                builder =>
-                {
-                    builder.WithOrigins("http://45.141.184.21", 
-                        "http://rufrtest.xyz")
-                            .AllowAnyHeader()
-                            .AllowAnyMethod();
-                });
+                mvcOptions.EnableEndpointRouting = false;
             });
 
-            services.AddControllersWithViews(mvcOtions =>
-            {
-                mvcOtions.EnableEndpointRouting = false;
-            });
+            services.AddCors();
 
             services.AddMvc().SetCompatibilityVersion(Microsoft.AspNetCore.Mvc.CompatibilityVersion.Version_3_0)
                 .AddNewtonsoftJson(options => options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore);
@@ -89,14 +70,16 @@ namespace RUFR.Api
                 app.UseHsts();
             }
 
-            app.UseCors(CorsPolicyName);
-            //app.UseCors(options =>
-            // options.WithOrigins("http://localhost:8080/")
-            // .AllowAnyHeader()
-            // .AllowAnyMethod());
+            app.UseRouting();
 
-            app.UseReact(config => { });
+            // Use the CORS policy
+            app.UseCors(builder => builder
+            .AllowAnyOrigin()
+            .AllowAnyMethod()
+            .AllowAnyHeader());
+
             app.UseHttpsRedirection();
+            app.UseReact(config => { });
             app.UseMvc();
         }
     }

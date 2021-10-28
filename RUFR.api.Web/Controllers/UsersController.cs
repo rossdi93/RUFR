@@ -28,17 +28,6 @@ namespace RUFR.Api.Web.Controllers
         }
 
         /// <summary>
-        /// Получение всех сущностей
-        /// </summary>
-        /// <returns></returns>
-        [HttpGet("Test")]
-        public IActionResult Test()
-        {
-            return Ok("ok!!!!!!!!!!!!");
-        }
-
-
-        /// <summary>
         /// Получение по id конктретной сущности
         /// </summary>
         /// <param name="id"></param>
@@ -83,6 +72,7 @@ namespace RUFR.Api.Web.Controllers
                 oldUser.Mail = user.Mail;
                 oldUser.Name = user.Name;
                 oldUser.Pass = user.Pass;
+                oldUser.Role = user.Role;
 
                 _usersService.Update(oldUser);
 

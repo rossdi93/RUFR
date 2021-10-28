@@ -75,6 +75,7 @@ namespace RUFR.Api.Web.Controllers
                 oldNews.Theme = news.Theme;
                 oldNews.Lang = news.Lang;
                 oldNews.Description = news.Description;
+                oldNews.IsMain = news.IsMain;
 
                 _newsService.Update(oldNews);
 
@@ -87,31 +88,6 @@ namespace RUFR.Api.Web.Controllers
                 throw;
             }
 
-        }
-
-        /// <summary>
-        /// Добавление картинки по id
-        /// </summary>
-        /// <param name="id"></param>
-        /// <param name="logo"></param>
-        /// <returns></returns>
-        [HttpPost("AddLogo/{id}")]
-        public IActionResult AddLogo(long id, [FromBody] byte[] logo)
-        {
-
-            if (_newsService.GetById(id) == null)
-            {
-                return NotFound();
-            }
-            else
-            {
-                var news = _newsService.GetById(id);
-                news.Logo = logo;
-                _newsService.Update(news);
-
-                return Ok();
-            }
-        
         }
 
         /// <summary>

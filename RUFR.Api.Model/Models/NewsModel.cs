@@ -40,5 +40,10 @@ namespace RUFR.Api.Model.Models
         /// язык
         /// </summary>
         public string Lang { get; set; }
+
+        /// <summary>
+        /// является главной
+        /// </summary>
+        public bool IsMain { get; set; }
     }
 }

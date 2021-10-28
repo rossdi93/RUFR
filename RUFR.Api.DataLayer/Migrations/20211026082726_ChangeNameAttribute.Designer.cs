@@ -3,15 +3,17 @@ using System;
 using Api.DataLayer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 namespace RUFR.Api.DataLayer.Migrations
 {
     [DbContext(typeof(ApiDbContext))]
-    partial class ApiDbContextModelSnapshot : ModelSnapshot
+    [Migration("20211026082726_ChangeNameAttribute")]
+    partial class ChangeNameAttribute
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -224,9 +226,6 @@ namespace RUFR.Api.DataLayer.Migrations
                     b.Property<bool>("IsDelete")
                         .HasColumnType("boolean");
 
-                    b.Property<bool>("IsMain")
-                        .HasColumnType("boolean");
-
                     b.Property<string>("Lang")
                         .HasColumnType("text");
 
@@ -338,6 +337,9 @@ namespace RUFR.Api.DataLayer.Migrations
                     b.Property<string>("Date")
                         .HasColumnType("text");
 
+                    b.Property<bool>("IsAdmin")
+                        .HasColumnType("boolean");
+
                     b.Property<bool>("IsDelete")
                         .HasColumnType("boolean");
 
@@ -352,9 +354,6 @@ namespace RUFR.Api.DataLayer.Migrations
 
                     b.Property<string>("Pass")
                         .HasColumnType("text");
-
-                    b.Property<int>("Role")
-                        .HasColumnType("integer");
 
                     b.HasKey("Id");
 

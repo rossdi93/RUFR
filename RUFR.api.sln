@@ -9,7 +9,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RUFR.Api.Model", "RUFR.Api.
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RUFR.Api.DataLayer", "RUFR.Api.DataLayer\RUFR.Api.DataLayer.csproj", "{FB0E4265-5EC4-49B3-BF72-AAC79D4207E9}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RUFR.Api.Service", "RUFR.Api.Service\RUFR.Api.Service.csproj", "{B16D3DE1-702F-47E6-A258-780B79CD06BC}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RUFR.Api.Service", "RUFR.Api.Service\RUFR.Api.Service.csproj", "{B16D3DE1-702F-47E6-A258-780B79CD06BC}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
