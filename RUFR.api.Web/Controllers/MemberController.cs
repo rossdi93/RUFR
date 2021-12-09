@@ -3,6 +3,7 @@ using RUFR.Api.Model.Models;
 using System;
 using System.Linq;
 using RUFR.Api.Service.Interfaces;
+using Microsoft.EntityFrameworkCore;
 
 namespace RUFR.Api.Web.Controllers
 {
@@ -24,7 +25,10 @@ namespace RUFR.Api.Web.Controllers
         [HttpGet]
         public IActionResult Get()
         {
-            return Ok(_memberService.Select().ToList());
+            var members = _memberService.Select()
+                .Include(p => p.PriorityDirectionModels)
+                .Include(t => t.TypesOfCooperationModels).ToList();
+            return Ok(members);
         }
 
         /// <summary>
@@ -35,7 +39,10 @@ namespace RUFR.Api.Web.Controllers
         [HttpGet("GetById/{id}")]
         public IActionResult GetById(int id)
         {
-            return Ok(_memberService.GetById(id));
+            var member = _memberService.Select().Where(m => m.Id == id)
+                .Include(p => p.PriorityDirectionModels)
+                .Include(t => t.TypesOfCooperationModels);
+            return Ok(member);
         }
 
         /// <summary>
@@ -47,24 +54,6 @@ namespace RUFR.Api.Web.Controllers
         public IActionResult New([FromBody] MemberModel member)
         {
             MemberModel newMember = _memberService.Create(member);
-
-            if (newMember.PriorityDirectionModels != member.PriorityDirectionModels)
-            {
-                foreach (var pd in member.PriorityDirectionModels)
-                {
-                    newMember.PriorityDirectionModels.Add(pd);
-                }
-                _memberService.Update(newMember);
-            }
-
-            if (newMember.TypesOfCooperationModels != member.TypesOfCooperationModels)
-            {
-                foreach (var tc in member.TypesOfCooperationModels)
-                {
-                    newMember.TypesOfCooperationModels.Add(tc);
-                }
-                _memberService.Update(newMember);
-            }
 
             return Ok(newMember);
         }
@@ -114,7 +103,6 @@ namespace RUFR.Api.Web.Controllers
             }
             catch (Exception)
             {
-
                 throw;
             }
 

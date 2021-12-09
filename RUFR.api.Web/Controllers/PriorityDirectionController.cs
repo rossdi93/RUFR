@@ -74,7 +74,6 @@ namespace RUFR.Api.Web.Controllers
                 oldPd.ProjectModels = pd.ProjectModels;
                 oldPd.Name = pd.Name;
 
-
                 _priorityDirectionService.Update(oldPd);
 
                 return Ok(oldPd);

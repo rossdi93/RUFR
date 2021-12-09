@@ -40,7 +40,7 @@ namespace RUFR.Api.Model.Models
         /// <summary>
         /// приоритетные направления
         /// </summary>
-        public ICollection<PriorityDirectionModel> Priorities { get; set;}
+        public virtual ICollection<PriorityDirectionModel> Priorities { get; set;}
 
         /// <summary>
         /// Logo

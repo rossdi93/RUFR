@@ -17,14 +17,19 @@ namespace RUFR.Api.Model.Models
         public string Date { get; set; }
 
         /// <summary>
+        /// контент
+        /// </summary>
+        public string Content { get; set; }
+
+        /// <summary>
         /// приоритетные направления
         /// </summary>
-        public ICollection<PriorityDirectionModel> PriorityDirectionModels { get; set; }
+        public virtual ICollection<PriorityDirectionModel> PriorityDirectionModels { get; set; }
 
         /// <summary>
         /// виды сотрудничества
         /// </summary>
-        public ICollection<TypesOfCooperationModel> TypesOfCooperationModels { get; set; }
+        public virtual ICollection<TypesOfCooperationModel> TypesOfCooperationModels { get; set; }
 
         public MemberModel()
         {

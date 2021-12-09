@@ -53,6 +53,7 @@ namespace RUFR.Api
             services.AddScoped<IUsersService, UsersService>();
             services.AddScoped<IEventsService, EventService>();
             services.AddScoped<ITyperOfCooperationService, TyperOfCooperationService>();
+            services.AddScoped<IPriorityDirectionService, PriorityDirectionService>();
             services.AddScoped<IMemberService, MemberService>();
             services.AddScoped<IDocumentService, DocumentService>();
         }

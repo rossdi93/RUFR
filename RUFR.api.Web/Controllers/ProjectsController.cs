@@ -3,6 +3,7 @@ using RUFR.Api.Model.Models;
 using System;
 using System.Linq;
 using RUFR.Api.Service.Interfaces;
+using Microsoft.EntityFrameworkCore;
 
 namespace RUFR.Api.Web.Controllers
 {
@@ -24,7 +25,9 @@ namespace RUFR.Api.Web.Controllers
         [HttpGet]
         public IActionResult Get()
         {
-            return Ok(_projectService.Select().ToList());
+            var projects = _projectService.Select()
+              .Include(p => p.Priorities).ToArray();
+            return Ok(projects);
         }
 
         /// <summary>
@@ -35,7 +38,9 @@ namespace RUFR.Api.Web.Controllers
         [HttpGet("GetById/{id}")]
         public IActionResult GetById(int id)
         {
-            return Ok(_projectService.GetById(id));
+            var project = _projectService.Select().Where(p => p.Id == id)
+             .Include(p => p.Priorities);
+            return Ok(project);
         }
 
         /// <summary>
@@ -47,15 +52,6 @@ namespace RUFR.Api.Web.Controllers
         public IActionResult New([FromBody] ProjectModel project)
         {
             ProjectModel newProject = _projectService.Create(project);
-
-            if (newProject.Priorities != project.Priorities)
-            {
-                foreach (var pd in project.Priorities)
-                {
-                    newProject.Priorities.Add(pd);
-                }
-                _projectService.Update(newProject);
-            }
 
             return Ok(newProject);
         }
@@ -92,7 +88,6 @@ namespace RUFR.Api.Web.Controllers
                     {
                         oldProject.Priorities.Add(pd);
                     }
-                    _projectService.Update(oldProject);
                 }
 
                 _projectService.Update(oldProject);
