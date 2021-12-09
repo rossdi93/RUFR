@@ -26,8 +26,9 @@ namespace RUFR.Api.Web.Controllers
         public IActionResult Get()
         {
             var members = _memberService.Select()
+                .Include(p => p.ProjectModels)
                 .Include(p => p.PriorityDirectionModels)
-                .Include(t => t.TypesOfCooperationModels).ToList();
+                .Include(p => p.TypesOfCooperationModels).ToArray();
             return Ok(members);
         }
 
@@ -40,8 +41,9 @@ namespace RUFR.Api.Web.Controllers
         public IActionResult GetById(int id)
         {
             var member = _memberService.Select().Where(m => m.Id == id)
+                .Include(p => p.ProjectModels)
                 .Include(p => p.PriorityDirectionModels)
-                .Include(t => t.TypesOfCooperationModels);
+                .Include(p => p.TypesOfCooperationModels);
             return Ok(member);
         }
 

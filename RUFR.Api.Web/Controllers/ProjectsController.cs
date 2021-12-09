@@ -26,7 +26,8 @@ namespace RUFR.Api.Web.Controllers
         public IActionResult Get()
         {
             var projects = _projectService.Select()
-              .Include(p => p.Priorities).ToArray();
+                .Include(p => p.MemberModels)
+                .Include(p => p.Priorities).ToArray();
             return Ok(projects);
         }
 
@@ -39,7 +40,8 @@ namespace RUFR.Api.Web.Controllers
         public IActionResult GetById(int id)
         {
             var project = _projectService.Select().Where(p => p.Id == id)
-             .Include(p => p.Priorities);
+                .Include(p => p.MemberModels)
+                .Include(p => p.Priorities);
             return Ok(project);
         }
 

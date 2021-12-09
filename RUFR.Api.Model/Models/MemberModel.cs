@@ -31,11 +31,18 @@ namespace RUFR.Api.Model.Models
         /// </summary>
         public virtual ICollection<TypesOfCooperationModel> TypesOfCooperationModels { get; set; }
 
+        /// <summary>
+        /// Проекты
+        /// </summary>
+        public virtual ICollection<ProjectModel> ProjectModels { get; set; }
+
         public MemberModel()
         {
+            ProjectModels = new List<ProjectModel>();
             PriorityDirectionModels = new List<PriorityDirectionModel>();
             TypesOfCooperationModels = new List<TypesOfCooperationModel>();
         }
+
 
     }
 }

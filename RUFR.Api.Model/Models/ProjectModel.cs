@@ -43,6 +43,11 @@ namespace RUFR.Api.Model.Models
         public virtual ICollection<PriorityDirectionModel> Priorities { get; set;}
 
         /// <summary>
+        /// Участники
+        /// </summary>
+        public virtual ICollection<MemberModel> MemberModels { get; set; }
+
+        /// <summary>
         /// Logo
         /// </summary>
         public byte[] Logo { get; set; }
@@ -54,6 +59,7 @@ namespace RUFR.Api.Model.Models
 
         public ProjectModel()
         {
+            MemberModels = new List<MemberModel>();
             Priorities = new List<PriorityDirectionModel>();
         }
     }
