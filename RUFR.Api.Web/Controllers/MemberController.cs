@@ -80,6 +80,7 @@ namespace RUFR.Api.Web.Controllers
                 oldMember.Date = member.Date;
                 oldMember.Name = member.Name;
                 oldMember.Logo = member.Logo;
+                oldMember.Lang = member.Lang;
 
                 if (oldMember.PriorityDirectionModels != member.PriorityDirectionModels)
                 {

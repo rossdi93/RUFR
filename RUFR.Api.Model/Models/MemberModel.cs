@@ -28,6 +28,11 @@ namespace RUFR.Api.Model.Models
         public byte[] Logo { get; set; }
 
         /// <summary>
+        /// язык
+        /// </summary>
+        public string Lang { get; set; }
+
+        /// <summary>
         /// приоритетные направления
         /// </summary>
         public virtual ICollection<PriorityDirectionModel> PriorityDirectionModels { get; set; }
