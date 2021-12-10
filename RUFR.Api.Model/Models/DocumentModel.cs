@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using System.Text.Json.Serialization;
 
 namespace RUFR.Api.Model.Models
 {
@@ -26,9 +24,11 @@ namespace RUFR.Api.Model.Models
         /// </summary>
         public string Type { get; set; }
 
+
         /// <summary>
         /// сам документ
         /// </summary>
+        [JsonIgnore]
         public byte[] DocByte { get; set; }
 
         /// <summary>

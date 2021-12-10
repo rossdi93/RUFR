@@ -79,6 +79,7 @@ namespace RUFR.Api.Web.Controllers
                 oldMember.Countrys = member.Countrys;
                 oldMember.Date = member.Date;
                 oldMember.Name = member.Name;
+                oldMember.Logo = member.Logo;
 
                 if (oldMember.PriorityDirectionModels != member.PriorityDirectionModels)
                 {

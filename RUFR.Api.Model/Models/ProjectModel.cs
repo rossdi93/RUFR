@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Text.Json.Serialization;
 
 namespace RUFR.Api.Model.Models
 {
@@ -40,11 +41,13 @@ namespace RUFR.Api.Model.Models
         /// <summary>
         /// приоритетные направления
         /// </summary>
-        public virtual ICollection<PriorityDirectionModel> Priorities { get; set;}
+        [JsonIgnore]
+        public virtual ICollection<PriorityDirectionModel> Priorities { get; set; }
 
         /// <summary>
         /// Участники
         /// </summary>
+        [JsonIgnore]
         public virtual ICollection<MemberModel> MemberModels { get; set; }
 
         /// <summary>

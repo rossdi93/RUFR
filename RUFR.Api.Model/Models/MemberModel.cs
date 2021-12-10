@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Text.Json.Serialization;
 
 namespace RUFR.Api.Model.Models
 {
@@ -20,6 +21,11 @@ namespace RUFR.Api.Model.Models
         /// контент
         /// </summary>
         public string Content { get; set; }
+
+        /// <summary>
+        /// Logo
+        /// </summary>
+        public byte[] Logo { get; set; }
 
         /// <summary>
         /// приоритетные направления
