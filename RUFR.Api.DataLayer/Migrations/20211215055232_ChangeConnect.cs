@@ -4,7 +4,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 namespace RUFR.Api.DataLayer.Migrations
 {
-    public partial class ChangeConncetionEntity : Migration
+    public partial class ChangeConnect : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -82,8 +82,7 @@ namespace RUFR.Api.DataLayer.Migrations
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
                     MemberModelId = table.Column<long>(type: "bigint", nullable: false),
                     ProjectModelId = table.Column<long>(type: "bigint", nullable: false),
-                    EnrollmentDate = table.Column<DateTime>(type: "timestamp without time zone", nullable: false),
-                    PriorityDirectionModelId = table.Column<long>(type: "bigint", nullable: true)
+                    EnrollmentDate = table.Column<DateTime>(type: "timestamp without time zone", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -94,12 +93,6 @@ namespace RUFR.Api.DataLayer.Migrations
                         principalTable: "MemberModels",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_ProjectMemberModels_PriorityDirectionModels_PriorityDirecti~",
-                        column: x => x.PriorityDirectionModelId,
-                        principalTable: "PriorityDirectionModels",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
                         name: "FK_ProjectMemberModels_ProjectModels_ProjectModelId",
                         column: x => x.ProjectModelId,
@@ -159,11 +152,6 @@ namespace RUFR.Api.DataLayer.Migrations
                 name: "IX_ProjectMemberModels_MemberModelId",
                 table: "ProjectMemberModels",
                 column: "MemberModelId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_ProjectMemberModels_PriorityDirectionModelId",
-                table: "ProjectMemberModels",
-                column: "PriorityDirectionModelId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_ProjectMemberModels_ProjectModelId",

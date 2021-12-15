@@ -26,11 +26,10 @@ namespace RUFR.Api.Web.Controllers
         public IActionResult Get()
         {
             var projects = _projectService.Select()
-                .Include(p => p.ProjectMemberModels)
-                    .ThenInclude(p => p.MemberModel)
                 .Include(p => p.ProjectPriorityModels)
-                    .ThenInclude(p => p.PriorityDirectionModel).ToArray();
-            return Ok(projects);
+                .Include(m => m.ProjectMemberModels).ToArray();
+
+                return Ok(projects);
         }
 
         /// <summary>
@@ -42,11 +41,17 @@ namespace RUFR.Api.Web.Controllers
         public IActionResult GetById(int id)
         {
             var project = _projectService.Select()
-                .Include(p => p.ProjectMemberModels)
-                    .ThenInclude(p => p.MemberModel)
                 .Include(p => p.ProjectPriorityModels)
-                    .ThenInclude(p => p.PriorityDirectionModel).FirstOrDefault(p => p.Id == id);
-            return Ok(project);
+                .Include(m => m.ProjectMemberModels).FirstOrDefault(p => p.Id == id);
+
+            if (project != null)
+            {
+                return Ok(project);
+            }            
+            else
+            {
+                return NotFound(project);
+            }
         }
 
         /// <summary>
@@ -70,41 +75,51 @@ namespace RUFR.Api.Web.Controllers
         [HttpPut("Update")]
         public IActionResult Update([FromBody] ProjectModel project)
         {
-            if (_projectService.GetById(project.Id) == null)
-            {
-                return NotFound(project);
-            }
-
             try
             {
                 ProjectModel oldProject = _projectService.Select()
-                .Include(p => p.ProjectMemberModels)
-                    .ThenInclude(p => p.MemberModel)
-                .Include(p => p.ProjectPriorityModels)
-                .ThenInclude(p => p.PriorityDirectionModel).FirstOrDefault(p => p.Id == project.Id);
+               .Include(p => p.ProjectPriorityModels)
+               .Include(m => m.ProjectMemberModels).FirstOrDefault(p => p.Id == project.Id);
 
-                oldProject.Countrys = project.Countrys;
-                oldProject.Logo = project.Logo;
-                oldProject.Name = project.Name;
-                oldProject.ProjectStage = project.ProjectStage;
-                oldProject.TypeOfProject = project.TypeOfProject;
-                oldProject.Content = project.Content;
-                oldProject.Lang = project.Lang;
-                oldProject.Description = project.Description;
-
-                if (oldProject.ProjectPriorityModels != project.ProjectPriorityModels)
+                if (oldProject != null)
                 {
-                    oldProject.ProjectPriorityModels.Clear();
-                    foreach (var pd in project.ProjectPriorityModels)
+                    oldProject.Countrys = project.Countrys;
+                    oldProject.Logo = project.Logo;
+                    oldProject.Name = project.Name;
+                    oldProject.ProjectStage = project.ProjectStage;
+                    oldProject.TypeOfProject = project.TypeOfProject;
+                    oldProject.Content = project.Content;
+                    oldProject.Lang = project.Lang;
+                    oldProject.Description = project.Description;
+
+                    if (oldProject.ProjectPriorityModels != project.ProjectPriorityModels)
                     {
-                        oldProject.ProjectPriorityModels.Add(pd);
+                        oldProject.ProjectPriorityModels.Clear();
+                        foreach (var pd in project.ProjectPriorityModels)
+                        {
+                            oldProject.ProjectPriorityModels.Add(new ProjectPriorityModel
+                            { PriorityDirectionModelId = pd.PriorityDirectionModelId, ProjectModelId = pd.ProjectModelId });
+                        }
                     }
+
+                    if (oldProject.ProjectMemberModels != project.ProjectMemberModels)
+                    {
+                        oldProject.ProjectMemberModels.Clear();
+                        foreach (var pd in project.ProjectMemberModels)
+                        {
+                            oldProject.ProjectMemberModels.Add(new ProjectMemberModel
+                            { MemberModelId = pd.MemberModelId, ProjectModelId = pd.ProjectModelId });
+                        }
+                    }
+
+                    _projectService.Update(oldProject);
+
+                    return Ok(oldProject);
                 }
-
-                _projectService.Update(oldProject);
-
-                return Ok(oldProject);
-
+                else
+                {
+                    return NotFound(project);
+                }
             }
             catch (Exception)
             {

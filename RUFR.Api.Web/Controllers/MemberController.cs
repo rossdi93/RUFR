@@ -43,9 +43,17 @@ namespace RUFR.Api.Web.Controllers
         {
             var member = _memberService.Select()
                 .Include(p => p.MemberPriorityModels)
-                    .Include(p => p.ProjectMemberModels)
-                    .Include(p => p.MemberTypesOfCooperationModels).FirstOrDefault(m => m.Id == id);
-            return Ok(member);
+                .Include(p => p.ProjectMemberModels)
+                .Include(p => p.MemberTypesOfCooperationModels).FirstOrDefault(m => m.Id == id);
+
+            if (member != null)
+            {
+                return Ok(member);
+            }
+            else
+            {
+                return NotFound(member);
+            }
         }
 
         /// <summary>
@@ -70,22 +78,49 @@ namespace RUFR.Api.Web.Controllers
             try
             {
                 var oldMember = _memberService.Select()
-                .Include(p => p.ProjectMemberModels)
-                    .ThenInclude(p => p.ProjectModel)
-                .Include(p => p.MemberPriorityModels)
-                    .ThenInclude(p => p.PriorityDirectionModel)
-                .Include(p => p.MemberTypesOfCooperationModels)
-                    .ThenInclude(p => p.TypesOfCooperationModel).FirstOrDefault(m => m.Id == member.Id);
+                    .Include(p => p.MemberPriorityModels)
+                    .Include(p => p.ProjectMemberModels)
+                    .Include(p => p.MemberTypesOfCooperationModels).FirstOrDefault(m => m.Id == member.Id);
 
-                oldMember.Countrys = member.Countrys;
-                oldMember.Date = member.Date;
-                oldMember.Name = member.Name;
-                oldMember.Logo = member.Logo;
-                oldMember.Lang = member.Lang;
+                if (oldMember != null)
+                {
+                    oldMember.Countrys = member.Countrys;
+                    oldMember.Date = member.Date;
+                    oldMember.Name = member.Name;
+                    oldMember.Logo = member.Logo;
+                    oldMember.Lang = member.Lang;
 
-                _memberService.Update(oldMember);
+                    if (member.MemberPriorityModels != oldMember.MemberPriorityModels)
+                    {
+                        oldMember.MemberPriorityModels.Clear();
+                        foreach (var priorityModel in member.MemberPriorityModels)
+                        {
+                            oldMember.MemberPriorityModels.Add(new MemberPriorityModel { MemberModelId = priorityModel.MemberModelId, EnrollmentDate = DateTime.Now, PriorityDirectionModelId = priorityModel.PriorityDirectionModelId });
+                        }
 
-                return Ok(member);
+                        oldMember.MemberTypesOfCooperationModels.Clear();
+                        foreach (var typesOfCooperation in member.MemberTypesOfCooperationModels)
+                        {
+                            oldMember.MemberTypesOfCooperationModels.Add(new MemberTypesOfCooperationModel { MemberModelId = typesOfCooperation.MemberModelId, EnrollmentDate = DateTime.Now, TypesOfCooperationModelId = typesOfCooperation.TypesOfCooperationModelId });
+                        }
+
+                        oldMember.MemberPriorityModels.Clear();
+                        foreach (var priorityModel in member.MemberPriorityModels)
+                        {
+                            oldMember.MemberPriorityModels.Add(new MemberPriorityModel { MemberModelId = priorityModel.MemberModelId, EnrollmentDate = DateTime.Now, PriorityDirectionModelId = priorityModel.PriorityDirectionModelId });
+                        }
+
+                    }
+                    _memberService.Update(oldMember);
+
+                    return Ok(member);
+                }
+                else
+                {
+                    return NotFound(member);
+                }
+                
+
             }
             catch (Exception)
             {

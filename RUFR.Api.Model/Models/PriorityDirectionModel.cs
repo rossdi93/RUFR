@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using System.Collections.Generic;
 
 namespace RUFR.Api.Model.Models
 {
@@ -19,11 +17,11 @@ namespace RUFR.Api.Model.Models
         /// <summary>
         /// Проекты
         /// </summary>
-        public List<ProjectMemberModel> ProjectMemberModels { get; set; }
+        public List<ProjectPriorityModel> ProjectPriorityModels { get; set; }
 
         public PriorityDirectionModel()
         {
-            ProjectMemberModels = new List<ProjectMemberModel>();
+            ProjectPriorityModels = new List<ProjectPriorityModel>();
             MemberPriorityModels = new List<MemberPriorityModel>();
         }
     }

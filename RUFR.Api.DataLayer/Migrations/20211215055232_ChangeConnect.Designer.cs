@@ -10,8 +10,8 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace RUFR.Api.DataLayer.Migrations
 {
     [DbContext(typeof(ApiDbContext))]
-    [Migration("20211215035505_ChangeConncetionEntity")]
-    partial class ChangeConncetionEntity
+    [Migration("20211215055232_ChangeConnect")]
+    partial class ChangeConnect
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -294,17 +294,12 @@ namespace RUFR.Api.DataLayer.Migrations
                     b.Property<long>("MemberModelId")
                         .HasColumnType("bigint");
 
-                    b.Property<long?>("PriorityDirectionModelId")
-                        .HasColumnType("bigint");
-
                     b.Property<long>("ProjectModelId")
                         .HasColumnType("bigint");
 
                     b.HasKey("Id");
 
                     b.HasIndex("MemberModelId");
-
-                    b.HasIndex("PriorityDirectionModelId");
 
                     b.HasIndex("ProjectModelId");
 
@@ -478,10 +473,6 @@ namespace RUFR.Api.DataLayer.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("RUFR.Api.Model.Models.PriorityDirectionModel", null)
-                        .WithMany("ProjectMemberModels")
-                        .HasForeignKey("PriorityDirectionModelId");
-
                     b.HasOne("RUFR.Api.Model.Models.ProjectModel", "ProjectModel")
                         .WithMany("ProjectMemberModels")
                         .HasForeignKey("ProjectModelId")
@@ -496,7 +487,7 @@ namespace RUFR.Api.DataLayer.Migrations
             modelBuilder.Entity("RUFR.Api.Model.Models.ProjectPriorityModel", b =>
                 {
                     b.HasOne("RUFR.Api.Model.Models.PriorityDirectionModel", "PriorityDirectionModel")
-                        .WithMany()
+                        .WithMany("ProjectPriorityModels")
                         .HasForeignKey("PriorityDirectionModelId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -525,7 +516,7 @@ namespace RUFR.Api.DataLayer.Migrations
                 {
                     b.Navigation("MemberPriorityModels");
 
-                    b.Navigation("ProjectMemberModels");
+                    b.Navigation("ProjectPriorityModels");
                 });
 
             modelBuilder.Entity("RUFR.Api.Model.Models.ProjectModel", b =>
