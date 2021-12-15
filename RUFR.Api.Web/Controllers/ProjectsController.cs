@@ -26,8 +26,10 @@ namespace RUFR.Api.Web.Controllers
         public IActionResult Get()
         {
             var projects = _projectService.Select()
-                .Include(p => p.MemberModels)
-                .Include(p => p.Priorities).ToArray();
+                .Include(p => p.ProjectMemberModels)
+                    .ThenInclude(p => p.MemberModel)
+                .Include(p => p.ProjectPriorityModels)
+                    .ThenInclude(p => p.PriorityDirectionModel).ToArray();
             return Ok(projects);
         }
 
@@ -39,9 +41,11 @@ namespace RUFR.Api.Web.Controllers
         [HttpGet("GetById/{id}")]
         public IActionResult GetById(int id)
         {
-            var project = _projectService.Select().Where(p => p.Id == id)
-                .Include(p => p.MemberModels)
-                .Include(p => p.Priorities);
+            var project = _projectService.Select()
+                .Include(p => p.ProjectMemberModels)
+                    .ThenInclude(p => p.MemberModel)
+                .Include(p => p.ProjectPriorityModels)
+                    .ThenInclude(p => p.PriorityDirectionModel).FirstOrDefault(p => p.Id == id);
             return Ok(project);
         }
 
@@ -73,7 +77,12 @@ namespace RUFR.Api.Web.Controllers
 
             try
             {
-                ProjectModel oldProject = _projectService.GetById(project.Id);
+                ProjectModel oldProject = _projectService.Select()
+                .Include(p => p.ProjectMemberModels)
+                    .ThenInclude(p => p.MemberModel)
+                .Include(p => p.ProjectPriorityModels)
+                .ThenInclude(p => p.PriorityDirectionModel).FirstOrDefault(p => p.Id == project.Id);
+
                 oldProject.Countrys = project.Countrys;
                 oldProject.Logo = project.Logo;
                 oldProject.Name = project.Name;
@@ -83,12 +92,12 @@ namespace RUFR.Api.Web.Controllers
                 oldProject.Lang = project.Lang;
                 oldProject.Description = project.Description;
 
-                if (oldProject.Priorities != project.Priorities)
+                if (oldProject.ProjectPriorityModels != project.ProjectPriorityModels)
                 {
-                    oldProject.Priorities.Clear();
-                    foreach (var pd in project.Priorities)
+                    oldProject.ProjectPriorityModels.Clear();
+                    foreach (var pd in project.ProjectPriorityModels)
                     {
-                        oldProject.Priorities.Add(pd);
+                        oldProject.ProjectPriorityModels.Add(pd);
                     }
                 }
 

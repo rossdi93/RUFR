@@ -62,6 +62,26 @@ namespace Api.DataLayer
         public DbSet<DocumentModel> DocumentModels { get; set; }
 
         /// <summary>
+        /// таблица связи проект-приоритетное направление
+        /// </summary>
+        public DbSet<ProjectPriorityModel> ProjectPriorityModels { get; set; }
+
+        /// <summary>
+        /// таблицы связи проект-участник
+        /// </summary>
+        public DbSet<ProjectMemberModel> ProjectMemberModels { get; set; }
+
+        /// <summary>
+        /// таблица связи участник-приоритетное направление
+        /// </summary>
+        public DbSet<MemberPriorityModel> MemberPriorityModels { get; set; }
+
+        /// <summary>
+        /// таблица связи участник-тип сотрудничества
+        /// </summary>
+        public DbSet<MemberTypesOfCooperationModel> MemberTypesOfCooperationModels { get; set; }
+
+        /// <summary>
         /// Сохранение изменений
         /// </summary>
         public new void SaveChanges()

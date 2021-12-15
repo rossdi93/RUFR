@@ -35,23 +35,23 @@ namespace RUFR.Api.Model.Models
         /// <summary>
         /// приоритетные направления
         /// </summary>
-        public virtual ICollection<PriorityDirectionModel> PriorityDirectionModels { get; set; }
+        public List<MemberPriorityModel> MemberPriorityModels { get; set; }
 
         /// <summary>
         /// виды сотрудничества
         /// </summary>
-        public virtual ICollection<TypesOfCooperationModel> TypesOfCooperationModels { get; set; }
+        public List<MemberTypesOfCooperationModel> MemberTypesOfCooperationModels { get; set; }
 
         /// <summary>
         /// Проекты
         /// </summary>
-        public virtual ICollection<ProjectModel> ProjectModels { get; set; }
+        public List<ProjectMemberModel> ProjectMemberModels { get; set; }
 
         public MemberModel()
         {
-            ProjectModels = new List<ProjectModel>();
-            PriorityDirectionModels = new List<PriorityDirectionModel>();
-            TypesOfCooperationModels = new List<TypesOfCooperationModel>();
+            ProjectMemberModels = new List<ProjectMemberModel>();
+            MemberPriorityModels = new List<MemberPriorityModel>();
+            MemberTypesOfCooperationModels = new List<MemberTypesOfCooperationModel>();
         }
 
 

@@ -41,14 +41,12 @@ namespace RUFR.Api.Model.Models
         /// <summary>
         /// приоритетные направления
         /// </summary>
-        [JsonIgnore]
-        public virtual ICollection<PriorityDirectionModel> Priorities { get; set; }
+        public List<ProjectPriorityModel> ProjectPriorityModels { get; set; }
 
         /// <summary>
         /// Участники
         /// </summary>
-        [JsonIgnore]
-        public virtual ICollection<MemberModel> MemberModels { get; set; }
+        public List<ProjectMemberModel> ProjectMemberModels { get; set; }
 
         /// <summary>
         /// Logo
@@ -62,8 +60,8 @@ namespace RUFR.Api.Model.Models
 
         public ProjectModel()
         {
-            MemberModels = new List<MemberModel>();
-            Priorities = new List<PriorityDirectionModel>();
+            ProjectMemberModels = new List<ProjectMemberModel>();
+            ProjectPriorityModels = new List<ProjectPriorityModel>();
         }
     }
 }

@@ -4,6 +4,7 @@ using System;
 using System.Linq;
 using RUFR.Api.Service.Interfaces;
 using Microsoft.EntityFrameworkCore;
+using System.Collections.Generic;
 
 namespace RUFR.Api.Web.Controllers
 {
@@ -26,9 +27,12 @@ namespace RUFR.Api.Web.Controllers
         public IActionResult Get()
         {
             var members = _memberService.Select()
-                .Include(p => p.ProjectModels)
-                .Include(p => p.PriorityDirectionModels)
-                .Include(p => p.TypesOfCooperationModels).ToArray();
+                .Include(p => p.ProjectMemberModels)
+                    .ThenInclude(p => p.ProjectModel)
+                .Include(p => p.MemberPriorityModels)
+                    .ThenInclude(p => p.PriorityDirectionModel)
+                .Include(p => p.MemberTypesOfCooperationModels)
+                    .ThenInclude(p => p.TypesOfCooperationModel).ToArray();
             return Ok(members);
         }
 
@@ -40,10 +44,13 @@ namespace RUFR.Api.Web.Controllers
         [HttpGet("GetById/{id}")]
         public IActionResult GetById(int id)
         {
-            var member = _memberService.Select().Where(m => m.Id == id)
-                .Include(p => p.ProjectModels)
-                .Include(p => p.PriorityDirectionModels)
-                .Include(p => p.TypesOfCooperationModels);
+            var member = _memberService.Select()
+                .Include(p => p.ProjectMemberModels)
+                    .ThenInclude(p => p.ProjectModel)
+                .Include(p => p.MemberPriorityModels)
+                    .ThenInclude(p => p.PriorityDirectionModel)
+                .Include(p => p.MemberTypesOfCooperationModels)
+                    .ThenInclude(p => p.TypesOfCooperationModel).FirstOrDefault(m => m.Id == id);
             return Ok(member);
         }
 
@@ -55,9 +62,7 @@ namespace RUFR.Api.Web.Controllers
         [HttpPost("New")]
         public IActionResult New([FromBody] MemberModel member)
         {
-            MemberModel newMember = _memberService.Create(member);
-
-            return Ok(newMember);
+            return Ok(_memberService.Create(member));
         }
 
         /// <summary>
@@ -68,47 +73,35 @@ namespace RUFR.Api.Web.Controllers
         [HttpPut("Update")]
         public IActionResult Update([FromBody] MemberModel member)
         {
-            if (_memberService.GetById(member.Id) == null)
-            {
-                return NotFound(member);
-            }
+            //try
+            //{
+            //    var oldMember = _memberService.GetFullById(member.Id);
 
-            try
-            {
-                MemberModel oldMember = _memberService.GetById(member.Id);
-                oldMember.Countrys = member.Countrys;
-                oldMember.Date = member.Date;
-                oldMember.Name = member.Name;
-                oldMember.Logo = member.Logo;
-                oldMember.Lang = member.Lang;
+            //    oldMember.Countrys = member.Countrys;
+            //    oldMember.Date = member.Date;
+            //    oldMember.Name = member.Name;
+            //    oldMember.Logo = member.Logo;
+            //    oldMember.Lang = member.Lang;
 
-                if (oldMember.PriorityDirectionModels != member.PriorityDirectionModels)
-                {
-                    oldMember.PriorityDirectionModels.Clear();
-                    foreach (var pd in member.PriorityDirectionModels)
-                    {
-                        oldMember.PriorityDirectionModels.Add(pd);
-                    }
-                }
+            //    if (member.PriorityDirectionModels != oldMember.PriorityDirectionModels)
+            //    {
+            //        oldMember.PriorityDirectionModels.Clear();
 
-                if (oldMember.TypesOfCooperationModels != member.TypesOfCooperationModels)
-                {
-                    oldMember.PriorityDirectionModels.Clear();
-                    foreach (var tc in member.TypesOfCooperationModels)
-                    {
-                        oldMember.TypesOfCooperationModels.Add(tc);
-                    }
-                }
+            //        foreach (var item in member.PriorityDirectionModels)
+            //        {
+            //            oldMember.PriorityDirectionModels.Add(item);
+            //        }
+            //    }
 
-                _memberService.Update(oldMember);
+            //    _memberService.Delete(oldMember.Id);
+            //    _memberService.Create(oldMember);
 
-                return Ok(oldMember);
-
-            }
-            catch (Exception)
-            {
-                throw;
-            }
+            return Ok(member);
+            //}
+            //catch (Exception)
+            //{
+            //    throw;
+            //}
 
         }
 

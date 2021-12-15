@@ -23,6 +23,14 @@ namespace RUFR.Api.DataLayer
 
         DbSet<DocumentModel> DocumentModels { get; set; }
 
+        DbSet<ProjectPriorityModel> ProjectPriorityModels { get; set; }
+
+        DbSet<ProjectMemberModel> ProjectMemberModels { get; set; }
+
+        DbSet<MemberPriorityModel> MemberPriorityModels { get; set; }
+
+        DbSet<MemberTypesOfCooperationModel> MemberTypesOfCooperationModels { get; set; }
+
         /// <summary>
         /// Получение таблицы для указанного типа сущности
         /// </summary>

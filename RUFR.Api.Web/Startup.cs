@@ -45,7 +45,6 @@ namespace RUFR.Api
             services.AddReact();
             services.AddJsEngineSwitcher(options => options.DefaultEngineName = ChakraCoreJsEngine.EngineName).AddChakraCore();
             services.AddDbContext<ApiDbContext>(o => o.UseNpgsql(Configuration.GetConnectionString("DefaultConnection")));
-
             services.AddScoped<IDbContext, ApiDbContext>();
             services.AddScoped<INewsService, NewsService>();
             services.AddScoped<IHistoryOfSuccessService, HistoryOfSuccessService>();

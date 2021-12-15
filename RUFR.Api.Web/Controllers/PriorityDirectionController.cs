@@ -70,8 +70,6 @@ namespace RUFR.Api.Web.Controllers
                 PriorityDirectionModel oldPd = _priorityDirectionService.GetById(pd.Id);
                 oldPd.Description = pd.Description;
                 oldPd.IsDelete = pd.IsDelete;
-                oldPd.MemberModels = pd.MemberModels;
-                oldPd.ProjectModels = pd.ProjectModels;
                 oldPd.Name = pd.Name;
 
                 _priorityDirectionService.Update(oldPd);

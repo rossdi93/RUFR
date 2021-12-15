@@ -1,3 +1,3 @@
 # RUFR
 Api for RUFR project
-asp.net core 3.1
+asp.net core 5.0

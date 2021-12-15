@@ -14,17 +14,17 @@ namespace RUFR.Api.Model.Models
         /// <summary>
         /// Участники
         /// </summary>
-        public virtual ICollection<MemberModel> MemberModels { get; set; }
+        public List<MemberPriorityModel> MemberPriorityModels { get; set; }
 
         /// <summary>
         /// Проекты
         /// </summary>
-        public virtual ICollection<ProjectModel> ProjectModels { get; set; }
+        public List<ProjectMemberModel> ProjectMemberModels { get; set; }
 
         public PriorityDirectionModel()
         {
-            ProjectModels = new List<ProjectModel>();
-            MemberModels = new List<MemberModel>();
+            ProjectMemberModels = new List<ProjectMemberModel>();
+            MemberPriorityModels = new List<MemberPriorityModel>();
         }
     }
 }

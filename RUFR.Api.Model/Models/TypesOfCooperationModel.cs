@@ -11,11 +11,11 @@ namespace RUFR.Api.Model.Models
         /// </summary>
         public string Description { get; set; }
 
-        public ICollection<MemberModel> MemberModels { get; set; }
+        public List<MemberTypesOfCooperationModel> MemberTypesOfCooperationModels { get; set; }
 
         public TypesOfCooperationModel()
         {
-            MemberModels = new List<MemberModel>();
+            MemberTypesOfCooperationModels = new List<MemberTypesOfCooperationModel>();
         }
     }
 }
