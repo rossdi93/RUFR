@@ -27,12 +27,9 @@ namespace RUFR.Api.Web.Controllers
         public IActionResult Get()
         {
             var members = _memberService.Select()
-                .Include(p => p.ProjectMemberModels)
-                    .ThenInclude(p => p.ProjectModel)
                 .Include(p => p.MemberPriorityModels)
-                    .ThenInclude(p => p.PriorityDirectionModel)
-                .Include(p => p.MemberTypesOfCooperationModels)
-                    .ThenInclude(p => p.TypesOfCooperationModel).ToArray();
+                    .Include(p => p.ProjectMemberModels)
+                    .Include(p => p.MemberTypesOfCooperationModels).ToArray();
             return Ok(members);
         }
 
@@ -45,12 +42,9 @@ namespace RUFR.Api.Web.Controllers
         public IActionResult GetById(int id)
         {
             var member = _memberService.Select()
-                .Include(p => p.ProjectMemberModels)
-                    .ThenInclude(p => p.ProjectModel)
                 .Include(p => p.MemberPriorityModels)
-                    .ThenInclude(p => p.PriorityDirectionModel)
-                .Include(p => p.MemberTypesOfCooperationModels)
-                    .ThenInclude(p => p.TypesOfCooperationModel).FirstOrDefault(m => m.Id == id);
+                    .Include(p => p.ProjectMemberModels)
+                    .Include(p => p.MemberTypesOfCooperationModels).FirstOrDefault(m => m.Id == id);
             return Ok(member);
         }
 
@@ -73,35 +67,30 @@ namespace RUFR.Api.Web.Controllers
         [HttpPut("Update")]
         public IActionResult Update([FromBody] MemberModel member)
         {
-            //try
-            //{
-            //    var oldMember = _memberService.GetFullById(member.Id);
+            try
+            {
+                var oldMember = _memberService.Select()
+                .Include(p => p.ProjectMemberModels)
+                    .ThenInclude(p => p.ProjectModel)
+                .Include(p => p.MemberPriorityModels)
+                    .ThenInclude(p => p.PriorityDirectionModel)
+                .Include(p => p.MemberTypesOfCooperationModels)
+                    .ThenInclude(p => p.TypesOfCooperationModel).FirstOrDefault(m => m.Id == member.Id);
 
-            //    oldMember.Countrys = member.Countrys;
-            //    oldMember.Date = member.Date;
-            //    oldMember.Name = member.Name;
-            //    oldMember.Logo = member.Logo;
-            //    oldMember.Lang = member.Lang;
+                oldMember.Countrys = member.Countrys;
+                oldMember.Date = member.Date;
+                oldMember.Name = member.Name;
+                oldMember.Logo = member.Logo;
+                oldMember.Lang = member.Lang;
 
-            //    if (member.PriorityDirectionModels != oldMember.PriorityDirectionModels)
-            //    {
-            //        oldMember.PriorityDirectionModels.Clear();
+                _memberService.Update(oldMember);
 
-            //        foreach (var item in member.PriorityDirectionModels)
-            //        {
-            //            oldMember.PriorityDirectionModels.Add(item);
-            //        }
-            //    }
-
-            //    _memberService.Delete(oldMember.Id);
-            //    _memberService.Create(oldMember);
-
-            return Ok(member);
-            //}
-            //catch (Exception)
-            //{
-            //    throw;
-            //}
+                return Ok(member);
+            }
+            catch (Exception)
+            {
+                throw;
+            }
 
         }
 
