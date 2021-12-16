@@ -28,8 +28,10 @@ namespace RUFR.Api.Web.Controllers
         {
             var members = _memberService.Select()
                 .Include(p => p.MemberPriorityModels)
-                    .Include(p => p.ProjectMemberModels)
-                    .Include(p => p.MemberTypesOfCooperationModels).ToArray();
+                .Include(p => p.ProjectMemberModels)
+                .Include(p => p.MemberTypesOfCooperationModels)
+                .Include(s => s.StatisticalInformationModels)
+                .Include(u => u.UserMemberModels).ToArray();
             return Ok(members);
         }
 
@@ -44,7 +46,9 @@ namespace RUFR.Api.Web.Controllers
             var member = _memberService.Select()
                 .Include(p => p.MemberPriorityModels)
                 .Include(p => p.ProjectMemberModels)
-                .Include(p => p.MemberTypesOfCooperationModels).FirstOrDefault(m => m.Id == id);
+                .Include(m => m.MemberTypesOfCooperationModels)
+                .Include(s => s.StatisticalInformationModels)
+                .Include(u => u.UserMemberModels).FirstOrDefault(m => m.Id == id);
 
             if (member != null)
             {
@@ -80,7 +84,9 @@ namespace RUFR.Api.Web.Controllers
                 var oldMember = _memberService.Select()
                     .Include(p => p.MemberPriorityModels)
                     .Include(p => p.ProjectMemberModels)
-                    .Include(p => p.MemberTypesOfCooperationModels).FirstOrDefault(m => m.Id == member.Id);
+                    .Include(p => p.MemberTypesOfCooperationModels)
+                    .Include(s => s.StatisticalInformationModels)
+                    .Include(u => u.UserMemberModels).FirstOrDefault(m => m.Id == member.Id);
 
                 if (oldMember != null)
                 {
@@ -89,6 +95,9 @@ namespace RUFR.Api.Web.Controllers
                     oldMember.Name = member.Name;
                     oldMember.Logo = member.Logo;
                     oldMember.Lang = member.Lang;
+                    oldMember.WebSite = member.WebSite;
+                    oldMember.Content = member.Content;
+                    oldMember.Description = member.Description;
 
                     if (!member.MemberPriorityModels.Select(mp => mp.PriorityDirectionModelId).ToArray().
                         SequenceEqual(oldMember.MemberPriorityModels.Select(mp => mp.PriorityDirectionModelId).ToArray()))
@@ -96,7 +105,8 @@ namespace RUFR.Api.Web.Controllers
                         oldMember.MemberPriorityModels.Clear();
                         foreach (var priorityModel in member.MemberPriorityModels)
                         {
-                            oldMember.MemberPriorityModels.Add(new MemberPriorityModel { MemberModelId = priorityModel.MemberModelId, PriorityDirectionModelId = priorityModel.PriorityDirectionModelId, EnrollmentDate = DateTime.Now });
+                            oldMember.MemberPriorityModels.Add(new MemberPriorityModel { MemberModelId = priorityModel.MemberModelId, 
+                                PriorityDirectionModelId = priorityModel.PriorityDirectionModelId, EnrollmentDate = DateTime.Now });
                         }
                     }
 
@@ -106,7 +116,30 @@ namespace RUFR.Api.Web.Controllers
                         oldMember.MemberTypesOfCooperationModels.Clear();
                         foreach (var typesOfCooperation in member.MemberTypesOfCooperationModels)
                         {
-                            oldMember.MemberTypesOfCooperationModels.Add(new MemberTypesOfCooperationModel { MemberModelId = typesOfCooperation.MemberModelId, TypesOfCooperationModelId = typesOfCooperation.TypesOfCooperationModelId, EnrollmentDate = DateTime.Now });
+                            oldMember.MemberTypesOfCooperationModels.Add(new MemberTypesOfCooperationModel { MemberModelId = typesOfCooperation.MemberModelId, 
+                                TypesOfCooperationModelId = typesOfCooperation.TypesOfCooperationModelId, EnrollmentDate = DateTime.Now });
+                        }
+                    }
+
+                    if (!member.StatisticalInformationModels.Select(mt => mt.Id).ToArray().
+                        SequenceEqual(oldMember.StatisticalInformationModels.Select(mt => mt.Id).ToArray()))
+                    {
+                        oldMember.StatisticalInformationModels.Clear();
+                        foreach (var keyValue in member.StatisticalInformationModels)
+                        {
+                            oldMember.StatisticalInformationModels.Add(new StatisticalInformationModel { MemberModelId = keyValue.MemberModelId, Name = keyValue.Name, 
+                                Key = keyValue.Key, Value = keyValue.Value });
+                        }
+                    }
+
+                    if (!member.UserMemberModels.Select(u => u.Id).ToArray().
+                        SequenceEqual(oldMember.UserMemberModels.Select(u => u.Id).ToArray()))
+                    {
+                        oldMember.UserMemberModels.Clear();
+                        foreach (var keyValue in member.UserMemberModels)
+                        {
+                            oldMember.UserMemberModels.Add(new UserMemberModel { MemberModelId = keyValue.MemberModelId, UserModelId = keyValue.UserModelId,
+                                Position = keyValue.Position, EnrollmentDate = DateTime.Now });
                         }
                     }
 
@@ -119,7 +152,7 @@ namespace RUFR.Api.Web.Controllers
                     //        oldMember.ProjectMemberModels.Add(new ProjectMemberModel { MemberModelId = priorityModel.MemberModelId, ProjectModelId = priorityModel.ProjectModelId, EnrollmentDate = DateTime.Now });
                     //    }
                     //}
-   
+
                     _memberService.Update(oldMember);
 
                     return Ok(oldMember);
@@ -149,7 +182,9 @@ namespace RUFR.Api.Web.Controllers
             var member = _memberService.Select()
                     .Include(p => p.MemberPriorityModels)
                     .Include(p => p.ProjectMemberModels)
-                    .Include(p => p.MemberTypesOfCooperationModels).FirstOrDefault(m => m.Id == id);
+                    .Include(p => p.MemberTypesOfCooperationModels)
+                    .Include(s => s.StatisticalInformationModels)
+                    .Include(u => u.UserMemberModels).FirstOrDefault(m => m.Id == id);
 
             if (!member.IsDelete && member != null)
             {
@@ -159,7 +194,10 @@ namespace RUFR.Api.Web.Controllers
                     member.MemberPriorityModels.Clear();
                     member.ProjectMemberModels.Clear();
                     member.MemberTypesOfCooperationModels.Clear();
+                    member.StatisticalInformationModels.Clear();
+                    member.UserMemberModels.Clear();
                     _memberService.Update(member);
+
                     return Ok();
                 }
                 catch (Exception)

@@ -31,6 +31,14 @@ namespace RUFR.Api.DataLayer
 
         DbSet<MemberTypesOfCooperationModel> MemberTypesOfCooperationModels { get; set; }
 
+        DbSet<StatisticalInformationModel> StatisticalInformationModels { get; set; }
+
+        DbSet<UserDocumentModel> UserDocumentModels { get; set; }
+
+        DbSet<UserProjectModel> UserProjectModels { get; set; }
+
+        DbSet<UserMemberModel> UserMemberModels { get; set; }
+
         /// <summary>
         /// Получение таблицы для указанного типа сущности
         /// </summary>

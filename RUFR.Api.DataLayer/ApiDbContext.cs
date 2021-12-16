@@ -82,6 +82,26 @@ namespace Api.DataLayer
         public DbSet<MemberTypesOfCooperationModel> MemberTypesOfCooperationModels { get; set; }
 
         /// <summary>
+        /// таблица для хранения стастической, краткой информации для участников
+        /// </summary>
+        public DbSet<StatisticalInformationModel> StatisticalInformationModels { get; set; }
+
+        /// <summary>
+        /// таблица связи пользователь-документ
+        /// </summary>
+        public DbSet<UserDocumentModel> UserDocumentModels { get; set; }
+
+        /// <summary>
+        /// таблица связи пользователь-проект
+        /// </summary>
+        public DbSet<UserProjectModel> UserProjectModels { get; set; }
+
+        /// <summary>
+        /// таблица связи пользователь-участник
+        /// </summary>
+        public DbSet<UserMemberModel> UserMemberModels { get; set; }
+
+        /// <summary>
         /// Сохранение изменений
         /// </summary>
         public new void SaveChanges()

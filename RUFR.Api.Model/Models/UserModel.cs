@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace RUFR.Api.Model.Models
 {
@@ -8,7 +9,7 @@ namespace RUFR.Api.Model.Models
     public class UserModel: BaseModel
     {
         /// <summary>
-        /// логин польователя
+        /// логин пользователя
         /// </summary>
         public string Login { get; set; }
 
@@ -31,6 +32,32 @@ namespace RUFR.Api.Model.Models
         /// роль пользователя
         /// </summary>
         public UserRole Role { get; set; }
+
+        /// <summary>
+        /// Logo
+        /// </summary>
+        public byte[] Logo { get; set; }
+
+        /// <summary>
+        /// описание 
+        /// </summary>
+        public string Description { get; set; }
+
+        /// <summary>
+        /// приоритетные направления
+        /// </summary>
+        public List<UserMemberModel> UserMemberModels { get; set; }
+
+        /// <summary>
+        /// участники
+        /// </summary>
+        public List<UserProjectModel> UserProjectModels { get; set; }
+
+        /// <summary>
+        /// документы
+        /// </summary>
+        public List<UserDocumentModel> UserDocumentModels { get; set; }
+
 
     }
 }

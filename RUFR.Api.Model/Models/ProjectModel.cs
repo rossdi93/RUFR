@@ -17,7 +17,6 @@ namespace RUFR.Api.Model.Models
         /// </summary>
         public string Description { get; set; }
 
-
         /// <summary>
         /// стадия проекта
         /// </summary>
@@ -47,6 +46,11 @@ namespace RUFR.Api.Model.Models
         /// Участники
         /// </summary>
         public List<ProjectMemberModel> ProjectMemberModels { get; set; }
+
+        /// <summary>
+        /// Пользователи
+        /// </summary>
+        public List<UserProjectModel> UserProjectModels { get; set; }
 
         /// <summary>
         /// Logo

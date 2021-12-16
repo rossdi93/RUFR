@@ -18,6 +18,11 @@ namespace RUFR.Api.Model.Models
         public string Date { get; set; }
 
         /// <summary>
+        /// описание 
+        /// </summary>
+        public string Description { get; set; }
+
+        /// <summary>
         /// контент
         /// </summary>
         public string Content { get; set; }
@@ -31,6 +36,11 @@ namespace RUFR.Api.Model.Models
         /// язык
         /// </summary>
         public string Lang { get; set; }
+
+        /// <summary>
+        /// Адресс сайта
+        /// </summary>
+        public string WebSite { get; set; }
 
         /// <summary>
         /// приоритетные направления
@@ -47,11 +57,24 @@ namespace RUFR.Api.Model.Models
         /// </summary>
         public List<ProjectMemberModel> ProjectMemberModels { get; set; }
 
+        /// <summary>
+        /// Статистическая информация
+        /// </summary>
+        public List<StatisticalInformationModel> StatisticalInformationModels { get; set; }
+
+        /// <summary>
+        /// Пользователи
+        /// </summary>
+        public List<UserMemberModel> UserMemberModels { get; set; }
+
+
         public MemberModel()
         {
             ProjectMemberModels = new List<ProjectMemberModel>();
             MemberPriorityModels = new List<MemberPriorityModel>();
             MemberTypesOfCooperationModels = new List<MemberTypesOfCooperationModel>();
+            StatisticalInformationModels = new List<StatisticalInformationModel>();
+            UserMemberModels = new List<UserMemberModel>();
         }
 
 
