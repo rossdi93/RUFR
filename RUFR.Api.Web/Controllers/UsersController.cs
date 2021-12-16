@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using RUFR.Api.Model.Models;
 using RUFR.Api.Service.Interfaces;
 using System;
@@ -73,6 +74,8 @@ namespace RUFR.Api.Web.Controllers
                 oldUser.Name = user.Name;
                 oldUser.Pass = user.Pass;
                 oldUser.Role = user.Role;
+                oldUser.Description = user.Description;
+                oldUser.Mail = user.Mail;
 
                 _usersService.Update(oldUser);
 
@@ -95,13 +98,22 @@ namespace RUFR.Api.Web.Controllers
         [HttpDelete("{id}")]
         public IActionResult Delete(int id)
         {
-            var user = _usersService.GetById(id);
-            if (!user.IsDelete)
+            var user = _usersService.Select()
+                .Include(d => d.UserDocumentModels)
+                .Include(m => m.UserMemberModels)
+                .Include(p => p.UserProjectModels).FirstOrDefault(p => p.Id == id);
+
+            if (!user.IsDelete && user != null)
             {
                 user.IsDelete = true;
                 try
                 {
+                    user.UserDocumentModels.Clear();
+                    user.UserMemberModels.Clear();
+                    user.UserProjectModels.Clear();
+
                     _usersService.Update(user);
+
                     return Ok();
                 }
                 catch (Exception)

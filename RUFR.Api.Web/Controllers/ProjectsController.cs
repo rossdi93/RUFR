@@ -27,7 +27,8 @@ namespace RUFR.Api.Web.Controllers
         {
             var projects = _projectService.Select()
                 .Include(p => p.ProjectPriorityModels)
-                .Include(m => m.ProjectMemberModels).ToArray();
+                .Include(m => m.ProjectMemberModels)
+                .Include(u => u.UserProjectModels).ToArray();
 
                 return Ok(projects);
         }
@@ -42,7 +43,8 @@ namespace RUFR.Api.Web.Controllers
         {
             var project = _projectService.Select()
                 .Include(p => p.ProjectPriorityModels)
-                .Include(m => m.ProjectMemberModels).FirstOrDefault(p => p.Id == id);
+                .Include(m => m.ProjectMemberModels)
+                .Include(u => u.UserProjectModels).FirstOrDefault(p => p.Id == id);
 
             if (project != null)
             {
@@ -78,8 +80,9 @@ namespace RUFR.Api.Web.Controllers
             try
             {
                 ProjectModel oldProject = _projectService.Select()
-               .Include(p => p.ProjectPriorityModels)
-               .Include(m => m.ProjectMemberModels).FirstOrDefault(p => p.Id == project.Id);
+                .Include(p => p.ProjectPriorityModels)
+                .Include(m => m.ProjectMemberModels)
+                .Include(u => u.UserProjectModels).FirstOrDefault(p => p.Id == project.Id);
 
                 if (oldProject != null)
                 {
@@ -114,6 +117,17 @@ namespace RUFR.Api.Web.Controllers
                         }
                     }
 
+                    if (!oldProject.UserProjectModels.Select(p => p.UserModelId).ToArray().
+                      SequenceEqual(project.UserProjectModels.Select(p => p.UserModelId).ToArray()))
+                    {
+                        oldProject.UserProjectModels.Clear();
+                        foreach (var pd in project.UserProjectModels)
+                        {
+                            oldProject.UserProjectModels.Add(new UserProjectModel
+                            { UserModelId = pd.UserModelId, ProjectModelId = pd.ProjectModelId, Position = pd.Position,  EnrollmentDate = DateTime.Now });
+                        }
+                    }
+
                     _projectService.Update(oldProject);
 
                     return Ok(oldProject);
@@ -140,8 +154,9 @@ namespace RUFR.Api.Web.Controllers
         public IActionResult Delete(int id)
         {
             var project =  _projectService.Select()
-               .Include(p => p.ProjectPriorityModels)
-               .Include(m => m.ProjectMemberModels).FirstOrDefault(p => p.Id == id);
+                .Include(p => p.ProjectPriorityModels)
+                .Include(m => m.ProjectMemberModels)
+                .Include(u => u.UserProjectModels).FirstOrDefault(p => p.Id == id);
 
             if (!project.IsDelete && project != null)
             {
@@ -150,6 +165,7 @@ namespace RUFR.Api.Web.Controllers
                     project.IsDelete = true;
                     project.ProjectMemberModels.Clear();
                     project.ProjectPriorityModels.Clear();
+                    project.UserProjectModels.Clear();
                     _projectService.Update(project);
 
                     return Ok();

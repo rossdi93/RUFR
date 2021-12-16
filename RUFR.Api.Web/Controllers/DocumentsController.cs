@@ -3,6 +3,7 @@ using RUFR.Api.Model.Models;
 using System;
 using System.Linq;
 using RUFR.Api.Service.Interfaces;
+using Microsoft.EntityFrameworkCore;
 
 namespace RUFR.Api.Web.Controllers
 {
@@ -24,7 +25,10 @@ namespace RUFR.Api.Web.Controllers
         [HttpGet]
         public IActionResult Get()
         {
-            return Ok(_documentService.Select().ToList());
+            var documents = _documentService.Select()
+                .Include(p => p.UserDocumentModels).ToArray();
+
+            return Ok(documents);
         }
 
         /// <summary>
@@ -35,7 +39,17 @@ namespace RUFR.Api.Web.Controllers
         [HttpGet("GetById/{id}")]
         public IActionResult GetById(int id)
         {
-            return Ok(_documentService.GetById(id));
+            var document = _documentService.Select()
+                .Include(p => p.UserDocumentModels).FirstOrDefault(p => p.Id == id);
+
+            if (document != null)
+            {
+                return Ok(document);
+            }
+            else
+            {
+                return NotFound(document);
+            }
         }
 
         /// <summary>
@@ -59,26 +73,42 @@ namespace RUFR.Api.Web.Controllers
         [HttpPut("Update")]
         public IActionResult Update([FromBody] DocumentModel doc)
         {
-            if (_documentService.GetById(doc.Id) == null)
-            {
-                return NotFound(doc);
-            }
 
             try
             {
-                DocumentModel oldDoc = _documentService.GetById(doc.Id);
-                oldDoc.Author = doc.Author;
-                oldDoc.Date = doc.Date;
-                oldDoc.DocByte = doc.DocByte;
-                oldDoc.Lang = doc.Lang;
-                oldDoc.Name = doc.Name;
-                oldDoc.Type = doc.Type;
-                oldDoc.Description = doc.Description;
+                DocumentModel oldDoc = _documentService.Select()
+                    .Include(p => p.UserDocumentModels).FirstOrDefault(p => p.Id == doc.Id);
 
-                _documentService.Update(oldDoc);
+                if (oldDoc != null)
+                {
+                    oldDoc.Author = doc.Author;
+                    oldDoc.Date = doc.Date;
+                    oldDoc.DocByte = doc.DocByte;
+                    oldDoc.Lang = doc.Lang;
+                    oldDoc.Name = doc.Name;
+                    oldDoc.Type = doc.Type;
+                    oldDoc.Description = doc.Description;
 
-                return Ok(oldDoc);
+                    if (!oldDoc.UserDocumentModels.Select(p => p.UserModelId).ToArray().
+                           SequenceEqual(doc.UserDocumentModels.Select(p => p.UserModelId).ToArray()))
+                    {
+                        oldDoc.UserDocumentModels.Clear();
+                        foreach (var pd in doc.UserDocumentModels)
+                        {
+                            oldDoc.UserDocumentModels.Add(new UserDocumentModel
+                            { UserModelId = pd.UserModelId, DocumentModelId = pd.DocumentModelId, Position = pd.Position, EnrollmentDate = DateTime.Now });
+                        }
+                    }
 
+                    _documentService.Update(oldDoc);
+
+                    return Ok(oldDoc);
+                }
+                else
+                {
+                    return NotFound(doc);
+                }
+                
             }
             catch (Exception)
             {
@@ -96,12 +126,15 @@ namespace RUFR.Api.Web.Controllers
         [HttpDelete("{id}")]
         public IActionResult Delete(int id)
         {
-            var doc = _documentService.GetById(id);
-            if (!doc.IsDelete)
+            var doc = _documentService.Select()
+                .Include(p => p.UserDocumentModels).FirstOrDefault(p => p.Id == id);
+
+            if (!doc.IsDelete && doc != null)
             {
                 doc.IsDelete = true;
                 try
                 {
+                    doc.UserDocumentModels.Clear();
                     _documentService.Update(doc);
                     return Ok();
                 }

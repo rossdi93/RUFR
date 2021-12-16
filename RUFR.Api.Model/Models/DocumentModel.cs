@@ -1,4 +1,5 @@
-﻿using System.Text.Json.Serialization;
+﻿using System.Collections.Generic;
+using System.Text.Json.Serialization;
 
 namespace RUFR.Api.Model.Models
 {
@@ -28,12 +29,16 @@ namespace RUFR.Api.Model.Models
         /// <summary>
         /// сам документ
         /// </summary>
-        [JsonIgnore]
         public byte[] DocByte { get; set; }
 
         /// <summary>
         /// язык
         /// </summary>
         public string Lang { get; set; }
+
+        /// <summary>
+        /// Пользователи
+        /// </summary>
+        public List<UserDocumentModel> UserDocumentModels { get; set; }
     }
 }
