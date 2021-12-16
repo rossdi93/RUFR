@@ -92,23 +92,25 @@ namespace RUFR.Api.Web.Controllers
                     oldProject.Lang = project.Lang;
                     oldProject.Description = project.Description;
 
-                    if (oldProject.ProjectPriorityModels != project.ProjectPriorityModels)
+                    if (!oldProject.ProjectPriorityModels.Select(p => p.PriorityDirectionModelId).ToArray().
+                        SequenceEqual(project.ProjectPriorityModels.Select(p => p.PriorityDirectionModelId).ToArray()))
                     {
                         oldProject.ProjectPriorityModels.Clear();
                         foreach (var pd in project.ProjectPriorityModels)
                         {
                             oldProject.ProjectPriorityModels.Add(new ProjectPriorityModel
-                            { PriorityDirectionModelId = pd.PriorityDirectionModelId, ProjectModelId = pd.ProjectModelId });
+                            { PriorityDirectionModelId = pd.PriorityDirectionModelId, ProjectModelId = pd.ProjectModelId, EnrollmentDate = DateTime.Now });
                         }
                     }
 
-                    if (oldProject.ProjectMemberModels != project.ProjectMemberModels)
+                    if (!oldProject.ProjectMemberModels.Select(p => p.MemberModelId).ToArray().
+                       SequenceEqual(project.ProjectMemberModels.Select(p => p.MemberModelId).ToArray()))
                     {
                         oldProject.ProjectMemberModels.Clear();
                         foreach (var pd in project.ProjectMemberModels)
                         {
                             oldProject.ProjectMemberModels.Add(new ProjectMemberModel
-                            { MemberModelId = pd.MemberModelId, ProjectModelId = pd.ProjectModelId });
+                            { MemberModelId = pd.MemberModelId, ProjectModelId = pd.ProjectModelId, EnrollmentDate = DateTime.Now });
                         }
                     }
 
@@ -137,18 +139,23 @@ namespace RUFR.Api.Web.Controllers
         [HttpDelete("{id}")]
         public IActionResult Delete(int id)
         {
-            var project = _projectService.GetById(id);
-            if (!project.IsDelete)
+            var project =  _projectService.Select()
+               .Include(p => p.ProjectPriorityModels)
+               .Include(m => m.ProjectMemberModels).FirstOrDefault(p => p.Id == id);
+
+            if (!project.IsDelete && project != null)
             {
-                project.IsDelete = true;
                 try
                 {
+                    project.IsDelete = true;
+                    project.ProjectMemberModels.Clear();
+                    project.ProjectPriorityModels.Clear();
                     _projectService.Update(project);
+
                     return Ok();
                 }
                 catch (Exception)
                 {
-
                     throw;
                 }
             }

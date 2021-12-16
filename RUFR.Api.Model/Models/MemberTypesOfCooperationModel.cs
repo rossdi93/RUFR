@@ -11,10 +11,8 @@ namespace RUFR.Api.Model.Models
         public long Id { get; set; }
         public long MemberModelId { get; set; }
         public MemberModel MemberModel { get; set; }
-
         public long TypesOfCooperationModelId { get; set; }
         public TypesOfCooperationModel TypesOfCooperationModel { get; set; }
-
         public System.DateTime EnrollmentDate { get; set; }
     }
 }

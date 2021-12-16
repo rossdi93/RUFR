@@ -90,30 +90,39 @@ namespace RUFR.Api.Web.Controllers
                     oldMember.Logo = member.Logo;
                     oldMember.Lang = member.Lang;
 
-                    if (member.MemberPriorityModels != oldMember.MemberPriorityModels)
+                    if (!member.MemberPriorityModels.Select(mp => mp.PriorityDirectionModelId).ToArray().
+                        SequenceEqual(oldMember.MemberPriorityModels.Select(mp => mp.PriorityDirectionModelId).ToArray()))
                     {
                         oldMember.MemberPriorityModels.Clear();
                         foreach (var priorityModel in member.MemberPriorityModels)
                         {
-                            oldMember.MemberPriorityModels.Add(new MemberPriorityModel { MemberModelId = priorityModel.MemberModelId, EnrollmentDate = DateTime.Now, PriorityDirectionModelId = priorityModel.PriorityDirectionModelId });
+                            oldMember.MemberPriorityModels.Add(new MemberPriorityModel { MemberModelId = priorityModel.MemberModelId, PriorityDirectionModelId = priorityModel.PriorityDirectionModelId, EnrollmentDate = DateTime.Now });
                         }
+                    }
 
+                    if (!member.MemberTypesOfCooperationModels.Select(mt => mt.TypesOfCooperationModelId).ToArray().
+                        SequenceEqual(oldMember.MemberTypesOfCooperationModels.Select(mt => mt.TypesOfCooperationModelId).ToArray()))
+                    {
                         oldMember.MemberTypesOfCooperationModels.Clear();
                         foreach (var typesOfCooperation in member.MemberTypesOfCooperationModels)
                         {
-                            oldMember.MemberTypesOfCooperationModels.Add(new MemberTypesOfCooperationModel { MemberModelId = typesOfCooperation.MemberModelId, EnrollmentDate = DateTime.Now, TypesOfCooperationModelId = typesOfCooperation.TypesOfCooperationModelId });
+                            oldMember.MemberTypesOfCooperationModels.Add(new MemberTypesOfCooperationModel { MemberModelId = typesOfCooperation.MemberModelId, TypesOfCooperationModelId = typesOfCooperation.TypesOfCooperationModelId, EnrollmentDate = DateTime.Now });
                         }
-
-                        oldMember.MemberPriorityModels.Clear();
-                        foreach (var priorityModel in member.MemberPriorityModels)
-                        {
-                            oldMember.MemberPriorityModels.Add(new MemberPriorityModel { MemberModelId = priorityModel.MemberModelId, EnrollmentDate = DateTime.Now, PriorityDirectionModelId = priorityModel.PriorityDirectionModelId });
-                        }
-
                     }
+
+                    //if (!member.ProjectMemberModels.Select(p => p.ProjectModelId).ToArray().
+                    //    SequenceEqual(oldMember.ProjectMemberModels.Select(p => p.ProjectModelId).ToArray()))
+                    //{
+                    //    oldMember.ProjectMemberModels.Clear();
+                    //    foreach (var priorityModel in member.ProjectMemberModels)
+                    //    {
+                    //        oldMember.ProjectMemberModels.Add(new ProjectMemberModel { MemberModelId = priorityModel.MemberModelId, ProjectModelId = priorityModel.ProjectModelId, EnrollmentDate = DateTime.Now });
+                    //    }
+                    //}
+   
                     _memberService.Update(oldMember);
 
-                    return Ok(member);
+                    return Ok(oldMember);
                 }
                 else
                 {
@@ -137,12 +146,19 @@ namespace RUFR.Api.Web.Controllers
         [HttpDelete("{id}")]
         public IActionResult Delete(int id)
         {
-            var member = _memberService.GetById(id);
-            if (!member.IsDelete)
+            var member = _memberService.Select()
+                    .Include(p => p.MemberPriorityModels)
+                    .Include(p => p.ProjectMemberModels)
+                    .Include(p => p.MemberTypesOfCooperationModels).FirstOrDefault(m => m.Id == id);
+
+            if (!member.IsDelete && member != null)
             {
-                member.IsDelete = true;
                 try
                 {
+                    member.IsDelete = true;
+                    member.MemberPriorityModels.Clear();
+                    member.ProjectMemberModels.Clear();
+                    member.MemberTypesOfCooperationModels.Clear();
                     _memberService.Update(member);
                     return Ok();
                 }
