@@ -28,8 +28,11 @@ namespace RUFR.Api.Web.Controllers
         {
             var members = _memberService.Select()
                 .Include(p => p.MemberPriorityModels)
+                    .ThenInclude(p => p.PriorityDirectionModel)
                 .Include(p => p.ProjectMemberModels)
+                    .ThenInclude(p => p.ProjectModel)
                 .Include(p => p.MemberTypesOfCooperationModels)
+                    .ThenInclude(t => t.TypesOfCooperationModel)
                 .Include(s => s.StatisticalInformationModels)
                 .Include(u => u.UserMemberModels).ToArray();
             return Ok(members);
@@ -45,8 +48,11 @@ namespace RUFR.Api.Web.Controllers
         {
             var member = _memberService.Select()
                 .Include(p => p.MemberPriorityModels)
+                    .ThenInclude(p => p.PriorityDirectionModel)
                 .Include(p => p.ProjectMemberModels)
-                .Include(m => m.MemberTypesOfCooperationModels)
+                    .ThenInclude(p => p.ProjectModel)
+                .Include(p => p.MemberTypesOfCooperationModels)
+                    .ThenInclude(t => t.TypesOfCooperationModel)
                 .Include(s => s.StatisticalInformationModels)
                 .Include(u => u.UserMemberModels).FirstOrDefault(m => m.Id == id);
 

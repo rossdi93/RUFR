@@ -26,7 +26,8 @@ namespace RUFR.Api.Web.Controllers
         public IActionResult Get()
         {
             var documents = _documentService.Select()
-                .Include(p => p.UserDocumentModels).ToArray();
+                .Include(p => p.UserDocumentModels)
+                .ThenInclude(u => u.UserModel).ToArray();
 
             return Ok(documents);
         }
@@ -40,7 +41,8 @@ namespace RUFR.Api.Web.Controllers
         public IActionResult GetById(int id)
         {
             var document = _documentService.Select()
-                .Include(p => p.UserDocumentModels).FirstOrDefault(p => p.Id == id);
+                .Include(p => p.UserDocumentModels)
+                .ThenInclude(u => u.UserModel).FirstOrDefault(p => p.Id == id);
 
             if (document != null)
             {

@@ -27,8 +27,11 @@ namespace RUFR.Api.Web.Controllers
         {
             var projects = _projectService.Select()
                 .Include(p => p.ProjectPriorityModels)
+                    .ThenInclude(pr => pr.PriorityDirectionModel)
                 .Include(m => m.ProjectMemberModels)
-                .Include(u => u.UserProjectModels).ToArray();
+                    .ThenInclude(m => m.MemberModel)
+                .Include(u => u.UserProjectModels)
+                    .ThenInclude(u => u.UserModel).ToArray();
 
                 return Ok(projects);
         }
@@ -43,8 +46,11 @@ namespace RUFR.Api.Web.Controllers
         {
             var project = _projectService.Select()
                 .Include(p => p.ProjectPriorityModels)
+                    .ThenInclude(pr => pr.PriorityDirectionModel)
                 .Include(m => m.ProjectMemberModels)
-                .Include(u => u.UserProjectModels).FirstOrDefault(p => p.Id == id);
+                    .ThenInclude(m => m.MemberModel)
+                .Include(u => u.UserProjectModels)
+                    .ThenInclude(u => u.UserModel).FirstOrDefault(p => p.Id == id);
 
             if (project != null)
             {
