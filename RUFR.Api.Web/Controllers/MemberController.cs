@@ -108,9 +108,14 @@ namespace RUFR.Api.Web.Controllers
                     if (!member.MemberPriorityModels.Select(mp => mp.PriorityDirectionModelId).ToArray().
                         SequenceEqual(oldMember.MemberPriorityModels.Select(mp => mp.PriorityDirectionModelId).ToArray()))
                     {
-                        oldMember.MemberPriorityModels.Clear();
+                        foreach(var priorityModel in member.MemberPriorityModels)
+                        {
+                            oldMember.MemberPriorityModels.Remove(priorityModel);
+                        }
+
                         foreach (var priorityModel in member.MemberPriorityModels)
                         {
+
                             oldMember.MemberPriorityModels.Add(new MemberPriorityModel { MemberModelId = priorityModel.MemberModelId, 
                                 PriorityDirectionModelId = priorityModel.PriorityDirectionModelId, EnrollmentDate = DateTime.Now });
                         }
@@ -119,7 +124,11 @@ namespace RUFR.Api.Web.Controllers
                     if (!member.MemberTypesOfCooperationModels.Select(mt => mt.TypesOfCooperationModelId).ToArray().
                         SequenceEqual(oldMember.MemberTypesOfCooperationModels.Select(mt => mt.TypesOfCooperationModelId).ToArray()))
                     {
-                        oldMember.MemberTypesOfCooperationModels.Clear();
+                        foreach (var typesOfCooperation in member.MemberTypesOfCooperationModels)
+                        {
+                            oldMember.MemberTypesOfCooperationModels.Remove(typesOfCooperation);
+                        }
+
                         foreach (var typesOfCooperation in member.MemberTypesOfCooperationModels)
                         {
                             oldMember.MemberTypesOfCooperationModels.Add(new MemberTypesOfCooperationModel { MemberModelId = typesOfCooperation.MemberModelId, 
@@ -130,7 +139,11 @@ namespace RUFR.Api.Web.Controllers
                     if (!member.StatisticalInformationModels.Select(mt => mt.Id).ToArray().
                         SequenceEqual(oldMember.StatisticalInformationModels.Select(mt => mt.Id).ToArray()))
                     {
-                        oldMember.StatisticalInformationModels.Clear();
+                        foreach (var keyValue in member.StatisticalInformationModels)
+                        {
+                            oldMember.StatisticalInformationModels.Remove(keyValue);
+                        }
+
                         foreach (var keyValue in member.StatisticalInformationModels)
                         {
                             oldMember.StatisticalInformationModels.Add(new StatisticalInformationModel { MemberModelId = keyValue.MemberModelId, Name = keyValue.Name, 
@@ -141,11 +154,15 @@ namespace RUFR.Api.Web.Controllers
                     if (!member.UserMemberModels.Select(u => u.Id).ToArray().
                         SequenceEqual(oldMember.UserMemberModels.Select(u => u.Id).ToArray()))
                     {
-                        oldMember.UserMemberModels.Clear();
-                        foreach (var keyValue in member.UserMemberModels)
+                        foreach (var user in member.UserMemberModels)
                         {
-                            oldMember.UserMemberModels.Add(new UserMemberModel { MemberModelId = keyValue.MemberModelId, UserModelId = keyValue.UserModelId,
-                                Position = keyValue.Position, EnrollmentDate = DateTime.Now });
+                            oldMember.UserMemberModels.Remove(user);
+                        }
+
+                        foreach (var user in member.UserMemberModels)
+                        {
+                            oldMember.UserMemberModels.Add(new UserMemberModel { MemberModelId = user.MemberModelId, UserModelId = user.UserModelId,
+                                Position = user.Position, EnrollmentDate = DateTime.Now });
                         }
                     }
 
