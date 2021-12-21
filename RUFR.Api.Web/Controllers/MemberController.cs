@@ -34,7 +34,7 @@ namespace RUFR.Api.Web.Controllers
                 .Include(p => p.MemberTypesOfCooperationModels)
                     .ThenInclude(t => t.TypesOfCooperationModel)
                 .Include(s => s.StatisticalInformationModels)
-                .Include(u => u.UserMemberModels).ToArray();
+                .Include(u => u.UserMemberModels).AsNoTracking().ToArray();
             return Ok(members);
         }
 
@@ -54,7 +54,7 @@ namespace RUFR.Api.Web.Controllers
                 .Include(p => p.MemberTypesOfCooperationModels)
                     .ThenInclude(t => t.TypesOfCooperationModel)
                 .Include(s => s.StatisticalInformationModels)
-                .Include(u => u.UserMemberModels).FirstOrDefault(m => m.Id == id);
+                .Include(u => u.UserMemberModels).AsNoTracking().FirstOrDefault(m => m.Id == id);
 
             if (member != null)
             {
@@ -92,7 +92,7 @@ namespace RUFR.Api.Web.Controllers
                     .Include(p => p.ProjectMemberModels)
                     .Include(p => p.MemberTypesOfCooperationModels)
                     .Include(s => s.StatisticalInformationModels)
-                    .Include(u => u.UserMemberModels).FirstOrDefault(m => m.Id == member.Id);
+                    .Include(u => u.UserMemberModels).AsNoTracking().FirstOrDefault(m => m.Id == member.Id);
 
                 if (oldMember != null)
                 {
@@ -207,7 +207,7 @@ namespace RUFR.Api.Web.Controllers
                     .Include(p => p.ProjectMemberModels)
                     .Include(p => p.MemberTypesOfCooperationModels)
                     .Include(s => s.StatisticalInformationModels)
-                    .Include(u => u.UserMemberModels).FirstOrDefault(m => m.Id == id);
+                    .Include(u => u.UserMemberModels).AsNoTracking().FirstOrDefault(m => m.Id == id);
 
             if (!member.IsDelete && member != null)
             {

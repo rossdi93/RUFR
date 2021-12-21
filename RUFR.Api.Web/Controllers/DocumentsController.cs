@@ -27,7 +27,7 @@ namespace RUFR.Api.Web.Controllers
         {
             var documents = _documentService.Select()
                 .Include(p => p.UserDocumentModels)
-                .ThenInclude(u => u.UserModel).ToArray();
+                .ThenInclude(u => u.UserModel).AsNoTracking().ToArray();
 
             return Ok(documents);
         }
@@ -42,7 +42,7 @@ namespace RUFR.Api.Web.Controllers
         {
             var document = _documentService.Select()
                 .Include(p => p.UserDocumentModels)
-                .ThenInclude(u => u.UserModel).FirstOrDefault(p => p.Id == id);
+                .ThenInclude(u => u.UserModel).AsNoTracking().FirstOrDefault(p => p.Id == id);
 
             if (document != null)
             {
@@ -79,7 +79,7 @@ namespace RUFR.Api.Web.Controllers
             try
             {
                 DocumentModel oldDoc = _documentService.Select()
-                    .Include(p => p.UserDocumentModels).FirstOrDefault(p => p.Id == doc.Id);
+                    .Include(p => p.UserDocumentModels).AsNoTracking().FirstOrDefault(p => p.Id == doc.Id);
 
                 if (oldDoc != null)
                 {

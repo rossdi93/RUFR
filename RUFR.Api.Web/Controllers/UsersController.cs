@@ -101,7 +101,7 @@ namespace RUFR.Api.Web.Controllers
             var user = _usersService.Select()
                 .Include(d => d.UserDocumentModels)
                 .Include(m => m.UserMemberModels)
-                .Include(p => p.UserProjectModels).FirstOrDefault(p => p.Id == id);
+                .Include(p => p.UserProjectModels).AsNoTracking().FirstOrDefault(p => p.Id == id);
 
             if (!user.IsDelete && user != null)
             {

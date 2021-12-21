@@ -31,7 +31,7 @@ namespace RUFR.Api.Web.Controllers
                 .Include(m => m.ProjectMemberModels)
                     .ThenInclude(m => m.MemberModel)
                 .Include(u => u.UserProjectModels)
-                    .ThenInclude(u => u.UserModel).ToArray();
+                    .ThenInclude(u => u.UserModel).AsNoTracking().ToArray();
 
                 return Ok(projects);
         }
@@ -50,7 +50,7 @@ namespace RUFR.Api.Web.Controllers
                 .Include(m => m.ProjectMemberModels)
                     .ThenInclude(m => m.MemberModel)
                 .Include(u => u.UserProjectModels)
-                    .ThenInclude(u => u.UserModel).FirstOrDefault(p => p.Id == id);
+                    .ThenInclude(u => u.UserModel).AsNoTracking().FirstOrDefault(p => p.Id == id);
 
             if (project != null)
             {
@@ -88,7 +88,7 @@ namespace RUFR.Api.Web.Controllers
                 ProjectModel oldProject = _projectService.Select()
                 .Include(p => p.ProjectPriorityModels)
                 .Include(m => m.ProjectMemberModels)
-                .Include(u => u.UserProjectModels).FirstOrDefault(p => p.Id == project.Id);
+                .Include(u => u.UserProjectModels).AsNoTracking().FirstOrDefault(p => p.Id == project.Id);
 
                 if (oldProject != null)
                 {
@@ -162,7 +162,7 @@ namespace RUFR.Api.Web.Controllers
             var project =  _projectService.Select()
                 .Include(p => p.ProjectPriorityModels)
                 .Include(m => m.ProjectMemberModels)
-                .Include(u => u.UserProjectModels).FirstOrDefault(p => p.Id == id);
+                .Include(u => u.UserProjectModels).AsNoTracking().FirstOrDefault(p => p.Id == id);
 
             if (!project.IsDelete && project != null)
             {
