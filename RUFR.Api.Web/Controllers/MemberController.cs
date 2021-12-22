@@ -110,10 +110,19 @@ namespace RUFR.Api.Web.Controllers
                     if (!member.MemberPriorityModels.Select(mp => mp.PriorityDirectionModelId).ToArray().
                         SequenceEqual(oldMember.MemberPriorityModels.Select(mp => mp.PriorityDirectionModelId).ToArray()))
                     {
-                        foreach(var memberPriority in member.MemberPriorityModels)
+                        foreach(var memberPriority in oldMember.MemberPriorityModels)
                         {
-                            _memberPriorityService.Delete(memberPriority.Id);
+                            oldMember.MemberPriorityModels.Remove(memberPriority);
                         }
+
+                        _memberService.Update(oldMember);
+
+                        oldMember = _memberService.Select()
+                            .Include(p => p.MemberPriorityModels)
+                            .Include(p => p.ProjectMemberModels)
+                            .Include(p => p.MemberTypesOfCooperationModels)
+                            .Include(s => s.StatisticalInformationModels)
+                            .Include(u => u.UserMemberModels).AsNoTracking().FirstOrDefault(m => m.Id == member.Id);
 
                         foreach (var memberPriority in member.MemberPriorityModels)
                         {
