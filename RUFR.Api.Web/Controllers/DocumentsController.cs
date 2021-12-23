@@ -5,6 +5,7 @@ using System.Linq;
 using RUFR.Api.Service.Interfaces;
 using Microsoft.EntityFrameworkCore;
 using System.Threading.Tasks;
+using System.IO;
 
 namespace RUFR.Api.Web.Controllers
 {
@@ -168,14 +169,20 @@ namespace RUFR.Api.Web.Controllers
         /// <param name="id"></param>
         /// <returns></returns>
         [HttpGet("GetFile/{id}")]
-        async public Task<FileResult> GetFile(long id)
+        public FileResult GetFile(long id)
         {
             try
             {
-                DocumentModel document = new();
-                await Task.Run(() => document = _documentService.GetById(id));               
+                var fileName = "";
+                var document = _documentService.GetById(id);
 
-                return File(document.DocByte, "application/xml");
+                using (Stream s = new MemoryStream(document.DocByte))
+                {
+                    FileStream fs = s as FileStream;
+                    fileName = fs.Name;
+                }
+                
+                return File(document.DocByte, "application/xml", fileName);
             }
             catch (Exception)
             {
