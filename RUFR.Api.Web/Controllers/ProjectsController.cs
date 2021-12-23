@@ -12,10 +12,20 @@ namespace RUFR.Api.Web.Controllers
     public class ProjectsController : ControllerBase
     {
         private readonly IProjectService _projectService;
+        private readonly IProjectPriorityService _projectPriorityService;
+        private readonly IProjectMemberService _projectMemberService;
+        private readonly IUserProjectService _userProjectService;
 
-        public ProjectsController(IProjectService projectService)
+        public ProjectsController(IProjectService projectService, 
+            IProjectPriorityService projectPriorityService,
+            IProjectMemberService projectMemberService,
+            IUserProjectService userProjectService
+            )
         {
+            _projectPriorityService = projectPriorityService;
             _projectService = projectService;
+            _projectMemberService = projectMemberService;
+            _userProjectService = userProjectService;
         }
 
         /// <summary>
@@ -104,7 +114,13 @@ namespace RUFR.Api.Web.Controllers
                     if (!oldProject.ProjectPriorityModels.Select(p => p.PriorityDirectionModelId).ToArray().
                         SequenceEqual(project.ProjectPriorityModels.Select(p => p.PriorityDirectionModelId).ToArray()))
                     {
+                        foreach (var oldPP in oldProject.ProjectPriorityModels)
+                        {
+                            _projectPriorityService.Delete(oldPP.Id);
+                        }
+
                         oldProject.ProjectPriorityModels.Clear();
+
                         foreach (var pd in project.ProjectPriorityModels)
                         {
                             oldProject.ProjectPriorityModels.Add(new ProjectPriorityModel
@@ -115,7 +131,13 @@ namespace RUFR.Api.Web.Controllers
                     if (!oldProject.ProjectMemberModels.Select(p => p.MemberModelId).ToArray().
                        SequenceEqual(project.ProjectMemberModels.Select(p => p.MemberModelId).ToArray()))
                     {
+                        foreach (var oldPM in oldProject.ProjectMemberModels)
+                        {
+                            _projectMemberService.Delete(oldPM.Id);
+                        }
+
                         oldProject.ProjectMemberModels.Clear();
+
                         foreach (var pd in project.ProjectMemberModels)
                         {
                             oldProject.ProjectMemberModels.Add(new ProjectMemberModel
@@ -126,7 +148,13 @@ namespace RUFR.Api.Web.Controllers
                     if (!oldProject.UserProjectModels.Select(p => p.UserModelId).ToArray().
                       SequenceEqual(project.UserProjectModels.Select(p => p.UserModelId).ToArray()))
                     {
+                        foreach (var oldUP in oldProject.UserProjectModels)
+                        {
+                            _userProjectService.Delete(oldUP.Id);
+                        }
+
                         oldProject.UserProjectModels.Clear();
+
                         foreach (var pd in project.UserProjectModels)
                         {
                             oldProject.UserProjectModels.Add(new UserProjectModel
@@ -169,9 +197,25 @@ namespace RUFR.Api.Web.Controllers
                 try
                 {
                     project.IsDelete = true;
-                    project.ProjectMemberModels.Clear();
+                    foreach (var pp in project.ProjectPriorityModels)
+                    {
+                        _projectPriorityService.Delete(pp.Id);
+                    }
                     project.ProjectPriorityModels.Clear();
+
+                    foreach (var pm in project.ProjectMemberModels)
+                    {
+                        _projectMemberService.Delete(pm.Id);
+                    }
+                    project.ProjectMemberModels.Clear();
+
+                    foreach (var up in project.UserProjectModels)
+                    {
+                        _userProjectService.Delete(up.Id);
+                    }
                     project.UserProjectModels.Clear();
+
+
                     _projectService.Update(project);
 
                     return Ok();

@@ -14,11 +14,24 @@ namespace RUFR.Api.Web.Controllers
     {
         private readonly IMemberService _memberService;
         private readonly IMemberPriorityService _memberPriorityService;
+        private readonly IStatisticalInformationService _statisticalInformationService;
+        private readonly IMemberTypesOfCooperationService _memberTypesOfCooperationService;
+        private readonly IProjectMemberService _projectMemberService;
+        private readonly IUserMemberService _userMemberService;
 
-        public MemberController(IMemberService memberService, IMemberPriorityService memberPriorityService)
+        public MemberController(IMemberService memberService, 
+            IMemberPriorityService memberPriorityService,
+            IStatisticalInformationService statisticalInformationService,
+            IMemberTypesOfCooperationService memberTypesOfCooperationService,
+            IProjectMemberService projectMemberService,
+            IUserMemberService userMemberService)
         {
             _memberService = memberService;
             _memberPriorityService = memberPriorityService;
+            _statisticalInformationService = statisticalInformationService;
+            _memberTypesOfCooperationService = memberTypesOfCooperationService;
+            _projectMemberService = projectMemberService;
+            _userMemberService = userMemberService;
         }
 
         /// <summary>
@@ -110,82 +123,100 @@ namespace RUFR.Api.Web.Controllers
                     if (!member.MemberPriorityModels.Select(mp => mp.PriorityDirectionModelId).ToArray().
                         SequenceEqual(oldMember.MemberPriorityModels.Select(mp => mp.PriorityDirectionModelId).ToArray()))
                     {
-                        foreach(var memberPriority in oldMember.MemberPriorityModels)
+                        foreach(var oldMemberPriority in oldMember.MemberPriorityModels)
                         {
-                            oldMember.MemberPriorityModels.Remove(memberPriority);
+                            _memberPriorityService.Delete(oldMemberPriority.Id);
                         }
 
-                        _memberService.Update(oldMember);
-
-                        oldMember = _memberService.Select()
-                            .Include(p => p.MemberPriorityModels)
-                            .Include(p => p.ProjectMemberModels)
-                            .Include(p => p.MemberTypesOfCooperationModels)
-                            .Include(s => s.StatisticalInformationModels)
-                            .Include(u => u.UserMemberModels).AsNoTracking().FirstOrDefault(m => m.Id == member.Id);
+                        oldMember.MemberPriorityModels.Clear();
 
                         foreach (var memberPriority in member.MemberPriorityModels)
                         {
-
                             oldMember.MemberPriorityModels.Add(new MemberPriorityModel { MemberModelId = memberPriority.MemberModelId, 
                                 PriorityDirectionModelId = memberPriority.PriorityDirectionModelId, EnrollmentDate = DateTime.Now });
                         }
                     }
 
-                    //if (!member.MemberTypesOfCooperationModels.Select(mt => mt.TypesOfCooperationModelId).ToArray().
-                    //    SequenceEqual(oldMember.MemberTypesOfCooperationModels.Select(mt => mt.TypesOfCooperationModelId).ToArray()))
-                    //{
-                    //    foreach (var typesOfCooperation in member.MemberTypesOfCooperationModels)
-                    //    {
-                    //        oldMember.MemberTypesOfCooperationModels.Remove(typesOfCooperation);
-                    //    }
+                    if (!member.MemberTypesOfCooperationModels.Select(mt => mt.TypesOfCooperationModelId).ToArray().
+                        SequenceEqual(oldMember.MemberTypesOfCooperationModels.Select(mt => mt.TypesOfCooperationModelId).ToArray()))
+                    {
+                        foreach (var memberTypes in oldMember.MemberTypesOfCooperationModels)
+                        {
+                            _memberTypesOfCooperationService.Delete(memberTypes.Id);
+                        }
 
-                    //    foreach (var typesOfCooperation in member.MemberTypesOfCooperationModels)
-                    //    {
-                    //        oldMember.MemberTypesOfCooperationModels.Add(new MemberTypesOfCooperationModel { MemberModelId = typesOfCooperation.MemberModelId, 
-                    //            TypesOfCooperationModelId = typesOfCooperation.TypesOfCooperationModelId, EnrollmentDate = DateTime.Now });
-                    //    }
-                    //}
+                        oldMember.MemberTypesOfCooperationModels.Clear();
 
-                    //if (!member.StatisticalInformationModels.Select(mt => mt.Id).ToArray().
-                    //    SequenceEqual(oldMember.StatisticalInformationModels.Select(mt => mt.Id).ToArray()))
-                    //{
-                    //    foreach (var keyValue in member.StatisticalInformationModels)
-                    //    {
-                    //        oldMember.StatisticalInformationModels.Remove(keyValue);
-                    //    }
+                        foreach (var typesOfCooperation in member.MemberTypesOfCooperationModels)
+                        {
+                            oldMember.MemberTypesOfCooperationModels.Add(new MemberTypesOfCooperationModel
+                            {
+                                MemberModelId = typesOfCooperation.MemberModelId,
+                                TypesOfCooperationModelId = typesOfCooperation.TypesOfCooperationModelId,
+                                EnrollmentDate = DateTime.Now
+                            });
+                        }
+                    }
 
-                    //    foreach (var keyValue in member.StatisticalInformationModels)
-                    //    {
-                    //        oldMember.StatisticalInformationModels.Add(new StatisticalInformationModel { MemberModelId = keyValue.MemberModelId, Name = keyValue.Name, 
-                    //            Key = keyValue.Key, Value = keyValue.Value });
-                    //    }
-                    //}
+                    if (!member.StatisticalInformationModels.Select(mt => mt.Id).ToArray().
+                        SequenceEqual(oldMember.StatisticalInformationModels.Select(mt => mt.Id).ToArray()))
+                    {
+                        foreach (var oldStatInf in oldMember.StatisticalInformationModels)
+                        {
+                            _statisticalInformationService.Delete(oldStatInf.Id);
+                        }
 
-                    //if (!member.UserMemberModels.Select(u => u.Id).ToArray().
-                    //    SequenceEqual(oldMember.UserMemberModels.Select(u => u.Id).ToArray()))
-                    //{
-                    //    foreach (var user in member.UserMemberModels)
-                    //    {
-                    //        oldMember.UserMemberModels.Remove(user);
-                    //    }
+                        oldMember.StatisticalInformationModels.Clear();
 
-                    //    foreach (var user in member.UserMemberModels)
-                    //    {
-                    //        oldMember.UserMemberModels.Add(new UserMemberModel { MemberModelId = user.MemberModelId, UserModelId = user.UserModelId,
-                    //            Position = user.Position, EnrollmentDate = DateTime.Now });
-                    //    }
-                    //}
+                        foreach (var keyValue in member.StatisticalInformationModels)
+                        {
+                            oldMember.StatisticalInformationModels.Add(new StatisticalInformationModel
+                            {
+                                MemberModelId = keyValue.MemberModelId,
+                                Name = keyValue.Name,
+                                Key = keyValue.Key,
+                                Value = keyValue.Value
+                            });
+                        }
+                    }
 
-                    //if (!member.ProjectMemberModels.Select(p => p.ProjectModelId).ToArray().
-                    //    SequenceEqual(oldMember.ProjectMemberModels.Select(p => p.ProjectModelId).ToArray()))
-                    //{
-                    //    oldMember.ProjectMemberModels.Clear();
-                    //    foreach (var priorityModel in member.ProjectMemberModels)
-                    //    {
-                    //        oldMember.ProjectMemberModels.Add(new ProjectMemberModel { MemberModelId = priorityModel.MemberModelId, ProjectModelId = priorityModel.ProjectModelId, EnrollmentDate = DateTime.Now });
-                    //    }
-                    //}
+                    if (!member.UserMemberModels.Select(u => u.Id).ToArray().
+                        SequenceEqual(oldMember.UserMemberModels.Select(u => u.Id).ToArray()))
+                    {
+                        foreach (var oldUM in oldMember.UserMemberModels)
+                        {
+                            _userMemberService.Delete(oldUM.Id);
+                        }
+
+                        oldMember.UserMemberModels.Clear();
+
+                        foreach (var user in member.UserMemberModels)
+                        {
+                            oldMember.UserMemberModels.Add(new UserMemberModel
+                            {
+                                MemberModelId = user.MemberModelId,
+                                UserModelId = user.UserModelId,
+                                Position = user.Position,
+                                EnrollmentDate = DateTime.Now
+                            });
+                        }
+                    }
+
+                    if (!member.ProjectMemberModels.Select(p => p.ProjectModelId).ToArray().
+                        SequenceEqual(oldMember.ProjectMemberModels.Select(p => p.ProjectModelId).ToArray()))
+                    {
+                        foreach (var oldPM in oldMember.ProjectMemberModels)
+                        {
+                            _projectMemberService.Delete(oldPM.Id);
+                        }
+
+                        oldMember.ProjectMemberModels.Clear();
+
+                        foreach (var projectMember in member.ProjectMemberModels)
+                        {
+                            oldMember.ProjectMemberModels.Add(new ProjectMemberModel { MemberModelId = projectMember.MemberModelId, ProjectModelId = projectMember.ProjectModelId, EnrollmentDate = DateTime.Now });
+                        }
+                    }
 
                     _memberService.Update(oldMember);
 
@@ -225,11 +256,32 @@ namespace RUFR.Api.Web.Controllers
                 try
                 {
                     member.IsDelete = true;
+                    
+
+                    foreach (var memberPriority in member.MemberPriorityModels)
+                    {
+                        _memberPriorityService.Delete(memberPriority.Id);
+                    }
                     member.MemberPriorityModels.Clear();
+
+                    foreach (var projectMember in member.ProjectMemberModels)
+                    {
+                        _projectMemberService.Delete(projectMember.Id);
+                    }
                     member.ProjectMemberModels.Clear();
+
+                    foreach (var memberTypes in member.MemberTypesOfCooperationModels)
+                    {
+                        _memberTypesOfCooperationService.Delete(memberTypes.Id);
+                    }
                     member.MemberTypesOfCooperationModels.Clear();
-                    member.StatisticalInformationModels.Clear();
-                    member.UserMemberModels.Clear();
+
+                    foreach (var memberPriority in member.MemberPriorityModels)
+                    {
+                        _memberPriorityService.Delete(memberPriority.Id);
+                    }
+                    member.MemberPriorityModels.Clear();
+
                     _memberService.Update(member);
 
                     return Ok();

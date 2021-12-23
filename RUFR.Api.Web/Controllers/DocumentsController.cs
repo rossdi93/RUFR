@@ -12,10 +12,13 @@ namespace RUFR.Api.Web.Controllers
     public class DocumentsController : ControllerBase
     {
         private readonly IDocumentService _documentService;
+        private readonly IUserDocumentService _userDocumentService;
 
-        public DocumentsController(IDocumentService documentService)
+        public DocumentsController(IDocumentService documentService,
+            IUserDocumentService userDocumentService)
         {
             _documentService = documentService;
+            _userDocumentService = userDocumentService;
         }
 
         /// <summary>
@@ -94,7 +97,13 @@ namespace RUFR.Api.Web.Controllers
                     if (!oldDoc.UserDocumentModels.Select(p => p.UserModelId).ToArray().
                            SequenceEqual(doc.UserDocumentModels.Select(p => p.UserModelId).ToArray()))
                     {
+                        foreach (var oldUD in oldDoc.UserDocumentModels)
+                        {
+                            _userDocumentService.Delete(oldUD.Id);
+                        }
+
                         oldDoc.UserDocumentModels.Clear();
+
                         foreach (var pd in doc.UserDocumentModels)
                         {
                             oldDoc.UserDocumentModels.Add(new UserDocumentModel

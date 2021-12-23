@@ -12,10 +12,19 @@ namespace RUFR.Api.Web.Controllers
     public class UsersController : ControllerBase
     {
         private readonly IUsersService _usersService;
+        private readonly IUserDocumentService _userDocumentService;
+        private readonly IUserMemberService _userMemberService;
+        private readonly IUserProjectService _userProjectService;
 
-        public UsersController(IUsersService usersService)
+        public UsersController(IUsersService usersService,
+            IUserDocumentService userDocumentService,
+            IUserMemberService userMemberService,
+            IUserProjectService userProjectService)
         {
             _usersService = usersService;
+            _userDocumentService = userDocumentService;
+            _userMemberService = userMemberService;
+            _userProjectService = userProjectService;
         }
 
         /// <summary>
@@ -108,8 +117,22 @@ namespace RUFR.Api.Web.Controllers
                 user.IsDelete = true;
                 try
                 {
+                    foreach (var ud in user.UserDocumentModels)
+                    {
+                        _userDocumentService.Delete(ud.Id);
+                    }
                     user.UserDocumentModels.Clear();
+
+                    foreach (var ud in user.UserMemberModels)
+                    {
+                        _userMemberService.Delete(ud.Id);
+                    }
                     user.UserMemberModels.Clear();
+
+                    foreach (var ud in user.UserProjectModels)
+                    {
+                        _userProjectService.Delete(ud.Id);
+                    }
                     user.UserProjectModels.Clear();
 
                     _usersService.Update(user);
