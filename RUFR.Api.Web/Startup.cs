@@ -57,6 +57,13 @@ namespace RUFR.Api
             services.AddScoped<IDocumentService, DocumentService>();
             services.AddScoped<IMemberPriorityService, MemberPriorityService>();
             services.AddScoped<IProjectPriorityService, ProjectPriorityService>();
+            services.AddScoped<IMemberTypesOfCooperationService, MemberTypesOfCooperationService>();
+            services.AddScoped<IProjectMemberService, ProjectMemberService>();
+            services.AddScoped<IStatisticalInformationService, StatisticalInformationService>();
+            services.AddScoped<ITyperOfCooperationService, TyperOfCooperationService>();
+            services.AddScoped<IUserDocumentService, UserDocumentService>();
+            services.AddScoped<IUserMemberService, UserMemberService>();
+            services.AddScoped<IUserProjectService, UserProjectService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

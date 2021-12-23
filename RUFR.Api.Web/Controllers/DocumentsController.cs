@@ -4,6 +4,7 @@ using System;
 using System.Linq;
 using RUFR.Api.Service.Interfaces;
 using Microsoft.EntityFrameworkCore;
+using System.Threading.Tasks;
 
 namespace RUFR.Api.Web.Controllers
 {
@@ -119,7 +120,7 @@ namespace RUFR.Api.Web.Controllers
                 {
                     return NotFound(doc);
                 }
-                
+
             }
             catch (Exception)
             {
@@ -158,6 +159,27 @@ namespace RUFR.Api.Web.Controllers
             else
             {
                 return Ok(false);
+            }
+        }
+
+        /// <summary>
+        /// Получение файла по id документа
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        [HttpGet("GetFile/{id}")]
+        async public Task<FileResult> GetFile(long id)
+        {
+            try
+            {
+                DocumentModel document = new();
+                await Task.Run(() => document = _documentService.GetById(id));               
+
+                return File(document.DocByte, "application/xml");
+            }
+            catch (Exception)
+            {
+                throw;
             }
         }
     }
