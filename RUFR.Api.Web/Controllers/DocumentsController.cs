@@ -95,6 +95,7 @@ namespace RUFR.Api.Web.Controllers
                     oldDoc.Name = doc.Name;
                     oldDoc.Type = doc.Type;
                     oldDoc.Description = doc.Description;
+                    oldDoc.FileName = doc.FileName;
 
                     if (!oldDoc.UserDocumentModels.Select(p => p.UserModelId).ToArray().
                            SequenceEqual(doc.UserDocumentModels.Select(p => p.UserModelId).ToArray()))
@@ -173,16 +174,9 @@ namespace RUFR.Api.Web.Controllers
         {
             try
             {
-                var fileName = "";
                 var document = _documentService.GetById(id);
-
-                using (Stream s = new MemoryStream(document.DocByte))
-                {
-                    FileStream fs = s as FileStream;
-                    fileName = fs.Name;
-                }
                 
-                return File(document.DocByte, "application/xml", fileName);
+                return File(document.DocByte, "application/xml", document.FileName);
             }
             catch (Exception)
             {
