@@ -49,7 +49,8 @@ namespace RUFR.Api.Web.Controllers
                 .Include(p => p.MemberTypesOfCooperationModels)
                     .ThenInclude(t => t.TypesOfCooperationModel)
                 .Include(s => s.StatisticalInformationModels)
-                .Include(u => u.UserMemberModels).AsNoTracking().ToArray();
+                .Include(u => u.UserMemberModels)
+                    .ThenInclude(u => u.UserModel).AsNoTracking().ToArray();
             return Ok(members);
         }
 
@@ -69,7 +70,8 @@ namespace RUFR.Api.Web.Controllers
                 .Include(p => p.MemberTypesOfCooperationModels)
                     .ThenInclude(t => t.TypesOfCooperationModel)
                 .Include(s => s.StatisticalInformationModels)
-                .Include(u => u.UserMemberModels).AsNoTracking().FirstOrDefault(m => m.Id == id);
+                .Include(u => u.UserMemberModels)
+                    .ThenInclude(u => u.UserModel).AsNoTracking().FirstOrDefault(m => m.Id == id);
 
             if (member != null)
             {

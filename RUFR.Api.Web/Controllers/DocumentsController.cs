@@ -15,10 +15,13 @@ namespace RUFR.Api.Web.Controllers
     {
         private readonly IDocumentService _documentService;
         private readonly IUserDocumentService _userDocumentService;
+        private readonly IDocumentPriorityService _documentPriorityService;
 
         public DocumentsController(IDocumentService documentService,
-            IUserDocumentService userDocumentService)
+            IUserDocumentService userDocumentService,
+            IDocumentPriorityService documentPriorityService)
         {
+            _documentPriorityService = documentPriorityService;
             _documentService = documentService;
             _userDocumentService = userDocumentService;
         }
@@ -32,7 +35,9 @@ namespace RUFR.Api.Web.Controllers
         {
             var documents = _documentService.Select()
                 .Include(p => p.UserDocumentModels)
-                .ThenInclude(u => u.UserModel).AsNoTracking().ToArray();
+                    .ThenInclude(u => u.UserModel)
+                .Include(p => p.DocumentPriorityModels)
+                    .ThenInclude(p => p.PriorityDirectionModel).AsNoTracking().ToArray();
 
             return Ok(documents);
         }
@@ -47,7 +52,9 @@ namespace RUFR.Api.Web.Controllers
         {
             var document = _documentService.Select()
                 .Include(p => p.UserDocumentModels)
-                .ThenInclude(u => u.UserModel).AsNoTracking().FirstOrDefault(p => p.Id == id);
+                    .ThenInclude(u => u.UserModel)
+                .Include(p => p.DocumentPriorityModels)
+                    .ThenInclude(p => p.PriorityDirectionModel).AsNoTracking().FirstOrDefault(p => p.Id == id);
 
             if (document != null)
             {
@@ -96,6 +103,29 @@ namespace RUFR.Api.Web.Controllers
                     oldDoc.Type = doc.Type;
                     oldDoc.Description = doc.Description;
                     oldDoc.FileName = doc.FileName;
+                    oldDoc.Content = doc.Content;
+
+                    if (!oldDoc.DocumentPriorityModels.Select(p => p.PriorityDirectionModelId).ToArray().
+                           SequenceEqual(doc.DocumentPriorityModels.Select(p => p.PriorityDirectionModelId).ToArray()))
+                    {
+                        foreach (var oldDP in oldDoc.DocumentPriorityModels)
+                        {
+                            _documentPriorityService.Delete(oldDP.Id);
+                        }
+
+                        oldDoc.DocumentPriorityModels.Clear();
+
+                        foreach (var dp in doc.DocumentPriorityModels)
+                        {
+                            oldDoc.DocumentPriorityModels.Add(new DocumentPriorityModel
+                            {
+                                DocumentModelId = dp.DocumentModelId,
+                                PriorityDirectionModelId = dp.PriorityDirectionModelId,
+                                EnrollmentDate = DateTime.Now
+                            });
+                        }
+                    }
+
 
                     if (!oldDoc.UserDocumentModels.Select(p => p.UserModelId).ToArray().
                            SequenceEqual(doc.UserDocumentModels.Select(p => p.UserModelId).ToArray()))
@@ -141,14 +171,26 @@ namespace RUFR.Api.Web.Controllers
         public IActionResult Delete(int id)
         {
             var doc = _documentService.Select()
-                .Include(p => p.UserDocumentModels).FirstOrDefault(p => p.Id == id);
+                .Include(p => p.UserDocumentModels)
+                .Include(p => p.DocumentPriorityModels).FirstOrDefault(p => p.Id == id);
 
             if (!doc.IsDelete && doc != null)
             {
                 doc.IsDelete = true;
                 try
                 {
+                    foreach (var ud in doc.UserDocumentModels)
+                    {
+                        _userDocumentService.Delete(ud.Id);
+                    }
                     doc.UserDocumentModels.Clear();
+
+                    foreach (var dp in doc.DocumentPriorityModels)
+                    {
+                        _documentPriorityService.Delete(dp.Id);
+                    }
+                    doc.DocumentPriorityModels.Clear();
+
                     _documentService.Update(doc);
                     return Ok();
                 }

@@ -19,8 +19,11 @@ namespace RUFR.Api.Model.Models
         /// </summary>
         public List<ProjectPriorityModel> ProjectPriorityModels { get; set; }
 
+        public List<DocumentPriorityModel> DocumentPriorityModels { get; set; }
+
         public PriorityDirectionModel()
         {
+            DocumentPriorityModels = new List<DocumentPriorityModel>();
             ProjectPriorityModels = new List<ProjectPriorityModel>();
             MemberPriorityModels = new List<MemberPriorityModel>();
         }
