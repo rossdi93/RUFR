@@ -91,7 +91,10 @@ namespace RUFR.Api.Web.Controllers
             try
             {
                 DocumentModel oldDoc = _documentService.Select()
-                    .Include(p => p.UserDocumentModels).AsNoTracking().FirstOrDefault(p => p.Id == doc.Id);
+                    .Include(p => p.UserDocumentModels)
+                        .ThenInclude(u => u.UserModel)
+                    .Include(p => p.DocumentPriorityModels)
+                        .ThenInclude(p => p.PriorityDirectionModel).AsNoTracking().FirstOrDefault(p => p.Id == doc.Id);
 
                 if (oldDoc != null)
                 {

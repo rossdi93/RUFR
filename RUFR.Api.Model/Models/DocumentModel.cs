@@ -55,5 +55,11 @@ namespace RUFR.Api.Model.Models
         /// приоритетные направления
         /// </summary>
         public List<DocumentPriorityModel> DocumentPriorityModels { get; set; }
+
+        public DocumentModel()
+        {
+            UserDocumentModels = new List<UserDocumentModel>();
+            DocumentPriorityModels = new List<DocumentPriorityModel>();
+        }
     }
 }
